@@ -1,0 +1,3275 @@
+Recommended to learn before Node.js
+===================================
+Variables
+Scopes
+Functions
+Arrow Function
+this operator
+Loops
+String
+Array
+fetch()
+ES-6 and beyond 
+(class,module,rest,spread,promise,async await)
+
+
+
+Node.js Syllabus
+================
+-Node.JS - Introduction, Advantages
+-Traditional Web Server Model, Node.js Process Model
+-Local Environment SetUp
+-Node.js Console - REPL
+-NPM , NPX , NVM
+-Modules: Core, Local , 3rd party
+-Global Objects
+-File System
+-Debugging Node JS Application
+-Buffer & Streams
+-Events (Event Loop,Event Emitter)
+-Creating web server & Handling http requests (HTTP)
+-Express Framework-routes
+-NodeJS & MongoDB Connection
+-Mongoose,graphQL
+-Template Engines (Jade/Pug, vash, EJS, handlebars)
+-Redis (Caching)
+-Swagger  (API Documentation)
+-Unit testing (Mocha, Jasmine)
+-JWT
+
+
+
+Projects
+========
+-CRUD HTTP Module
+-CRUD ExpressJS
+-GraphQL
+-Template Engine
+-Server Side Validation
+-Image Upload (express-file-uploader)
+-Image Upload (Formidable) 
+-NodeEmailer (Send Email)
+-Chat Application (Socket.io)
+-JWT Token
+-Swagger
+-Unit testing
+
+
+
+
+
+
+What NodeJs is?
+===============
+-NodeJS is a Runtime Environment to execute JavaScript on server side
+-Allows to run JavaScript on the server(outside the browser).
+-Built on Google Chrome's JavaScript V8 Engine. 
+-Single threaded, non-blocking, and event-driven execution model.
+-It is used to develop I/O intensive web applications. 
+-ex:video streaming sites, real-time chat application, Game servers and web applications.
+-It's not the best choice for CPU intensive work.(Complex calculations)
+
+javascript Engines:
+	V8  - is developed by Google , Google Chrome.
+	SpiderMonkey - is developed by Mozilla , Firefox.
+	JavaScriptCore  - is Apple's engine for its Safari browser. 
+	Chakra  - is the JavaScript engine of the Internet Explorer browser.
+	
+
+	Browser					 Node.js
+======================================================
+-DOM (document)				-No DOM
+-Window						-No Window (global)
+-Cookies					-No Cookies
+-Offline Storage            -No Offline Storage
+-No FileSystem				-FileSystem
+-Database Interaction(No)	-Database Interaction(yes)
+-Client Apps/ UI			-Server side Apps / Back-End
+-Consume APIs				-Develop APIs
+
+
+
+Key Features of Node.js
+=======================
+Asynchronous and Event Driven:
+	All APIs of Node Js are asynchronous. 
+	This feature means that if  Node receives a request for some Input/Output operation, it will execute that operation in the background and continue with the processing of other requests. 
+	Thus it will not wait for the response from the previous requests.
+It's very fast:
+	Node Js uses the V8 JavaScript Runtime engine, the one which is used by Google Chrome. 
+	Node has a wrapper over the JavaScript engine which makes the runtime engine much faster and hence processing of requests in NodeJS is faster.
+Single Threaded but Highly Scalable:
+	Node Js uses a single thread model for event looping. 
+	The response from these events may or may not reach the server immediately. 
+	However, this does not block other operations. 
+	Thus making Node.js highly scalable. 
+	Traditional servers create limited threads to handle requests while Node.js creates	a single thread that provides service to much larger numbers of such requests.
+Node js library uses JavaScript:
+	The majority of developers are already well-versed in JavaScript. 
+	Hence, development in Node.js becomes easier for a developer who knows JavaScript.
+Community –
+	There is an Active and vibrant community for the Node Js framework - The active community always keeps the framework updated with the latest trends in the web development.
+No Buffering –
+	Node js applications never buffer any data. 
+	They simply output the data in chunks.
+NPM (Node Package Manager)–
+	it comes with node js & allows us to install various Packages for Node js Application. (lodash,cors,axios,express)
+
+
+
+V8 JavaScript Engine
+====================
+-V8 is the name of the JavaScript engine that powers Google Chrome.
+-V8 takes our JavaScript and executes it while browsing with Chrome.
+-The same V8 Engine is used in NodeJS also.
+-V8 is written in C++, and it's continuously improved.
+-JavaScript is generally considered an interpreted language, but modern JavaScript engines no longer just interpret JavaScript, they compile it.
+-JavaScript is internally compiled by V8 
+
+JS Code --> V8  -->  Parsing  --> Abstract Syntax Tree  --> ByteCode --> Machine Code  --> Runs On CPU
+
+
+
+
+What Can Node.js Do?
+====================
+-Node.js can generate dynamic page content.
+-Node.js can create, open, read, write, delete, and close files on the server.
+-Node.js can collect form data.
+-Node.js can add, delete, modify data in the database.
+
+
+
+How NodeJs works/NodeJs Process Model
+=====================================
+-In the traditional web server model, each request is handled by a dedicated thread from the thread pool.
+If no thread is available in the thread pool at any point of time then the request waits till the next available thread. 
+-Dedicated thread executes a particular request and does not return to thread pool until it completes the execution and returns a response.
+
+-All the user requests are handled by a single thread and all the I/O work or long running job is performed asynchronously for a particular request. 
+this single thread doesn't have to wait for the request to complete and is free to handle the next request. 
+-When asynchronous I/O work completes then it processes the request further and sends the response.
+-An event loop is constantly watching for the events to be raised for an asynchronous job and executing callback function when the job completes. 
+-Internally, Node.js uses libuv for the event loop which in turn uses internal C++ thread pool to provide asynchronous I/O.
+
+
+https://cdn.buttercms.com/0Nh1yR6SSPwqnsKYSfHa
+https://www.scholarhat.com/tutorial/nodejs/nodejs-vs-other-server-side-frameworks
+ 
+process.env.UV_THREADPOOL_SIZE=6  (4 default, max 128)
+Worker Threads- File System API, Cryptography, Compression, DNS Lookup
+
+
+
+
+The Workflow of Node.js Architecture:
+======================================
+-Clients send requests to the webserver to interact with the web application. Requests can be non-blocking or blocking:
+            -Querying for data
+            -Deleting data 
+            -Updating the data
+			-Adding Data In to database
+-Node.js retrieves the incoming requests and adds those requests to the Event Queue
+-The requests are then passed one-by-one through the Event Loop. It checks if the requests are simple enough to not require any external resources
+-Event Loop processes simple requests (non-blocking operations), such as I/O Polling, and returns the responses to the corresponding clients
+-A single thread from the Thread Pool is assigned to a single complex request. This thread is responsible for completing a particular blocking request by accessing the external resources, such as compute, database, file system, etc.
+-Once, the task is carried out completely, the response is sent to the Event Loop that in turn sends that response back to the Client
+
+
+
+NodeJs vs Others
+================
+-A common task for a web server can be to open a file on the server and return the content to the client.
+
+Here is how PHP or ASP handles a file request:
+	1. Sends the task to the computer's file system.
+	2. Waits while the file system opens and reads the file.
+	3. Returns the content to the client.
+	4. Ready to handle the next request.
+Here is how Node.js handles a file request:
+	1. Sends the task to the computer's file system.
+	2. Ready to handle the next request.
+	3. When the file system has opened and read the file, the server returns the content to the client.
+-Node.js eliminates the waiting, and simply continues with the next request.
+-Node.js runs single-threaded, non-blocking, asynchronously programming, which is very memory efficient.
+
+
+
+Blocking vs Non-Blocking I/O
+============================
+-waiter takes the order and gives it to chef.
+ while the chef is preparing that order, 
+ waiter will take new orders and will give it back to the chef.
+ waiter doesn't wait for the chef to prepare the food.
+-Non-blocking I/O operations allow a single process to serve multiple requests at the same time. -Instead of the process being blocked and waiting for I/O operations to complete, the I/O operations are delegated to the system, so that the process can execute the next piece of code. -Non-blocking I/O operations provide a callback function that is called when the operation is completed.
+-Blocking methods execute synchronously and non-blocking methods execute asynchronously.
+-let's consider a case where each request to a web server takes 50ms to complete and 45ms of that 50ms is database I/O that can be done asynchronously. Choosing non-blocking asynchronous operations frees up that 45ms per request to handle other requests. This is a significant difference in capacity just by choosing to use non-blocking methods instead of blocking methods.
+
+
+Q. What is Reactor Pattern in Node.js?
+-Assigning a callback function to each I/O operation is called the Reactor Pattern.
+-It’s the responsibilty of the system to run the handler function once the data from the event is available.
+
+
+
+
+How to install Node.js
+======================
+-Official packages for all the major platforms are available in the below URL
+ https://nodejs.org/en/download/prebuilt-installer
+ https://nodejs.org/en/about/previous-releases
+ 
+ 
+ 
+ 
+How to Maintain multiple NodeJS versions
+========================================
+-NVM : Node version Manager
+-NVM is a version manager for node.js
+-Multiple nodeJS versions can be maintained with the help of NVM.
+-It allows to easily switch the Node.js version.
+  NVM for Mac - https://tecadmin.net/install-nvm-macos-with-homebrew/
+  NVM for windows - https://github.com/coreybutler/nvm-windows
+
+
+NVM useful commands
+===================
+-Check NVM is installed
+ nvm --version
+-List all the available Node Versions to be installed
+ nvm list available
+-List all the installed Node Versions
+ nvm list installed / nvm ls
+-To install latest node version
+ nvm install node
+-To install a particular version of node
+ nvm install 16.0.0
+-To uninstall a particular version of node
+ nvm uninstall 16.0.0
+-To switch node version
+ nvm use 16.0.0
+-To check currently used node version
+ nvm current / node -v
+ 
+ 
+
+
+REPL
+====
+-REPL stands for Read-Eval-Print-Loop.
+ R - Reads user's input
+ E - Evaluates the expression
+ P - Prints the result
+ L - Loops the above things until user kills the process
+-Node.js comes with virtual environment called REPL.
+-it is similar to Shell in Linux or command prompt in windows where 
+ a command is entered and the system responds with an output in an interactive mode
+-It is a quick and easy way to test simple Node.js/JavaScript code.
+-To launch the REPL (Node shell), open command prompt and type 'node'.
+-If you need to write multi line JavaScript expression or function then just press Enter.
+ (The REPL terminal will display three dots (...), it means you can continue on next line)
+-We can execute an external JavaScript file by writing 'node <Filename>'.
+-assign the result of the most recently evaluated expression to the special variable _ (underscore)
+	 a = 10; b = 20; a+b;
+	 sum = _; console.log(sum);
+-To Open REPL in editor mode , use .editor
+-To Exit REPL type .exit
+-if you press the tab key the REPL will try to autocomplete what you wrote to match a variable you already defined or a predefined one.
+-Used For Exploring node objects ( os, fs , http)
+ fs (enter)
+
+
+
+REPL Command		Description
+--------------------------------
+.help				Display help on all the commands
+.editor			    enables editor mode, multiline JS code , ctrl+D  
+Tab Key				Display the list of all commands. (Math. tab twice)
+Up/Down Keys		See previous commands applied in REPL.
+.save filename		Save current Node REPL session to a file. (.save e:/abc.txt)
+.load filename		Load the specified file in the current Node REPL session.
+.exit				exits the repl (same as pressing ctrl+C two times)
+ctrl + c			Terminate the current command.
+ctrl + c (twice)	Exit from the REPL.
+ctrl + d			Exit from the REPL.
+
+
+
+How to exit from a Node.js shell
+================================
+There are various ways to terminate a Node.js application.
+-Press Ctrl + C twice.
+-Press Ctrl + D once.
+-type .exit and press Enter
+-process.exit()
+-process.kill(process.pid)
+
+
+
+
+How to run a javascript/NodeJs file 
+===================================
+node <fileName>.js
+node --watch <fileName>.js
+
+
+
+
+accept arguments from the command line
+======================================
+-we can pass any number of arguments while invoking a Node.js application.
+-Arguments can be standalone or have a key-value.
+ ex: node app.js sanjay
+     node app.js name=sanjay
+-arguments can be collected by using 'process' module's argv property which is an array.
+-The first element is the full path of the node command.
+-The second element is the full path of the file being executed.
+-All the additional arguments are present from the third position going forward.
+-we can iterate over all the arguments (including the node path and the file path) using a loop:
+	process.argv.forEach((val, ind) => {
+	  console.log(`index ${ind} argument -> ${val}`);
+	})
+-we can get only the additional arguments by creating a new array that excludes the first 2 params
+ const args = process.argv.slice(2)
+
+
+Assignment:
+-Ask user to enter 2 numbers and 1 operator(+ - * /) 
+-perform arithmetic operation on those 2 numbers
+Note: Handle edge cases also (user should pass arguments, if not show error message)
+
+
+
+Minimist
+========
+-The best way to deal with key:value arguements is by using the 'minimist' library.
+ const minimist = require('minimist');
+ const argArr = process.argv.slice(2);
+ const argObj = minimist(argArr);
+ console.log(argObj)
+-use double dashes before each argument name
+ node app.js --name=sanjay --add=bangalore
+ Note: process module does not need a "require", it's defaultly available.
+
+
+Assignment:
+-Build a calculator using minimist
+node calculator.js --num1 10 --num2 5 --operation add
+
+
+VS Code Extensions
+==================
+vscode-icons
+prettier
+tab nine
+thunderclient
+ESLint
+
+
+
+
+Debug NodeJs Code
+=================	
+1. Debugging natively
+  a. node inspect script.js  (type next, help)
+     node inspect --port=5000 app.js
+     go to browser --> chrome://inspect   OR  about:inspect
+  b. use debugger;  in a code line you want
+  
+cont, c               Resume execution
+next, n               Continue to next line in current file
+step, s               Step into, potentially entering a function
+out, o                Step out, leaving the current function
+backtrace, bt         Print the current backtrace
+  
+  
+2. visual Studio Code
+   a. In the Debug panel, click the settings icon to open .vscode/launch.json.
+   Select "Node.js" for initial setup.
+   b. go to the JS file add debug points
+   c. go to Debug Panel, click 'Run' button
+
+
+
+
+
+
+NPM (Node Package Manager)
+==========================
+-npm is the standard package manager for NodeJS Applications.
+-Node Package Manager (NPM) provides two main functionalities:
+	1.Online repositories for node.js packages
+	which are searchable on https://www.npmjs.com/
+	2.Command line utility to install Node.js packages, do version management and dependency management of Node.js packages.
+	
+-NPM comes bundled with Node.js installables.
+-To verify npm version, Run the below command  
+ npm --version/-v
+ 
+-initialize an NPM  project
+ npm init
+ npm init -y (everything default)
+
+
+-Install a Module using npm
+ npm install <Module Name>
+
+-npm install 
+ install all the modules as specified in package.json
+ 
+-Install the package globally
+ npm install <package_name> -g
+ 
+-Save the package as dependency
+ npm install <package_name> --save
+ 
+-Save the package as dev-dependency
+ npm install <package_name> --save-dev 
+ 
+-Install the latest version of a package
+ npm install <package_name>@latest
+ 
+-Install any particluar version of a package
+ npm install <package_name>@<version_number>
+ npm install bootstrap@4.0.1
+ 
+-Uninstalling Packages/Modules via NPM
+ npm uninstall <package_name>
+ 
+-Update Packages/Modules via NPM
+ npm update <package_name>
+ 
+-Searching a particular package
+ npm search <package_name>
+ 
+-List all Installed Packages Locally
+ npm list/ls
+
+-List all Installed Packages Globally
+ npm ls -g
+ 
+-Run a Script
+ npm run <script-name>
+
+
+npm i nodemon 			 	--> helps during development and production dependencies
+npm i nodemon --save  		--> helps during development and production dependencies
+npm i nodemon --save-dev  	--> helps during development not in production(-D)
+npm i nodemon --no-save 	--> installs but does not add the entry to the package.json file dependencies
+npm i nodemon --save-optional --> installs and adds the entry to the package.json file optionalDependencies
+npm i --no-optional  --> will prevent optional dependencies from being installed
+
+
+
+
+
+NPM Global vs Local Installation
+================================
+-By default, NPM installs any dependency in the local mode. 
+-Local mode refers to the package installation in node_modules directory of our project.
+-Locally installed packages are accessible via require() method. 
+ ex: npm i minimist
+    const minimist = require('minimist');
+-Run the below command command to list down all the locally installed modules. 
+ npm ls
+-few packages that should be locally installed:
+ 1.minimist  2.express  3.lodash  4.bootstrap  5.axios  6.rxjs
+-If a module needs to be used inside our code using require(), then install that module locally.
+ 
+ 
+-Globally installed packages/dependencies are stored in system directory. 
+-Such dependencies can be used in CLI (Command Line Interface), they are not meant to be imported using require() in Node application directly. 
+ ex:- npm i nodemon -g
+      const nodemon = require('nodemon'); //No
+-Few packages that should be globally installed: 
+ 1.npm   2.nodemon  3.typescript  4.create-react-app  5.angular-cli  6.json-server
+-Run the below command command to list down all the globally installed modules. 
+ npm ls -g
+-If we want to use a module in shell/command-prompt not using require(), install that globally.
+ 
+
+
+
+
+yarn package Manager
+====================
+-Yarn is an open-source package manager used to manage dependencies in JavaScript projects. 
+-It assists with the process of installing, updating, configuring, and removing packages dependencies
+
+npm install -g yarn
+
+yarn --version
+yarn --help
+
+yarn init -y
+yarn add minimist
+yarn add mocha --dev
+yarn add minimist@latest
+yarn add minimist@2.3.1
+yarn install 
+yarn install --production
+yarn install --offline
+yarn remove minimist
+yarn upgrade 
+yarn run [script-name]
+yarn outdated
+yarn audit     (runs a security audit)
+
+
+
+
+
+
+ 
+Package.json
+============
+-Contains the metadata of the project.
+-Helps NPM to understand how the project should be handled along with its dependencies.
+-package.json files contain the below information.
+	  project name,
+	  version,
+	  homepage,
+	  description,
+	  author,
+	  keywords 
+	  scripts 
+	  dependencies 
+	  devdependencies
+	  optionaldependencies etc.
+-package.json file is normally located at the root directory of a Node.js project.
+
+
+package.json  VS  package-lock.json
+===================================
+-package.json maintains only the main packages's information.
+ "cors": "^2.8.5"
+ "bootstrap" : "^5.2.1"
+-package-lock.json containes the exact version. 
+	"bootstrap" : "5.3.2" (npm update bootstrap)
+-package-lock.json maintains main packages's information + nested-packages information
+    "node_modules/cors": {  
+      "dependencies": {
+        "object-assign": "^4",
+        "vary": "^1"
+      }
+-package.json lists the required dependencies and their version ranges, but not the exact versions to be installed.
+-package-lock.json is used to ensure that the same dependencies are installed across different environments and prevent conflicts due to different versions being installed.
+
+-package.json is created and modified manually by the developer.
+-It is automatically generated by npm and updated whenever you install or update packages.
+
+-in package.json (~) tells go up to hot-fixes 1.4.X if 1.4.1 is installed
+ in package.json (^) checks if there is a newer version under 1.x.x if 1.4.1 is installed
+ in package-lock.json - there is neither ~ nor ^
+
+Ex: bootstrap - 5.1.3
+              major.minor.hotfix
+
+
+NPX
+===
+NPX : Node Package Executer (used to execute Node.js packages)
+-Run Packages without installing them.
+-When you install NPM version 5.2.0 or higher, get NPX installed
+-we can install npx using the below command
+ npm i -g npx
+-npx helps us avoid versioning, dependency issues and installing unnecessary packages that we just want to try out.
+-npx helps running utility tools without installation (eslint, mocha)
+ npx eslint .
+ npx mocha
+-ex:npx create-react-app my-sample-react-app
+    npx nodemon file1.js	
+	npx nodemon file1.js -y
+
+
+
+Nodemon
+=======
+-Nodemon is a utility that will monitor for any changes in your source and automatically restart your server.
+-Nodemon can be installed using NPM.
+ ex:- npm i -g nodemon
+-Nodemon can be used without installing also, using npx
+ npx nodemon file1.js
+-nodemon help
+ nodemon -h 
+ nodemon --help
+-Just use nodemon instead of node to run your code, your process will automatically restart when your code changes
+ ex:- node file1.js      (server won't be re-started when code is changed)
+      nodemon file1.js   (server gets re-started when there is a code change)
+	  npx nodemon file1.js   (server gets re-started when there is a code change)
+-The 'node_modules' folder is ignored by default by nodemon.
+-You can restart the process at any time by typing 'rs' and hitting enter.
+
+
+ 
+
+
+Node.js Global Objects
+======================
+-Node.js global objects are global in nature and available in all modules.
+-we don't have to include these objects in our application; they can be directly used.
+-A list of Node.js global objects are given below:
+	__dirname
+	__filename
+	console - log(),error(),warn(),time(),timeEnd(),trace(),dir(),assert(),table()
+	process - exit(),beforeExit(), uncaughtException()
+	buffer
+	setImmediate(callback[, arg][, ...])
+	setInterval(callback, delay[, arg][, ...])
+	setTimeout(callback, delay[, arg][, ...])
+	clearImmediate(immediateObject)
+	clearInterval(intervalObject)
+	clearTimeout(timeoutObject)
+	structuredClone()
+	atob()
+	btoa()
+	exports
+	require
+	fetch
+	global
+	globalThis
+	module
+	
+
+Note: 
+__dirname :  __dirname is not defined in ES module scope
+
+to use __dirname in ES modules, use the below code
+const __dirname = import.meta.dirname;
+
+
+
+Nodejs Global Variables
+=======================
+-In Node.js, the 'global' object is global.
+-abc.js
+ global.myGlobalVariable = "Hello from global!";
+-xyz.js
+require('./abc');
+console.log(myGlobalVariable);
+console.log(global.myGlobalVariable);
+console.log(globalThis.myGlobalVariable);
+
+
+ 
+
+
+global and globalThis
+=====================
+-global and globalThis are used to access the global object, but they differ slightly in terms of scope and standardization.
+
+global (Node.js specific)
+-------------------------
+-In Node.js, the global object is used to access the global scope.
+-It contains global variables such as setTimeout, process, and Buffer among others.
+-global is specific to Node.js, meaning it may not be present in other environments (like browsers).
+	console.log(global.setTimeout);  // Node.js global object
+	console.log(global.process);     // Node.js global object
+-The global object allows access to Node.js-specific features like the process object, which provides information about the current process, environment variables, etc.
+
+globalThis (Universal across environments)
+-------------------------------------------
+-globalThis was introduced in ECMAScript 2020 (ES11) as a standardized way to access the global object across different environments.
+-It provides a universal way to access the global object, regardless of whether you're running the code in Node.js, a browser, or any other JavaScript environment.
+-In Node.js, globalThis is essentially an alias for global, but in the browser environment, it refers to the window object.
+	console.log(globalThis.setTimeout);  // Works in both Node.js and browsers
+	
+	global									globalThis
+===============================================================
+Node.js Specific-Yes				Node.js Specific-No(Universal across environments)
+Standardized-No 					Standardized-Yes (Standardized by ECMAScript)
+Only available in Node.js			Works in Node.js, browsers, and more
+Access Node.js-specific globals		Access global objects in any environment
+
+
+
+
+
+This
+====
+-The behavior of the this keyword depends on the context in which it is used. 
+-The value of this can vary between global scope, functions, and object methods, and it behaves differently in different scenarios, including strict mode, classes, and modules.
+
+1.In the top-level code 
+  in a Node module, 'this' is equivalent to module.exports. That's the empty object.
+  ex: console.log(this, this === module.exports); //true
+	module.exports.name = "sanjay";
+	console.log(this); // { name:sanjay }
+	
+2. Inside Functions 
+  -in Normal Mode:
+	a. this value inside a regular/normal function is 'global Object'.
+	b. this value inside an arrow function is {} (module.exports)
+  -in strictmode, this value inside a function is undefined.
+
+3. Inside Object Methods 
+  -When this is used in an object method, it refers to the object itself (i.e., the object that owns the method).
+  -If the method is assigned to a different object or called as a standalone function, this will lose its reference to the original object.
+  
+4. Inside Classes
+  -In classes, this refers to the instance of the class.
+  
+5. in Event Listeners and Callbacks
+  -If it's a regular function, this often refers to the global object, but arrow functions will capture the lexical this from the surrounding code
+
+
+
+Event Loop
+==========
+-Event loop's order of operations:
+
+1. timers: this phase executes callbacks for timers like setTimeout() and setInterval() whose delay has expired
+2. I/O callbacks: executes I/O callbacks deferred to the next loop iteration.
+3. idle, prepare: Used internally by Node.js and is not directly used by user applications
+4. poll: retrieve new I/O events; execute I/O related callbacks 
+5. check: setImmediate() callbacks are invoked here.
+6. close callbacks: some close callbacks, e.g. socket.on('close', ...)
+
+
+NodeJs Timers
+=============
+-setImmediate() is designed to execute a script once the current poll phase completes.
+ setImmediate() is useful when you want to execute a callback after I/O tasks in the current event loop iteration but before timers in the next iteration
+ 
+-setTimeout() schedules a script to be executed after a minimum threshold in ms has elapsed.
+-setImmediate callbacks are called after I/O Queue callbacks are finished or timed out. setImmediate callbacks are placed in Check Queue, which are processed after I/O Queue.
+-setTimeout(fn, 0) callbacks are placed in Timer Queue and will be called after I/O callbacks as well as Check Queue callbacks. As event loop, process the timer queue first in each iteration, so which one will be executed first depends on which phase event loop is.
+
+-if we run setImmediate() & setTimeout() which is not within an I/O cycle (i.e. the main module), the order in which the two timers are executed is non-deterministic.
+-However, if you move the two calls within an I/O cycle, the immediate callback is always executed first.
+
+
+
+NodeJs Modules
+==============
+-A way of encapsulating code in to separate logical units.
+-Module:A set of properties and functions we want to include in our application.
+-In Node.js module system, each file is treated as a separate module.
+-Node.js includes three types of modules:
+	1. Core(Built-in) Modules     	  (os,fs,http,path,url,crypto)
+	2. Local(Custom) Modules    	  (created locally in our application)
+	3. Third Party(External) Modules  (can be installed using NPM, and can be used) ex:-minimist,express,mongoose,lodash,moment,chalk,cors,axios
+
+
+Core Modules:
+-------------
+os-Get OS information
+fs-work with the file system
+path-handles path elegantly
+url-url module includes methods for URL resolution and parsing.
+querystring-querystring module includes methods to deal with query string.
+process - 
+http-launch a server,send requests
+https-launch a SSL server
+events-working with events
+util-util module includes utility functions useful for programmers.
+
+
+
+Local(Custom) Modules 
+=====================
+-Node.js has two types of modules: 
+	1. ES modules  (.mjs)
+	2. CommonJS modules (.cjs)
+-By default, Node.js treats JavaScript as CommonJS modules. But we can tell Node.js to treat JavaScript code as ES modules.
+-Node.js will treat the following files as ES modules:
+	a.Files ending in .mjs
+	b.if "type": "module" is set in package.json
+	
+Module Systems
+==============
+1. CommonJS
+   module.exports = {member1,member2};
+   const member1 = require('Library/file name');
+2. ECMASCRIPT
+   export member1;
+   export default member2;
+   import DefaultMember , {Namedmember} from 'file'
+
+
+imports & exports
+=================
+-Default import:
+  import DefaultMember from 'src/my_lib';
+-Named imports:
+  import { name1, name2 } from 'src/my_lib';
+-Combining a default import with named imports
+  import DefaultMember, { name1, name2 } from 'src/my_lib';
+
+
+Named Export vs Default Export
+==============================
+-Only one default export is allowed per file,where as multiple named exports are allowed per file.
+-Named exports are useful to export several values. 
+-A default export can be a function, a class, an object(cann't be variables). 
+ This value is to be considered as the “main” exported value since it will be the simplest to import
+-The name of imported module has to be the same as the name of the exported module for named exports.
+-The naming of import is completely independent in default export and we can use any name we like.
+ex: import MyReact, { MyComponent } from "react";
+           correct    wrong-namedExport
+
+
+
+External Modules(minimist,chalk,validator,lodash,moment)
+----------------
+1. Installing an npm Module
+   npm install validator
+2. Importing an npm Module
+   const validator = require('validator')
+   console.log(validator.isURL('https://www.google.co.in/')) // true
+   console.log(validator.isEmail('abc@gmail.com')) // true
+
+
+
+Node.js OS Module
+=================
+-The OS module provides information about the computer's operating system.
+
+arch()	      Returns the operating system CPU architecture-32/64
+cpus()	       Returns an array containing information about the computer's CPUs
+endianness()	Returns the endianness of the CPU (LE-Little Endian , BE-Big Endian)
+EOL	Returns the end-of-line marker for the current operating system
+freemem()	Returns the number of free memory of the system
+hostname()	Returns the hostname of the operating system
+loadavg()	Returns an array containing the load averages, (1, 5, and 15 minutes)
+networkInterfaces()	Returns the network interfaces that has a network address
+platform()	Returns information about the operating system's platform
+release()	Returns information about the operating system's release
+tmpdir()	Returns the operating system's default directory for temporary files
+totalmem()	Returns the number of total memory of the system
+type()	    Returns the name of the operating system
+uptime()	Returns the uptime of the operating system, in seconds
+userInfo()	Returns information about the current user
+availableParallelism() 
+constants	 Returns an object containing the operating system's constants for process signals, error cotes etc.
+
+
+
+Node.js fs module
+=================
+-The fs module provides a lot of very useful functionality to access and interact with the file system.
+-There is no need to install it. Being part of the Node.js core, it can be used by simply requiring it. and have access to all its methods.
+
+ex: 
+const fs = require('fs');
+fs.readFile(fileName [,options], callback)	Reads existing file.
+fs.writeFile(filename, data[, options], callback)	Writes to the file. If file exists then overwrite the content otherwise creates new file.
+fs.open(path, flags[, mode], callback)	Opens file for reading or writing.
+fs.rename(oldPath, newPath, callback)	Renames an existing file.
+fs.chown(path, uid, gid, callback)	Asynchronous chown.
+fs.stat(path, callback)	Returns fs.stat object which includes important file statistics.
+fs.link(srcpath, dstpath, callback)	Links file asynchronously.
+fs.unlink(path, callback);	Delete a file.
+fs.symlink(destination, path[, type], callback)	Symlink asynchronously.
+fs.rmdir(path, callback)	Renames an existing directory.
+fs.mkdir(path[, mode], callback)	Creates a new directory.
+fs.readdir(path, callback)	Reads the content of the specified directory.
+fs.utimes(path, atime, mtime, callback)	Changes the timestamp of the file.
+fs.exists(path, callback)	Determines whether the specified file exists or not.
+fs.access(path[, mode], callback)	Tests a user's permissions for the specified file.
+fs.appendFile(file, data[, options], callback)	Appends new content to the existing file.
+
+
+
+
+
+file encoding
+=============
+-Both fs.readFileSync() and fs.readFile() take an optional argument encoding. 
+-while reading a file, a string will be returned if character encoding is specified.
+-while reading a file, a buffer will be returned if character encoding is not specified.
+ex: bufferData = fs.readFileSync("./customer.json");
+	stringData = fs.readFileSync("./customer.json", "utf8");
+Note: UTF-8 is an encoding system for Unicode. It can translate any Unicode character to a matching unique binary string.
+
+
+
+JSON
+====
+-Node has some built in utilities that make it easy to read and write JSON files.
+-The simplest way to read a JSON file is to require it. 
+ ex: const config = require("./config.json");
+-But reading JSON files with require has its downsides. 
+-The file will only be read once; requiring it again returns the cached data from the first time require was run. 
+-This is fine for loading static data on startup (like config data). But for reading a file that changes on disk, we need to manually read the file using fs.readFile()
+  const jsonString = fs.readFileSync("./customer.json","utf8");
+  const customer = JSON.parse(jsonString);
+  
+
+
+
+What is an error-first callback?
+---------------------------------
+in NodeJS The first argument is always an error object that the programmer has to check if something went wrong.
+
+
+
+
+Node.js URL Module
+==================
+-The URL module splits up a web address into readable parts.
+-Parse an address with the url.parse() method, and it will return a URL object with each part of the address as properties.
+ex:-
+const url = require('url');
+let urlStr = 'http://localhost:8080/default.htm?year=2023&month=february';
+let urlObj = url.parse(urlStr, true);
+console.log(urlObj)
+
+-format() converts url Object to URL String
+let urlString = url.format(urlObj)
+console.log(urlString)
+
+
+
+
+Node.js Path Module
+===================
+-The Path module provides a way of working with directories and file paths.
+sep	        Returns the segment separator specified for the platform
+delimiter	Returns the delimiter specified for the platform
+basename()	Returns the last part of a path
+dirname()	Returns the directories of a path
+extname()	Returns the file extension of a path
+format()	Formats a path object into a path string
+isAbsolute()	Returns true if a path is an absolute path, otherwise false
+join()	Joins the specified paths into one
+normalize()	normalizes the given path, resolving '..' and '.' segments.
+parse()	Formats a path string into a path object
+relative()	Returns the relative path from one specified path to another specified path
+resolve()	Resolves the specified paths into an absolute path
+win32	Returns an object containing Windows specific properties and methods
+posix	Returns an object containing POSIX specific properties and methods
+
+
+Q. why you’d use the path.join() function instead of using string concatenation??
+ans: 1. Supports separators (\ or /) for different OS.
+	 2. handles leading and trailing slashes.
+	    path.join('data', 'test.txt'); // 'data/test.txt'
+		path.join('data', '/test.txt'); // 'data/test.txt'
+		path.join('data/', 'test.txt'); // 'data/test.txt'
+		path.join('data/', '/test.txt'); // 'data/test.txt'
+
+
+join() vs resolve()
+===================
+-join() concatenates(joins) the path segments.
+-resolve() creates an absolute path from the root. 
+
+-Both methods will normalize the paths i.e. they treat .. as we normally use them when navigating in the folder structure.
+
+-join() concatenates the the path fragments.
+-resolve() looks for the first segment with / from the right and append everything up to this point to the root.
+
+https://www.scaler.com/topics/nodejs/path-module-in-node-js/
+
+
+
+Query String Module
+===================
+-Node.js Query String module provides methods to deal with query string. 
+-It can be used to convert query string into JSON object and vice-versa.
+-querystring module has methods like:
+	parse() / decode()
+	stringify() / encode()
+	escape()
+	unescape()
+querystring.parse(str[, sep][, eq][, options])	queryString To object.
+querystring.stringify(obj[, sep][, eq][, options]) object to string.
+
+-characters such as "/", "?", "#", ":", "@", "&", "=", "+", "$", and ",". When these characters need to be included in a URL as data rather than as part of the URL syntax, they must be percent-encoded / escaped. 
+-For instance, the character "@" is encoded as "%40", and the character "#" is encoded as "%23".
+
+let str = 'https://example.com/path/to/page?name=sanjay_samantra&color=dark blue';
+let queryStr = url.parse(str).query; // 
+
+
+
+
+Process Module
+==============
+-Process Module provides the env property which hosts all the environment variables that were set at the moment the process was started.
+Note: process does not need a "require", it's automatically available.
+-If you have multiple environment variables in your node project, create an .env file in the root directory of project, and then use the 'dotenv' package to load them during runtime.
+.env file
+	USER_ID="239482"
+	USER_KEY="abcd"
+	NODE_ENV="development"
+	PORT=1234
+-npm install dotenv
+ require('dotenv').config();
+	process.env.USER_ID; // "239482"
+	process.env.USER_KEY; // "abcd"
+	process.env.NODE_ENV; // "development"
+-How to find which version of V8 ships with a particular version of Node.js?
+	node -p process.versions.v8
+-process.nextTick() : invoke this function at the end of the current operation, before the  next event loop tick starts
+-This function defers the execution of a callback function until the next Event Loop Iteration.
+-Every time the event loop takes a full trip, we call it a tick.
+-setTimeout(() => {}, 0) will execute the function at the end of next tick, much later than when using nextTick() which prioritizes the call and executes it just before the beginning of the next tick
+ 
+
+
+Node.js, the difference between development and production
+==========================================================
+-We can have different configurations for production and development environments.
+-Node.js assumes it's always running in a development environment.
+-We can signal Node.js that we are running in production by setting the NODE_ENV=production environment variable
+ 
+ NODE_ENV=production node app.js  (environemnt variable)
+ 
+ node --env-file=.env  app.js (environment file)
+ node --env-file=.development.env app.js
+ node --env-file=.qa.env app.js
+ node --env-file=.prod.env app.js
+ 
+Note: if the same variable is defined in the environment and in the file, the value from the environment takes precedence.
+ 
+if (process.env.NODE_ENV === 'development') {
+  app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
+}
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.errorHandler());
+}
+
+
+
+
+Child Processes Module
+======================
+-Node.js is single-threaded, non-blocking but running a single thread in a CPU cannot handle increasing workload.
+-The child_process module can be used to start child processes, and those child processes can easily communicate with each other with a messaging system.
+-There are four different ways to create a child process in Node:
+	1. exec() / execSync()
+	2. execFile() / execFileSync()
+	3. spawn()  /  spawnSync()
+	4. fork()
+exec()  
+	creates a new shell process and executes a command in that shell.
+         The output of the command can be collected via a callback function passed to exec()
+		ex: exec("dir", (error, stdout, stderr) =>{});
+		error - if command not found
+		stdout - output of the executed command
+		stderr - if error while executing the command
+			
+execFile() 
+	execute a file (bat/sh)
+			 
+spawn() 
+	when the command we want to run can output a large amount of data
+
+fork()  
+-communication channel is established to the child process when using fork, so we 	can use the send function on the forked process along with the global process object itself to exchange messages between the parent and forked processes.
+-ChildProcess will have an additional communication channel built-in that allows messages to be passed back and forth between the parent and child
+ 
+ 
+ 
+ 
+HTTP Module
+===========
+-The HTTP module can create an HTTP server.
+-Receives the request from client & gives a response back to the client.
+
+
+-headers, URL, method and body data can be collected from request objects.
+-Make routing decisions based on URL and/or other data in request objects.
+-Send headers, HTTP status codes and body data via response objects.
+
+createServer()   		Returns a new instance of Server.
+listen(PORT,CallBack)   Binds the server to listen on a specific port
+close()					Stops the server from listening to more requests
+
+response.setHeader('Content-Type', 'text/html');
+response.writeHead() should be called first when initiating a response, allows 	us to set up the HTTP response code and headers we are sending back.
+
+response.write(chunk[, encoding][, callback]) allows us to send a chunk of data as part of our response.
+
+response.end() signalizes the response as complete, MUST be called once per response.
+
+
+Note:Unless you change the path to your favicon in an HTML document, browsers will (usually) make a request to the /favicon.ico path in order to get the favicon of your server.
+
+
+HTTP Methods
+============
+https://testfully.io/blog/http-methods/
+
+GET - Retrieve a resource/Retrieve data from DB
+	  search	  
+POST - to send data to server  ( sign up ) 
+       (create a resource/create a new record in DB)
+	   to fetch data securly    (send params in body not in URL)
+PUT - update data/create or replace a resource  
+	  update user's profile information 	  
+PATCH - update/modify a particular resource(partial update)
+        update user password
+DELETE - Remove a resource/delete a record from DB 
+		 Delete naukri account
+OPTIONS - information about the Permitted HTTP methods (methods/content type)
+       Identifying which HTTP methods a resource supports, e.g. can we DELETE it or update it via a PUT?
+HEAD - method returns info about resource (http version/length/type)
+	  used to request the headers of a resource without actually fetching the body of the resource.
+	  HEAD request is a way to retrieve metadata about a resource, such as its size, modification date, or content type
+
+
+
+http status codes
+=================
+1xx Informational  (100-Continue,101-switching Protocols,102-processing)
+2xx Success		   (200-OK,201-created,202-accepted,204-No Content)
+3xx Redirection	   (300-Multiple Choices,301-Moved Permanently,302-Found,304-Not Modified)
+4xx Client Error   (400-Bad Request,401-Unauthorized,403-Forbidden,404-Not Found)
+5xx Server Error   (500-Internal Server Error,502-Bad Gateway,503-Service Unavailable)
+
+
+
+
+200 OK 
+201 Created 
+202 Accepted      accepted for processing,processing has not been finished
+204 No Content    successfully fulfilled the request, there is no available content
+205 ResetContent  the user should reset the document that sent this request
+206 Partial Content 
+
+300 MultipleChoices  request has multiple possible responses, user should choose one 
+301 MovedPermanently the target resource has been assigned a new permanent URL
+
+400 BadRequest   the server could not understand the request because of invalid syntax.
+401 Unauthorized  client needs to authenticate itself to get access.such as a username and password.
+402 Payment Required
+403 Forbidden   the client has been authenticated, but it does not have the necessary 	permissions to access the requested resource
+404 NotFound   could not locate the requested resource. Page/URL not found
+405 MethodNotAllowed  the method has been disabled and can not be used(only get ,not post,put)
+406 NotAcceptable   if a client requests a response in JSON format by including "Accept: application/json" in the request header, but the server can only provide data in XML format
+407 Proxy Authentication Required
+408 RequestTimeout  server did not receive a complete request in the time that it prepared to wait
+409 Conflict  
+
+500 InternalServerError   server has encountered an unexpected condition
+500 Not Implemented   server does not recognize the request method
+502 BadGateway  the server received an invalid response while working as a gateway to handle the response
+503 Service Unavailable temporarily
+504 GatewayTimeout did not receive a timely response from the upstream server
+505 HTTP Version Not Supported
+
+
+
+
+Route-Parameter
+===============
+1. PathParam
+-passed after /
+ ex:- /productDetails/101
+-Need to define in the route
+ ex: app.get('users/:id')
+-If defined than need to pass in url
+-only 1 value can be passed
+
+2. QueryParam
+-passed after ?
+  ex: /search?searchWord=skybag&filter=something
+-No Need to define in the route
+  ex: app.get('users')
+-not complusory to pass
+-used to pass multiple values.
+
+
+
+
+NodeJS Buffers
+==============
+-Buffer represents a fixed-length sequence of bytes.
+-Buffer is a built-in object used to handle binary data directly, without needing to convert it into string or other format.
+-to preocess raw binary data, such as reading data from file handling network communication.
+-Buffers are used with readable & writable streams for efficient data handling, especially for large files.
+-Buffers are essential when dealing with image data. Images are typically handled as binary data while sending over a network.
+
+
+
+
+Node.js Streams
+===============
+-Streams are objects that let you read data from a source or write data to a destination in continuous fashion.
+-When we try to read a file, the contents of the file is read and all the content gets saved in memory
+-Streams read chunks of data piece by piece, processing its content without keeping it all in memory.
+
+-4 types of streams in Node.js:
+1.Readable    fs.createReadStream()
+2.writeable   fs.createWriteStream()
+3.Duplex      net.Socket 
+  A Duplex stream is both readable and writable, meaning it can consume input and produce output at the same time.
+4.Transform
+
+
+Piping the Streams:
+-Piping is a mechanism where we provide the output of one stream as the input to another stream.
+
+
+
+
+
+Express.JS
+==========
+-Express.js is a web application framework for building RESTful APIs with Node.js.
+-a framework is a set of helper functions,tools and rules that help us to build our application.
+-It provides various features that make web application development fast and easy which otherwise takes more time using only Node.js.
+-Alternatives to Express.js are 'NestJS' , 'Vanilla Node.js','koa','sails.js'
+-NestJS : A progressive Node.js framework for building efficient, reliable and scalable server-side applications.
+
+https://expressjs.com/en/starter/examples.html
+
+
+Advantages of Express.js
+========================
+-Makes Node.js web application development fast and easy.
+-Easy to configure and customize.
+-Allows to define routes of your application based on HTTP methods and URLs.
+-Includes various middleware modules which you can use to perform additional tasks on request and response.
+-Easy to integrate with different template engines like Jade, Vash, EJS etc.
+-Allows to define an error handling middleware.
+-Easy to serve static files and resources of your application.
+-Allows to create REST API server.
+-Easy to connect with databases such as MongoDB, Redis, MySQL.
+
+
+
+How to use Express
+==================
+1. import express
+   const express = require('express')
+2. create an instance of express.
+   const app = express()
+3. use methods
+   app.get(route, callback)
+   app.post(route, callback)
+
+
+Express Methods
+===============
+app.get()
+app.post()
+app.put()
+app.patch()
+app.delete()
+app.listen()
+app.use()
+app.all()
+
+
+
+app.use() vs app.get()
+======================
+-app.use() can handle all type of HTTP requests(GET,POST,PUT,DELETE)
+-app.use() is generally used for introducing middlewares.
+ app.use(express.json()); // express.json() is middleware
+-app.get() is only for handling GET HTTP requests.
+ app.get('/users', (req, res) => { 
+    res.send('all users')
+ })
+
+
+app.use() vs app.all()
+======================
+app.use() will only see whether url starts with specified path.
+app.all() will match the complete path.
+
+app.use( "/book" , middleware);
+// will match /book
+// will match /book/author
+// will match /book/subject
+// won't match /book-123
+
+app.all( "/book" , handler);
+// will match /book
+// won't match /book/author   
+// won't match /book/subject  
+// won't match /book-123  
+
+app.all( "/book/*" , handler);
+// won't match /book   
+// won't match /book-123      
+// will match /book/author
+// will match /book/subject
+
+
+
+Express.js Request Object Properties
+====================================
+req.app
+req.body
+req.cookies
+req.hostname
+req.ip
+req.method
+req.params
+req.path
+req.protocol
+req.query
+
+
+
+Response methods
+================
+The methods on the response object (res) in the following table can send a response to the client, and terminate the request-response cycle. If none of these methods are called from a route handler, the client request will be left hanging.
+
+Method	Description
+res.send()	Send a response of various types. (Buffer / JSON / HTML / String)
+res.end()	End the response process.
+res.json()	Send a JSON response.
+res.jsonp()	Send a JSON response with JSONP support.
+res.redirect()	Redirect a request.
+res.render()	Render a view template.
+res.sendFile()	Send a file as an octet stream.
+res.download()	Prompt a file to be downloaded.
+res.sendStatus()	Set the response status code and send its string representation as the response body.
+
+
+Status() vs sendStatus()
+========================
+res.sendStatus(200); // equivalent to res.status(200).send('OK') 
+res.sendStatus(403); // equivalent to res.status(403).send('Forbidden')
+res.sendStatus(404); // equivalent to res.status(404).send('Not Found') 
+res.sendStatus(500); // equivalent to res.status(500).send('Internal Server Error')
+
+
+
+Express Routing
+===============
+-Routing refers to how an application’s endpoints (URIs) respond to client requests.
+-Route paths, in combination with a request method, define the endpoints at which requests can be made.
+-Route paths can be strings, string patterns, or regular expressions
+
+Examples:
+app.get('/ab?cd');   // will match acd and abcd
+app.get('/ab+cd');   // will match abcd, abbcd, abbbcd
+app.get('/ab*cd');   // will match abcd, abxcd, abRANDOMcd, ab123cd
+app.get('/ab(cd)?e'); // will match /abe and /abcde
+app.get(/.*fly$/);  // will match butterfly and dragonfly, but not butterflyman, dragonflyman
+
+
+
+Express PathParam & QueryParam
+==============================
+1. Path-Param
+	ex:- /users/101
+	const userId = req.params.userId;
+	
+Few More Path Params:
+app.get('/products/:productId([0-9])/ratings')
+app.get('/products/:productId([0-9])/ratings/:ratingId')
+
+2. Query-param
+	ex:- /search?searchWord=skybag&filter=something
+	const {searchWord,filter} = req.query;
+
+
+
+express.Router()
+================
+-express.Router() creates a new router object that can handle requests in a modular and organized way
+
+Modularity: Group routes based on features or functionality. (users, products,  orders)
+Scalability: Organize routes for large applications and separate them into different modules.
+Middleware Management: Apply middleware to specific routes or groups of routes easily.
+Cleaner Code: By dividing routes into smaller, focused files, our codebase remains clean and readable.
+
+	
+	
+
+Middlewares
+===========
+-Middlewares in ExpressJS are functions that can modify Request and Response objects.
+-Either to retrieve something from request Object or to store something in response object.
+-An example of a simple express js middleware could be to log the current date and time on every URL the user visits on our website.
+
+
+without middleware : 
+	request => Route => Response
+with middleware : 
+	request => middleware1 => middleware2 => Route => Response
+
+https://www.turing.com/kb/building-middleware-for-node-js
+https://expressjs.com/en/guide/using-middleware.html
+https://expressjs.com/en/resources/middleware/body-parser.html
+
+
+
+An Express application can use the following types of middleware:
+1. Application-level middleware
+   app.use(logger)
+2. Router-level middleware
+   const userRouter = express.Router();
+   userRouter.use(logger);
+3. Error-handling middleware
+   Note : To manually trigger error handling middleware, you can pass an error object to the next() function
+   try{
+   }catch(err){
+	 next(err); // transfers error object to error handling middleware
+   }   
+4. Built-in middleware
+    express.static()
+	express.json()        converts request body to JSON.     
+	express.urlencoded()  converts form-data to JSON
+5. Third-party middleware 
+   cors , body-parser, cookie-parser
+   
+
+
+Q.How to run a middleware for all the routes in an application
+  app.use(logger);
+  
+Q.How to run a middleware for all the routes for a router object
+  const userRouter = express.Router();
+  userRouter.use(logger);
+
+Q.How to run a middleware for a particular route
+  app.get('/route1', middleware,routeHandler);
+  
+
+logger middleware
+==================
+const logger = (req, res, next) => {
+    console.log(`URL:${req.url} , method:${req.method} , Time:${new Date().toLocaleTimeString()}`)
+    next();
+}
+ 
+authenticate middleware
+=====================
+const authenticate = (req, res, next) => {
+    const token = req.headers['authorization'];
+    if (!token || token !== 'mysecrettoken') {
+		res.status(401).json({ message: 'Unauthorized' });	
+    } else {
+         next(); // User is authenticated, proceed to next middleware or route handler
+    }
+};
+
+
+Error handler
+=============
+let myErrorHandler = (err, req, res, next) => {
+  const errorStatus = err.status || 500;
+  const errorMessage = err.message || 'Something went wrong, Try again!';
+ 
+  res.status(errorStatus).json({
+    status: errorStatus,
+    message: errorMessage,
+    stack: err.stack,
+    success: false,
+  });
+};
+Note : this should be present after all the routes & before app.listen(5000)
+
+
+
+Serving static files in Express
+===============================
+-To serve static files such as images, CSS files, and JavaScript files, use the express.static() built-in middleware function in Express. 
+express.static(root<directory Name>, [options])
+-The root argument specifies the root directory from which to serve static assets.
+ app.use(express.static('public'))
+-To use multiple static assets directories, call the express.static() middleware function multiple times:
+	app.use(express.static('public'))
+	app.use(express.static('files'))
+	
+	
+
+Body-parser
+===========
+-parse the body of requests which have payloads attached to them.
+-Parse incoming request bodies(formData) in a middleware before handlers are invoked.
+-extracts the body portion of an incoming request & exposes it on req.body.
+-parses the data submitted using HTTP POST request.
+ npm install body-parser --save
+ 
+ // parse application/x-www-form-urlencoded
+ app.use(bodyParser.urlencoded({ extended: false }))
+
+ // parse application/json
+ app.use(bodyParser.json())
+ 
+ 
+Note: ExpressJS provides its inbuilt functions for parsing request body
+	app.use(express.json()); 
+	app.use(express.urlencoded()); 
+ 
+
+
+cookie-parser
+=============
+-To Read cookie information from client.
+-It parses Cookie header and populate req.cookies with an object keyed by cookie names. 
+-To Store cookies in client, cookie-parser is not required
+-cookie-parser is required while reading cookie information from browser.
+
+1. How to Read Client cookie data in Server:
+	const cookieParser = require('cookie-parser');
+	app.use(cookieParser());
+	
+	app.get('/getCookie', (req, res,next) => {
+		res.send(req.cookies); // server can read cookie data from request object
+	});
+2. How server can set cookie in client's browser
+   app.get('/setCookie', (req, res,next) => {
+		res.cookie('name','sanjay')
+		res.cookie('add','bangalore')
+    });
+3. How server can delete cookie from client's browser
+   app.get('/setCookie', (req, res,next) => {
+		res.clearCookie('name');
+    });
+	
+
+
+
+NodeJs and Typescript
+=====================
+1. npm init -y
+2. npm install express typescript ts-node @types/node @types/express
+3. npx tsc --init  (OR) tsc --init  (Generates tsconfig.json)
+4. add CRUD code
+5. npx ts-node src/app.ts
+		(OR)
+   a. npx tsc  b. node dist/app.js
+
+
+tsconfig.json
+-------------
+{
+  "compilerOptions": {
+    "lib": [
+      "es6"
+    ],
+    "target": "es6",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "outDir": "dist",
+    "resolveJsonModule": true,
+    "emitDecoratorMetadata": true,
+    "esModuleInterop": true,
+    "experimentalDecorators": true,
+    "sourceMap": true
+  },
+  "include": [
+    "src/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "**/*.spec.ts"
+  ]
+}
+
+
+
+
+
+
+Use a Logging Service to track and store errors in production
+=============================================================
+-To improve error management, we can integrate logging services
+-Winston or Morgan can be used for logging error details to external files or monitoring services. 
+-These are helpful for production environments
+
+
+
+Morgan 
+======
+-Morgan is a popular HTTP request logger middleware for Node.js.
+-Alternatives Packages to morgan are : Winston / Bunyan / Pino
+-It simplifies the process of logging HTTP requests in a Node.js application by automatically generating logs for incoming requests.
+-Morgan provides various logging formats and options, allowing developers to customize the logging output according to their requirements.
+-Logging formats : combined / common / short / tiny / dev
+1. npm i morgan
+2. const morgan = require('morgan');
+   app.use(morgan('tiny'));
+   app.use(morgan('dev'));
+   app.use(morgan(':method :url :status :res[content-length] - :response-time ms'));
+
+
+Winston
+=======
+-winston is a logging library with support for multiple transports(console, file)
+
+// Configure Winston logger
+const logger = winston.createLogger({
+  level: 'info', // Log level: 'error', 'warn', 'info', 'http', 'verbose', 'debug', 'silly'
+  format: winston.format.json(),
+  transports: [
+    new winston.transports.Console(), // Log to the console
+    new winston.transports.File({ filename: 'app.log' }) // Log to a file
+  ]
+});
+
+// Middleware to log each request
+app.use((req, res, next) => {
+  logger.info(`HTTP ${req.method} ${req.url}`);
+  next();
+});
+
+// Error handling middleware
+app.use((err, req, res, next) => {
+  logger.error(`Error: ${err.message}`);
+  res.status(500).send('Something went wrong!');
+});
+
+
+
+
+
+Express generator
+=================
+1. npm install -g express-generator
+2. express project1 (--view=jade  default)
+   express --view=pug project1
+   express --view=ejs project2
+   express project3 --no-view
+3. once the project is created, run the below commands to start the app
+	cd project1
+	npm install
+	SET DEBUG=project1:* & npm start
+
+
+Folder Structure for NodeJS & ExpressJS project
+================================================
+https://dev.to/mr_ali3n/folder-structure-for-nodejs-expressjs-project-435l
+
+
+
+CORS(Cross-Origin-Resource-Sharing)
+====
+-Manages how our server will respond to requests from different origins.
+-Controls which domains can access our API or web application by setting Access-Control-Allow-Origin and other headers.
+
+Key Features:
+-Prevents unauthorized cross-origin requests: 
+	By default, browsers block requests made from one domain to another (a different origin). The cors middleware enables specific domains or all domains to access your resources.
+-Customizable origin policies: 
+	We can whitelist specific origins, methods, and headers that are allowed to interact with your server.
+
+
+-CORS is a npm package.
+-How to Install
+ npm install cors
+ 
+ 
+How to use cors
+===============
+const cors = require('cors');
+const app = express();
+app.use(cors());
+
+const corsOptions = {
+  origin: 'http://example.com'
+}
+app.use(cors(corsOptions));
+
+
+Default Configuration 
+corsOptions = {
+  "origin": "*",
+  "methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
+  "preflightContinue": false,
+  "optionsSuccessStatus": 204
+}
+
+const whitelist = ['http://example1.com', 'http://example2.com']
+const corsOptions = {
+  origin: function (origin, callback) {
+    if (whitelist.includes(origin)) {
+      callback(null, true)
+    } else {
+      callback(new Error('Not allowed by CORS'))
+    }
+  }
+}
+
+https://www.npmjs.com/package/cors
+
+
+
+CURL
+====
+-Client URL Request Library
+-curl -help
+
+
+Helmet
+======
+-It Helps to secure Node.js application by setting several HTTP headers.
+-automatically adds or removes HTTP headers to comply with web security standards.
+-protect Node.js Express apps from common security threats such as Cross-Site Scripting (XSS) and click-jacking attacks.
+-Express applications do not come with security HTTP headers out of the box.
+-Without Helmet, default headers returned by Express expose sensitive information and make your Node.js app vulnerable to malicious actors
+
+
+curl http://localhost:3000/
+curl http://localhost:3000/ --include
+Or
+use an HTTP client such as Postman to inspect the HTTP headers of the response
+
+without Helmet
+==============
+-response header should have X-Powered-By header. As with all headers that begin with X-, it is a non-standard header. X-Powered-By indicates the name and version number of the framework or library used by the server to generate the HTTP response.
+-we should never give attackers details about our tech stack.
+
+https://securityheaders.com/
+
+
+
+
+Events
+======
+-Node.js allows us to create and handle custom events easily by using events module.
+-Event module includes EventEmitter class which can be used to raise and handle custom events.
+-An event can be raised/triggered using emit(). in emit() First parameter is the name of the event as a string and then arguments.
+ ex:  emit(eventName)
+	  emit(eventName, arg1 , arg2)
+-An event can be emitted with zero or more arguments. 
+-We can specify any name for a custom event in the emit() function.
+-use addListener() / on() to subscribe/listen an event. 
+
+-Event names should be camel-cased strings but any valid name should be fine. 
+-Listeners should not return any value , Any values returned by the called listeners are ignored and will be discarded.
+
+-The EventEmitter calls all listeners synchronously in the order in which they were registered.
+-This ensures the proper sequencing of events and helps avoid race conditions and logic errors. 
+When appropriate, listener functions can switch to an asynchronous mode of operation using the setImmediate() or process.nextTick() methods:
+-Using the eventEmitter.once() method, it is possible to register a listener that is called at most once for a particular event. 
+-Once the event is emitted, the listener is unregistered and then called.
+
+ 
+EventEmitter Properties and Methods
+------------------------------------
+addListener()-			Adds the specified listener
+defaultMaxListeners-	Sets the maximum number of listeners allowed for one event. Default is 10
+emit()					Call all the listeners registered with the specified name
+eventNames()			Returns an array containing all registered events
+getMaxListeners()		Returns the maximum number of listeners allowed for one event
+listenerCount()			Returns the number of listeners with the specified name
+listeners()				Returns an array of listeners with the specified name
+on()					Adds the specified listener
+once()					Adds the specified listener once. When the specified listener has been executed, the listener is removed
+prependListener()		Adds the specified listener as the first event with the specified name
+prependOnceListener()	Adds the specified listener as the first event with the specified name, once. When the specified listener has been executed, the listener is removed
+removeAllListeners()	Removes all listeners with the specified name, or ALL listeners if no name is specified
+removeListener()		Removes the specified listener with the specified name
+setMaxListeners()		Sets the maximum number of listeners allowed for one event. Default is 10
+
+
+
+
+Template Engines for Node.js
+============================
+-A template engine enables us to use static template files in our application. 
+-At runtime, the template engine replaces variables in a template file with actual values, and transforms the template into an HTML file sent to the client.
+-Template engines for Node.js (Jade/pug,Vash,EJS,Handlebars)
+-Express application generator uses 'pug' as the default Template Engine.
+
+-To render template files, set the following application properties, in app.js
+ app.engine('pug', require('pug').__express)
+ app.set('views', './views')
+ app.set('view engine', 'pug')
+ 
+
+https://expressjs.com/en/guide/using-template-engines.html
+
+
+
+
+Data Access in Node.js
+======================
+-Node.js supports all kinds of databases(RDBMS/NO-SQl)
+ However, NoSQL databases like MongoDB are the best fit with Node.js
+-To access the database in Node.js application, driver needs to be installed 
+ex:npm install mysql (for MySQL)
+   npm install oracledb (for Oracle)
+   npm install mongodb (MongoDB)
+
+
+MongoDB
+=======
+-it stores data in the collections as JSON based documents and does not enforce schemas. 
+-UnStructured data. structure of every document must not be the same.
+-It does not have tables, rows, and columns as other SQL (RDBMS) databases.
+-RDBMS  (Database,Table,Row,Column)
+ MongoDB(Database,Collection,Document,Field)
+-indexing , shemaless , Replication, Scalability, Performance, High Availability.
+-No SQL databases - MongoDB, cassandra, Amazon Dynamo DB, couchbase, redis.
+ Relational databases - MySql , Oracle , PostgreSQL
+ 
+
+NoSQL Databases (MongoDB)
+=========================
+-Type: NoSQL, document-oriented database.
+-Data Storage: Stores data in flexible, JSON-like documents (BSON).
+-Schema: Schema-less; fields can vary from document to document.
+-Scalability: Horizontal scaling is easier; designed to scale out by sharding.
+-Performance: Can be faster for certain types of applications, especially those dealing with unstructured data or requiring flexible schema.
+-Use Cases: Ideal for content management systems, real-time analytics, IoT, and applications requiring flexible, hierarchical data structures.
+
+Relational Databases (MySQL, PostgreSQL, etc.)
+==============================================
+-Type: SQL-based, relational database management systems.
+-Data Storage: Stores data in tables with rows and columns.
+-Schema: Enforced schema; data must adhere to a predefined structure.
+-Scalability: Typically scales vertically, although horizontal scaling (sharding) is possible with more complexity.
+-Performance: Can be faster for applications with complex queries, transactions, and operations requiring joins across multiple tables.
+-Use Cases: Suitable for applications requiring ACID (Atomicity, Consistency, Isolation, Durability) properties, such as financial systems, e-commerce platforms, and other data-centric applications.
+
+
+
+Sql         MongoDB
+===================
+Database    Database
+Table       Collection
+Row         Document
+Column		Field
+Select      find
+Insert      Insert
+Update      Update
+Delete      Remove
+
+
+
+db.employees.insertMany([{id:1,name:'sanjay},{id:2,name:'deepak',sal:5000}])
+db.employees.insertMany([{id:1,name:'sanjay},{prodid:111,name:'prod1',price:5000}])
+-if it was RDBMS, we would have changed the schema(alter) first 
+
+
+MongoDB Local
+=============
+1. download and install (MongoDB Community Server)
+   https://www.mongodb.com/try/download/community 
+					(OR)
+   https://fastdl.mongodb.org/windows/mongodb-windows-x86_64-6.0.5-signed.msi
+   
+   
+The Below Points are optional if we want to access our database in MongoDB Compass
+2. Go to the path where MongoDB is installed,and run 'mongod.exe'  
+   By default it is "C:\Program Files\MongoDB\Server\6.0\bin"
+4. Expect Error as the data directory is not set
+   "{"error":"NonExistentPath: Data directory C:\\data\\db\\ not found"
+5. create folder 'c:\data\db'
+6. run 'mongod.exe'
+7. set path for mongo-server(To start mongodb from any path)
+	C:\Program Files\MongoDB\Server\6.0\bin
+
+
+https://treehouse.github.io/installation-guides/mac/mongo-mac.html
+https://www.mongodb.com/docs/manual/tutorial/install-mongodb-on-os-x/
+
+
+
+MongoDB Shell (CLI for mongoDB)
+=============
+-download mongoDB shell 
+ https://www.mongodb.com/try/download/shell
+-extract and run mongosh.exe
+-set path for mongo-shell
+	 C:\mongo-shell\bin	    
+-verify the path setup is done correctly by running below 2 commands
+ mongod --version
+ mongosh --version 
+-Run the below command to Start Mongo Shell 
+ start mongosh.exe 
+-Enter mongoDB Connection String 
+ mongodb://localhost:27017
+ 
+ 
+Note: If mongoDB and mongoShell are installed & path is set
+-open 2 command prompts
+-run 'mongod' in 1st cmd
+-run 'mongosh' in 2nd cmd
+ 
+ 
+MongoDB Compass
+===============
+-MongoDB Compass is a graphical interface to interact with the MongoDB 
+-Manage MongoDB data without writing complex shell commands
+ 
+1. Download and install MongoDB Compass (It comes along with mongoDB)
+   https://www.mongodb.com/try/download/compass
+2. open mongoDB Compass GUI
+3. Enter mongoDB Connection String 
+   mongodb://localhost:27017  (OR) 
+   mongodb://127.0.0.1:27017   
+   mongodb://0.0.0.0:27017
+
+ 
+
+ 
+
+ 
+MongoDB Queries/Commands
+========================
+https://www.geeksforgeeks.org/mongodb-tutorial/
+
+-To See All databases
+ show dbs;
+ show databases;
+-To Use one database
+ use sanjaydb1  (creates a new database if it doesn’t exist)
+-To see the Current Database
+ db 
+-To see all the collections under a database
+ show collections
+-To Create a Collection/Table
+ db.createCollection('employees')
+-To add a Document/Row in a collection
+ db.employees.insertOne({eid:1,name:'sanjay',sal:5000})
+ db.employees.insertOne({_id:1,name:'sanjay',sal:5000})
+ db.employees.insertMany([{eid:1,name:'sanjay',sal:5000},
+            {eid:2,name:'sameer',sal:6000}])
+ db.employees.insertMany([{eid:1,name:'sanjay',sal:5000},
+            {eid:2,name:'sameer',sal:6000}] , {ordered:false}); 
+// ordered:false , trying to insert 3 docs, if 2nd fails, 1 & 3 should be inserted
+-To  see data inside collections
+ db.employees.find() 
+ db.employees.find().pretty()
+ db.employees.find( {sal: 6000} )
+ db.employees.findOne({sal: 6000})
+ db.employees.find( {name:'abc',sal: 6000} )
+ db.employees.find({"address.city":"bangalore"}) //Nested
+ db.employees.find({sal: {$lt:6000}}) 
+ db.employees.find({sal: {$lte:6000}}) 
+ db.employees.find({sal: {$ne:6000}})
+ db.employees.find({sal: {$gt:5000, $lt:9000}})
+ db.employees.find({"name":{$in:["Raj", "Ram", "Raghu"]}})
+ db.employees.find({$or:[{name:"ram"},{sal:5000}]})
+ db.employees.find({"name":/san/i})   // (Like in SQL)
+ 
+Projection : which fields to include in the results
+             use 1 to include a field and 0 to exclude a field.
+
+ db.employees.find( {} , {sal:0} ) // all columns except sal
+ db.employees.find( {} , {sal:1,name:1} ) // name,sal column in result
+ db.employees.find({},{eid:1,sal:1}) // projection
+ 
+
+ db.employees.find().sort({sal:1})   //asc
+ db.employees.find().sort({sal:-1}) //desc
+ db.employees.find().count()
+ db.employees.countDocuments({salary:13001});
+ db.employees.find().limit(2)
+ db.employees.find().sort({sal:-1}).skip(2).limit(1)
+ db.employees.distinct('eid');  // ['e101','e102']
+ 
+-To Update the existing Data
+ db.employees.updateOne( { id: 101 }, { $set: { sal: 2000 } } ) 
+ db.employees.updatemany( { sal:6000 }, { $set: { sal: 6500 } } )
+ db.employees.updateOne({id: 101},{$set:{eid:1,name:'sanjay',sal:5000}},{ upsert: true });  // Update or Insert
+ // Update the document, but if not found insert it
+ db.employees.updateOne({eId:'e102'},{$inc:{sal:100}}); // increment
+ 
+ db.users.updateOne({id:3},{$set:{'address.pin':'12345'}}); // adds 'pin' in address, without removing other fields of add 
+ db.employees.updateOne({eId:'e102'},{$set:{address:{city:'bangalore'}}}); 
+ // add a new field 'address' in employee obj, if address is already there that is replaced by new value
+ db.employees.updateOne({eId:'e102'},{$set:{address:{}}}); // update address value to {}
+ db.employees.updateOne({eId:'e102'},{$unset:{address:''}});  // remove a field
+ db.employees.updateOne({eid:101},{$currentDate:{joiningDate:true}}) // Sets the field value to the current date
+ db.employees.updateOne({eid:101},{$currentDate:{joiningDate: { $type: "date" }}}) // Sets the field value to the current date
+ db.employees.updateOne({eId:'e102'},{ $rename: { "username": "user_name" } }); // Renaming a Field
+ 
+ 
+ 
+ 
+-To Delete 
+ db.employees.deleteOne({ sal:6000 });      
+ db.employees.deleteMany({ gender:"male" })
+ db.employees.deleteMany({})   // Delete All Documents(equivalent of SQL's truncate)
+ db.employees.deleteMany({$or:[{status:'inactive'},{sal:7000}]});  // Delete with Logical Operator
+ db.employees.deleteMany({name:{$regex:/si/}});  // Delete using REGEX
+ 
+ db.employees.drop()  // Drop The Collection
+ db.dropDatabase()    // Drop Database
+
+
+
+Q. find() vs findOne()
+======================
+findOne() - if query matches, first document is returned, otherwise null.
+			findOne() never returns a cursor
+			cursor methods cannot be used with the returned value of findOne()
+find() - no matter the number of documents matched, a cursor is returned, never null.
+
+-cursor is a pointer that references the documents of the collection returned.
+-cursor will find 20 documents at once.
+-db.employees.find({sal:8000}).forEach(ele=>print(ele.name))
+
+cursor Methods: count() , forEach(print,printjson), hasNext(), isClosed(), close(), explain(), limit(),map(),max(),min(),pretty(), size(), skip(), sort(), toArray()
+
+
+MongoDB Datatypes
+=================
+-String
+-Boolean
+-Numebr  
+	Int32 
+	Long 
+	Double
+-Date 
+	Date()  : returns the current date as a string
+	new Date() : returns a Date object
+	ISODate()  : returns a Date object using the ISODate()
+-ObjectId : new ObjectId()
+	A special type used to uniquely identify documents in a collection
+-Timestamp : new Timestamp() 
+ Timestamp{ "t": <integer>, "i": <integer> } Used for ordering when there are multiple operations within a given second
+
+
+
+
+
+MongoDB Query Operators
+=======================
+Comparison : $eq, $ne, $gt, $gte, $lt, $lte, $in, $nin
+Logical    : $and, $or, $nor, $not  
+Element Query : $exists , $type , 
+Evaluation : $regex, $text, $where, $expr , $mod 
+Array Query : $all , $elemMatch , $size , 
+
+
+$regex
+======
+db.employees.find( { phone: { $regex: /789$/ } } );  
+db.employees.find( { email: { $regex: /.org$/ } } );  // ends with .org
+db.comments.find({email:{$regex:/^ka/i}})    // starts with Ka
+db.comments.find({status:{$regex:/^(active|pending)/}})   // status : active | pending
+db.comments.find({name:{$regex:/^sanjay$/}}); // exact match
+
+
+$text
+=====
+db.articles.find( { $text: { $search: "coffee" } } )
+db.articles.find( { $text: { $search: "Coffee", $caseSensitive: true } } )
+db.articles.find( { $text: { $search: "bake coffee cake" } } ) 
+ bake / coffee / cake
+db.articles.find( { $text: { $search: "\"coffee shop\"" } } )
+ coffee shop
+db.articles.find( { $text: { $search: "\'coffee shop\' \'Cafe con Leche\'" } } )
+ Or
+$where
+db.table3.find( { $where: function() { return (this.english == this.science) }})
+
+
+
+Array
+$addToSet: Adds distinct elements to an array
+$pop: Removes the first or last element of an array
+$pull: Removes all elements from an array that match the query
+$push: Adds an element to an array
+
+ 
+implicit and vs explicit $and
+==============================
+implicit - {name:'abc',sal: 6000}
+Explicit - { $and: [ {name:'sanjay',sal:6000}] }
+
+db.employees.deleteMany({name:'sanjay',name:'geeta',name:'sameer'})
+-only sameer will be deleted, first 2 conditions are ignored
+
+-don't use implecit AND if the field name is same;
+-it ignores the first condition, only executes second condition.
+db.inventory.find( { $and: [ { price: { $ne: 1.99 } }, { price: { $exists: true } } ] } )
+
+ 
+
+ 
+ 
+ 
+Managing Indexes
+================
+-Without indexes, MongoDB must scan every document of a collection to select those documents that match the query statement. 
+-This scan is highly inefficient and require MongoDB to process a large volume of data.
+-Indexes support efficient execution of queries in MongoDB
+-Indexes are special data structures, that store a small portion of the data set in an easy-to-traverse form. 
+-If an appropriate index exists for a query, MongoDB uses the index to limit the number of documents it must scan
+
+db.employees.find({sal:5000}).explain('executionStats'); // nReturned, totalDocsExamined
+
+
+Single Field Indexes:
+-store information from a single field in a collection
+ ex:db.students.createIndex( { gpa: 1 } )
+
+Index on an Embedded Field:
+db.students.createIndex( { "location.state": 1 } )
+
+Compound Indexes:
+-Compound indexes collect and sort data from two or more fields
+ ex:db.students.createIndex( {name:1,gpa:-1})
+   
+
+-Create an index (db.COLLECTION_NAME.createIndex({KEY:1}))
+ db.user.createIndex({"name.family": 1})
+ db.user.createIndex({email: 1}, {unique: true})  
+ //at most one record in the collection with a given value for that field
+-See indexes on a collection
+ db.user.getIndexes()
+-Drop an index
+ db.user.dropIndex("email")
+ db.user.dropIndexes()
+ 
+
+Aggregation Operations
+======================
+-Aggregation operations process multiple documents and return computed results
+-Used to: 
+	1. Group values from multiple documents together.
+	2. Perform operations on the grouped data to return a single result.
+	3. Analyze data changes over time.
+
+
+
+Aggregation Pipelines
+======================
+-An aggregation pipeline consists of one or more stages that process documents.
+-Each stage performs an operation on the input documents. For example, a stage can filter documents, group documents, and calculate values.
+-The documents that are output from a stage are passed to the next stage as input.
+-An aggregation pipeline can return results for groups of documents. For example, return the total, average, maximum, and minimum values.
+
+-db.collectionName.aggregate(pipeline, options)
+ input --> $match  --> $group --> $sort --> output
+
+$match, $group, $limit, $project, $sort, $addFields, $count, $lookup, $out , $unwind
+
+
+
+Assignment
+==========
+1. Find distinct salaries in asccending order.
+2. Find the 3rd highest salary in the employee table.
+3. Find the employees whose DOB is today's date.
+4. increase the salary of every employee by 500.
+5. change the 'gender' of every employee (male-->female,female-->male)
+5. add 'mr.' before the names of all male employees
+
+
+Assignment Solutions
+====================
+1.db.employees.distinct('salary').sort((a,b)=>a-b);
+2.db.employees.find().sort({'salary':-1}).skip(2).limit(1);
+3.db.employees.find({
+	  $expr: {
+		$and: [
+		  { $eq: [{ $dayOfMonth: "$dob" }, { $dayOfMonth: new Date() }] },  // day
+		  { $eq: [{ $month: "$dob" }, { $month: new Date() }] }				// month
+		]
+	  }
+	});
+4.db.employees.updateMany({},{ $inc: { salary: 500 } });
+  // For Decrement - $inc: { salary: -500 }
+5.db.employees.updateMany({},[ {$set:{gender:{$cond:{
+		if: { $eq: ['$gender', 'male'] },
+		then: 'female',
+		else: 'male'
+	}}}} ]);
+6.db.employees.updateMany(
+   { gender: "male" },
+   [
+      {
+         $set: {
+            name: {
+               $concat: [ "Mr. ", "$name" ]
+            }
+         }
+      }
+   ]
+);
+	
+
+
+Views
+======
+-A MongoDB view is a read-only queryable object whose contents are defined by an aggregation pipeline on other collections or views.
+db.createView(
+    "firstYears",
+    "students",
+    [{ $match: { year: 1 } }]
+)
+db.firstYears.find({}, { _id: 0 } )
+
+
+Use a View to Join Two Collections
+==================================
+-We can use $lookup to create a view over two collections and then run queries against the view.
+-Applications can query the view without having to construct or maintain complex pipelines
+	
+1. create inventory & orders table
+2. Create a Joined View : 
+   db.createView( "sales", "orders", [
+   {
+      $lookup:
+         {
+            from: "inventory",
+            localField: "prodId",
+            foreignField: "prodId",
+            as: "inventoryDocs"
+         }
+   },
+   {
+      $project:
+         {
+           _id: 0,
+           prodId: 1,
+           orderId: 1,
+           numPurchased: 1,
+           price: "$inventoryDocs.price"
+         }
+   },
+      { $unwind: "$price" }
+] )
+
+
+	
+
+MongoDB Atlas
+=============
+-MongoDB Atlas is a fully-managed cloud database.
+
+-Register for an Atlas account
+ https://www.mongodb.com/atlas/database (click on try Free)
+ Fill in the registration form with your information and click Sign up
+ 
+-Create a cluster and deploy an M0(Free) cluster
+
+-Create a database user & password for your cluster
+ Security --> Database Access --> Add New User --> Authentication Method --> password
+ 
+-Add your IP address to your IP access list
+ Security --> Network Access --> IP Access List -->  Add IP Address
+
+-Connect to your cluster
+-Add your own data / Load Sample Data
+
+Follow the Steps mentioned in the below URL
+https://www.javatpoint.com/mongodb-atlas
+https://www.freecodecamp.org/news/get-started-with-mongodb-atlas/
+
+mongodb+srv://sanjaysamantra:<password>@cluster0.geshq.mongodb.net/?retryWrites=true&w=majority
+mongodb+srv://sanjaysamantra1:berhampur@cluster0.ga81v5y.mongodb.net/
+mongodb+srv://sanjaysamantra1:berhampur@cluster0.ga81v5y.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+
+
+
+ODM (Object-Document Mapping)
+=============================
+-ORM : Used with relational databases like MySQL and PostgreSQL
+-ODM : Used with non-relational databases like MongoDB, Cassandra, and Redis
+-ODM maps between objects in code and documents in a NoSQL database collection.
+-ODM provides a schema-based solution for modeling application data.
+-built-in features like type casting, validation, query building etc.
+-They streamline database operations, enhance code organization, and boost developer productivity
+-There are many ODM/ORM solutions available - Mongoose, Sequelize
+
+Mongoose
+========
+-Mongoose is a MongoDB object modeling tool.
+-Mongoose is a JavaScript object-oriented programming library that creates a connection between MongoDB and the Node.js.
+-Provides features like: Data validation, Middleware and hooks, Schema enforcement, Abstraction
+
+https://mongoosejs.com/docs/guide.html
+https://mongoosejs.com/docs/validation.html#built-in-validators
+
+
+
+Mongoose Terminologies
+======================
+Schema:
+-Each schema maps to a MongoDB collection and defines the shape of the documents within that collection
+ new mongoose.Schema({eId: { type: Number,required:true,min:18,default:20 }});
+ 
+Model:
+-To use schema definition, we need to convert a Schema into a Model. 
+ mongoose.model(modelName, schema):
+ 
+Constructing Documents:
+-An instance of a model is called a document.
+ const emp = new EmployeeModel({ id:1,name:'sanjay });
+ await emp.save();
+   (or)
+ await emp.create({ id:1,name:'sanjay });
+ 
+Querying: 
+-Finding documents is easy with Mongoose.
+-Documents can be retrieved using a model's find, findById, findOne, or where static functions.
+ await UserModel.find({ add.city:'bangalore }).where('sa').gt(5000).exec();
+ 
+Validating:
+-Documents are casted and validated before they are saved. Mongoose first casts values to the specified type and then validates them. 
+-Internally, Mongoose calls the document's validate() method before saving.
+ Built-in Validators : type, required, min, max, enum 
+
+Custom Error Messages :
+-Array syntax: min: [6, 'Must be at least 6, got {VALUE}']
+-Object syntax: enum: { values: ['Coffee', 'Tea'], message: '{VALUE} is not supported' }
+
+
+
+
+
+
+Steps to use mongoose
+======================
+1. connect to DB
+   const url = 'mongodb://localhost:27017/june_2024';
+   mongoose.connect(url);
+2. Create Schema
+   let employeeSchema = new mongoose.Schema({
+    eId: { type: Number,required:true },
+    name: { type: String,required:true },
+    sal: { type: Number,required:true },
+    gender: { type: String,required:true  }
+   })
+3. Create a Model
+   let employeeModel = mongoose.model("employees", employeeSchema);
+4. using model try to perform DB operations
+   await employeeModel.find({});
+   
+
+Note: By Default Validations work for POST calls, to run validations for PUT,PATCh , use the below code
+mongoose.set('runValidators', true); 
+
+
+Mongoose Middleware
+===================
+const mongoose = require('mongoose');
+const bcrypt = require('bcryptjs');
+
+// Create User Schema
+const userSchema = new mongoose.Schema({
+  username: {
+    type: String,
+    required: [true, 'Username is required'],
+    unique: true,
+    trim: true,
+    minlength: [3, 'Username must be at least 3 characters long'],
+  },
+  email: {
+    type: String,
+    required: [true, 'Email is required'],
+    unique: true,
+    lowercase: true,
+    validate: {
+      validator: function (v) {
+        return /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(v);  // Simple email regex validation
+      },
+      message: props => `${props.value} is not a valid email address!`
+    },
+  },
+  password: {
+    type: String,
+    required: [true, 'Password is required'],
+    minlength: [6, 'Password must be at least 6 characters long'],
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now
+  }
+});
+
+
+// Mr. Miss middleware
+employeeSchema.pre('save', async function (next) {
+    const user = this;
+    user.name = user.gender ==='male' ? `Mr. ${user.name}` : `Miss. ${user.name}`;
+    next();
+});
+
+
+// Middleware to hash the password before saving it to the database
+userSchema.pre('save', async function (next) {
+  const user = this;
+  
+  // Only hash the password if it has been modified (or is new)
+  if (!user.isModified('password')) return next();
+
+  // Generate a salt
+  const salt = await bcrypt.genSalt(10);
+
+  // Hash the password using the salt
+  user.password = await bcrypt.hash(user.password, salt);
+
+  next();
+});
+
+// Method to compare entered password with the hashed password
+userSchema.methods.comparePassword = async function (candidatePassword) {
+  return await bcrypt.compare(candidatePassword, this.password);
+};
+
+// Create the User model
+const User = mongoose.model('User', userSchema);
+
+module.exports = User;
+
+
+
+
+Assignment
+==========
+-Create URL shorten application, with the below 2 APIS 
+API-1
+=====
+POST http://localhost:5000/api/shorten 
+{
+    "originalUrl" : "https://www.youtube.com/results?search_query=express+rate+limit"
+}
+
+
+API-2
+=====
+GET http://localhost:5000/e32nODMkC<CODE>
+
+
+
+
+GraphQL
+=======
+-GraphQL is a query language for APIs.
+-GraphQL provides a complete and understandable description of the data in API.
+-It gives clients the power to ask for exactly what they need and nothing more.
+-it provides two important capabilities : building a type schema and serving queries against that type schema.
+
+Advantages of GraphQL
+---------------------
+Efficient data retrieval : allows clients to specify exactly what data they need, reduces the amount of data transferred 
+Flexible query structure : Clients can control the structure and content of the data they receive
+Batch processing : allows clients to consolidate multiple queries into a single request,reduce latency and minimize the number of network requests
+Defines a data shape : server returns the response in a simple, secure, and predictable shape
+
+		REST          		 GraphQL
+=========================================
+1. Server Driven            1. Client Driven
+2. Slower                   2. faster
+3. Over-fetching 		    3. No over-fetching , under-fetching
+4. fileuploading-Yes	    4. File-uploading - No
+5. Simple, Resource driven  5. Micro Services   
+
+
+
+Graphql and graphql-http
+-------------------------
+1. create a project 
+   npm init -y
+2. install required packages
+   npm install graphql graphql-http ruru
+3. Create a GraphQL schema
+   const schema = new GraphQLSchema({
+    query: new GraphQLObjectType({
+        name: 'Query',
+        fields: {
+            hello: {
+                type: GraphQLString,
+                resolve: () => 'Hello World !!',
+            },
+        },
+    }),
+ });
+4. Define a route and call createHandler(Schema)
+  app.all('/graphql', createHandler({ schema }));
+
+5. serve RURU UI
+   app.get('/', (req, res) => {
+     res.end(ruruHTML({ endPoint: '/graphql' }))
+   })
+
+
+
+
+apollographql
+=============
+https://www.apollographql.com/docs
+https://www.apollographql.com/docs/apollo-server
+
+-Apollo Server is an open-source, spec-compliant GraphQL server 
+-Apollo Server is compatible with any GraphQL client, including Apollo Client. 
+-To build a production-ready, self-documenting GraphQL API that can use data from any source.
+	
+npm i express cors @apollo/server graphql mongoose
+
+
+
+
+
+
+Redis
+=====
+-Redis Stands for 'Remote Dictionary Server'.
+-fast, open source, in-memory, key-value data store.
+-Redis speed makes it ideal for caching database queries, complex computations, API calls, and session state.
+-The stream data type enables high-rate data ingestion, messaging, event sourcing, and notifications.
+-Redis Cann't replace DB,it can only (set,get,delete)
+
+
+How To Install Redis
+====================
+1. https://github.com/microsoftarchive/redis/releases
+2. download Redis-x64-3.0.504.msi  and install
+3. add redis as path variable (Environment Variable)
+   C:\Program Files\Redis 
+4. check redis version (in command prompt)
+   redis-server -v
+5. open command prompt & run the below command. (redis cli should open at 127.0.0.1:6379 )
+   redis-cli 
+   
+
+
+Commands
+========
+Note : commands are not case sensitive (set/SET), Keys are case sensitive (get name)
+
+-To check the existing keys/data
+ KEYS *
+-Set Data (Syntax: set key value expiryTime_in_seconds)
+ SET name sanjay
+ SET add bangalore ex 2000 
+ SETEX age 3600 45
+-Get Data From Redis
+ GET <keyName>
+ GET name 
+ get add
+ get Add  (nil) (Keys are case sensitive)
+-Check if a key exists (1-Yes,0-No)
+ EXISTS keyName
+-Rename key
+ RENAME name fName
+-Check Data type of the value
+ TYPE keyName
+-Delete Data (del keyName)
+ del name
+-Delete all 
+ FLUSHALL
+-INFO (to check redis server details)
+
+
+Redis Cache Usecases
+====================
+GET: 
+	1. Check if data is there in Redis or not?
+	2. if Data is there in redis, return the data from redis cache
+	3. if Data is not there in redis, fetch data from db , Add the Data in Redis, Return the data
+POST: 
+	1. Insert the data into Database
+	2. add the data in Redis
+PATCH:
+	1. Update the data in Database
+	2. Update the data in Redis
+DELETE:
+	1. Delete the data in Database
+	2. Delete the data in Redis
+
+
+
+
+Fake APIs to fetch data
+=======================
+https://api.openweathermap.org/data/2.5/weather?q=${city}&mode=json&units=metric&cnt=5&appid=fbf712a5a83d7305c3cda4ca8fe7ef29
+
+https://api.openweathermap.org/data/2.5/forecast/daily?q=bangalore&mode=json&units=metric&cnt=5&appid=fbf712a5a83d7305c3cda4ca8fe7ef29
+
+https://en.wikipwikipedia.org/w/api.php?action=parse&format=json&section=0&page=india
+
+https://api.github.com/users/google
+
+https://dummyjson.com/products
+
+
+
+
+
+
+
+Nodemailer
+==========
+-Nodemailer is a module for Node.js to send emails.
+
+https://nodemailer.com/about/
+https://nodemailer.com/usage/using-gmail/
+
+Google App password
+===================
+-Go to your Google Account.(https://myaccount.google.com/)
+-->Security --> How you sign in to Google --> 2-Step Verification
+-->App passwords --> Generate a new password
+
+if app-password option is not there:
+1. enable 2-Step Verification
+2. create app password using the below URL
+  https://myaccount.google.com/apppasswords
+
+
+
+Upload File
+===========
+1. express-fileupload
+2. formidable
+3. multer
+
+
+
+
+
+Socket IO / Chat Application
+============================
+-Socket.IO is a library that enables bidirectional and event-based communication between a client and a server.
+
+Socket.IO is composed of two parts:
+-A server that integrates with the Node.JS HTTP Server (socket.io package)
+-A client library that loads on the browser side (socket.io-client package)
+
+
+Express & socket.io
+===================
+const app = require('express')();
+const server = require('http').createServer(app);
+const io = require('socket.io')(server);
+io.on('connection', socket => {
+  socket.emit('request', /* … */); // emit an event to the socket
+  socket.on('reply', () => { /* … */ }); // listen to the event
+  socket.broadcast.emit(); //emit an event to all connected sockets, except the sender
+  io.emit('broadcast', /* … */); // emit an event to all connected sockets  
+});
+server.listen(3000);
+
+
+
+Private Message	
+===============
+socket.on("private message", ({ content, to }) => {
+  socket.to(to).emit("private message", {
+    content,
+    from: socket.id,
+  });
+});
+
+
+(OR)
+
+1. Create a Room and join
+   io.on("connection", (socket) => {
+		socket.join("some room");
+   });
+2. Emit the message only to a room
+  socket.to('sanjaypraveenroom').emit("chat message", data);
+  
+  io.to("some room").emit("some event");
+  io.except("some room").emit("some event");
+  io.to("room1").to("room2").to("room3").emit("some event");
+
+https://socket.io/docs/v4/tutorial/introduction
+
+
+
+
+
+ESLint
+======
+-ESLint is a static code analysis tool.
+-Used for identifying problematic patterns found in JavaScript code.
+-It makes the code more consistent, avoiding bugs.
+-Pre-defined Rules:
+ no-debugger , no-unused-vars , no-dupe-keys , no-dupe-else-if , no-duplicate-case, no-duplicate-imports
+ https://eslint.org/docs/latest/rules/
+ 
+-To add custom rules, change eslintrc.js file as given below 
+ "rules": {
+         'semi': ['error', 'always'],
+         'quotes': ['error', 'single'],
+		 'no-var': 2,   // (0 = off, 1 = warn, 2 = error)
+		 'eqeqeq': 2,
+		 'prefer-template': 2,
+         'no-multi-spaces': 2,
+		 'max-params' : ["error", 3]
+    }
+
+1. npm i eslint 
+2. npm init @eslint/config   
+         (OR) 
+   npx eslint --init
+3. eslint .   		(linting will be running for a folder)
+   eslint abc.js    (linting will be running for a file-abc.js)
+   eslint abc.js --fix   (fixes the problems)
+
+
+
+
+Swagger
+=======
+-It’s very important to write documentation for APIs so that whoever consumes those APIs understand them, implement them, and play around with them.
+-Swagger is a software tool used for designing, building, documenting, and using RESTful APIs.
+-create, update and share API definitions with consumers.
+
+
+-All the operations should be mentioned in the file swagger.json
+-We can have custom CSS for our swagger page.
+
+Steps:
+1. npm init -y
+2. npm install swagger-ui-express 
+3. add server.js & add Routes code
+4. add the file swagger.json to define the operations.
+   http://rackerlabs.github.io/wadl2swagger/openstack/swagger/dbaas.json
+5. add the file swagger.css to define custom css
+6. Node server.js and try 'http://localhost:5000/api-docs/'
+
+
+Sample Swagger.json
+===================
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "User CRUD",
+        "version": "1"
+    },
+    "consumes": [
+        "application/json"
+    ],
+    "produces": [
+        "application/json"
+    ],
+    "paths": {
+		"/users" : {
+			"get" : {},
+			"post" : {}
+		},
+		"/users/{id}" : {
+			"get" : {},
+			"patch" : {},
+			"delete" : {}
+		}
+	},
+	"definitions": {}
+}
+
+
+How to Add Custom CSS
+=====================
+Styles.css:
+	.swagger-ui .topbar{
+		background-color: blueviolet;
+	}
+	
+const customCss = fs.readFileSync('./styles.css')
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument,{customCss}));
+
+
+https://stackoverflow.com/questions/45518568/can-i-write-same-path-names-for-different-methods-in-rest-api
+
+
+
+
+
+Unit Testing with Jasmine
+=========================
+-Unit testing is important to verify the behavior of the smallest units of code in application. 
+-It helps improve the quality of  code and reduces the amount of time we spend on bug fixing. 
+-unit testing helps to find bugs early in the development life cycle.
+-Jasmine is an open-source and  popular JavaScript testing framework to test any kind of JavaScript application.
+
+
+1. Create a npm project
+   npm init -y
+2.install jasmine 
+   npm i jasmine
+3.Initialize the Jasmine Environment
+  jasmine init
+4.verify your configuration file. (spec/support/jasmine.json)
+  jasmine.json
+5.run the below command to run tests
+  jasmine					 (run all the tests)
+  jasmine spec/demo.spec.js  (run tests for only 1 file)
+ 
+ 
+Coverage Report
+===============
+1. npm i istanbul
+2. istanbul cover --include-all-sources spec/tests/index.spec.js && istanbul check-coverage
+
+ 
+Jasmine Terminologies
+=====================
+describe()  Test suite (Group of testcases)
+it() 		test case / spec
+test()      test case / spec
+
+expect(actual).matcher(expected);
+expect(app.add(2,3)).toBe(5);
+
+
+Matchers
+--------
+toBe();
+not.toBe();
+toBeDefined();
+not.toBeDefined();
+toEqual();
+toBeTruthy();  
+toBeFalsy();  
+toBeGreaterThan();
+toBeLessThan();
+toContain()
+
+
+Setup and Teardown
+Jasmine Global Functions
+------------------------
+beforeAll()
+beforeEach()
+afterEach()
+afterAll()
+
+fdescribe() - focused describe. If it exists, jasmine will run only fdescribe spec and ignore other type of describe (describe and xdescribe).
+xdescribe() - disabled describe. It will never be executed.
+fit() - focused it()
+xit() - disabled it()
+
+
+
+
+Spy & Stub
+==========
+Spy: Used to track calls to a function without altering its actual behavior.
+	 spyOn(obj, 'greet'); // spy
+Stub: Used to replace the function's implementation to control its behavior during testing.
+     spyOn(obj, 'greet').and.returnValue("Stubbed greeting!"); // stub
+
+
+Stub
+====
+-stub is a function/object that replaces the actual behavior of a unit with a fixed response.
+-stub avoids calling the real implementation by overriding the original function with our custom implementation.
+-Allows to control the function behavior entirely.
+	Replaces the original function with:
+		A return value.
+		A fake implementation.
+-ex: if we are testing a function that writes a value to the database, we should write a stub that avoids the db interaction but returns a successful result.
+
+function saveUser(userData, userModel) { 
+  let result = userModel.create(userData)
+  return result;
+}
+
+makeStub(userModel, 'create', () => {
+  return true;
+})
+
+it("should return TRUE when the query succeeds", () => {
+  let result = saveUser({
+    name: "Fernando",
+    password: "1234"
+  }, userModel)
+  result.should.be.true
+})
+
+
+Spy
+===
+-A spy is a tool used to observe and monitor the behavior of an existing function. 
+-It allows to track if a function is called, how many times it’s called, with what arguments, and other behaviors. 
+-it does not modify the original function unless explicitly configured to do so.
+
+spyOn(someObj, 'func').and.returnValue(42);
+spyOn(someObj, 'func').withArgs(2, 3).and.returnValue(5);
+
+
+// app.js 
+const app = {
+  processData: (data) => {
+    console.log('Processing data:', data);
+    return data.length;
+  },
+  fetchData: () => {
+    const data = ['item1', 'item2', 'item3'];
+    return app.processData(data);
+  },
+};
+module.exports = app;
+
+// app.spec.js 
+const app = require('./app');
+describe('fetchData functionality', () => {
+  it('should call processData with the correct data', () => {
+    // Spy on processData,  callThrough() ensures the original implementation still runs
+    spyOn(app, 'processData').and.callThrough();
+
+    // Call fetchData
+    const result = app.fetchData();
+
+    // Assertions
+    expect(app.processData).toHaveBeenCalled(); // Verify processData was called
+    expect(app.processData).toHaveBeenCalledWith(['item1', 'item2', 'item3']); // Verify correct arguments
+    expect(result).toBe(3); // Verify the return value
+  });
+});
+
+
+
+
+
+
+
+
+Unit testing with Mocha & Chai
+==============================
+-Mocha is a testing framework for NodeJS.
+-Chai is an assertion library
+
+	
+project level install
+	npm install express cors mongoose
+	npm install --save-dev mocha chai chai-http sinon
+
+	
+Run Testcases
+=============
+mocha
+
+
+Code Coverage
+=============
+1. npm i nyc
+
+2. For nyc related help 
+   npx nyc --help
+
+3. Add Below code in package.json
+   "scripts": {
+    "test": "mocha 'specs/**/*.js'",
+    "test-report": "nyc mocha 'specs/**/*.js'",
+    "coverage": "nyc report --reporter=html && npm run test"
+  }
+	
+	
+
+Chai Assertion Style
+--------------------
+1. should 
+	ex: arr.should.have.lengthOf(3)
+2. expect
+   ex: expect(arr).to.have.lengthOf(3)
+3. assert
+   ex: assert.lengthOf(arr,3)
+   
+var chai = require('chai');  
+var assert = chai.assert;    // Using Assert style
+var expect = chai.expect;    // Using Expect style
+var should = chai.should();  // Using Should style
+
+
+Hooks
+=====
+-Mocha provides the hooks before(), after(), beforeEach(), and afterEach(). 
+-These should be used to set up preconditions and clean up after  tests are executed.
+
+
+Exclusive/Inclusive Test
+========================
+describe.only()
+it.only()
+describe.skip()
+it.skip()
+
+
+
+https://www.digitalocean.com/community/tutorials/test-a-node-restful-api-with-mocha-and-chai
+https://blog.logrocket.com/node-js-unit-testing-mocha-chai-sinon/
+
+
+
+JSON Web Token
+==============
+-JWT is used for authentication.
+-JSON Web Tokens (JWT) are tokens generated by the server upon user authentication on a web application, and then sent to the client.
+https://documentation.softwareag.com/webmethods/compendiums/v10-5/C_API_Management/index.html#page/api-mgmt-comp/co-jwt_usecase_workflow.html
+
+Basic Flow
+==========
+1. User logs in.
+2. Server generates a JWT and sends that to user/client.
+3. client receives the token and stores it somewhere in the browser (session/local storage).
+4. client sends the token in the Authorization header for protected pages/routes/data.
+5. Server checks the token, gets user information and sends the response to the client.
+
+
+1.client provides credentials to the authentication Server.
+2.The access token and refresh token are then issued by the authentication Server.
+3.After then, the client uses the access token to request resource endpoints for a protected resource.
+4.The resource endpoint verifies the access token before delivering a secure resource.
+5.Repeat steps 3 and 4 until the access token is no longer valid.
+6.When the access token expires, the client requests a new one using the refresh token.
+7.A new access token and refresh token are issued by the authentication Server.
+8.Repeat steps 3 through 7 until the refresh token has expired.
+9.When the refresh token expires, the client must re-authenticate with the authentication server, and the flow begins again at step 1.
+
+https://blog.logicwind.com/jwt-refresh-token-implementation-in-node-js/
+https://www.cloudzilla.ai/dev-education/how-to-build-authentication-api-with-jwt-token-in-nodejs/
+
+
+1. npm init -y
+2. npm install express cors mongoose jsonwebtoken bcryptjs
+
+
+
+
+PassportJS for Authentication
+=============================
+-Passport is middleware for Node.js to implement authentication and authorization.
+
+npm i express passport passport-local express-session bcryptjs 
+
+
+
+
+Deploy Nodejs Application
+=========================
+1. Render
+2. Netlify
+3. Heroku
+4. AWS
+
+Render :
+1. Register in Render and login
+   https://dashboard.render.com/register
+2. new ---> web service
+3. Connect to github Repo and Deploy 
+4. a live url should be generated after successful deployment 
+
+https://www.freecodecamp.org/news/how-to-deploy-nodejs-application-with-render/
+https://devcenter.heroku.com/articles/deploying-nodejs
+
+
+
+
+Profiling Node.js Applications
+==============================
+-Profiling a Node.js application helps to understand its performance characteristics, identify bottlenecks, and improve its efficiency.
+-For local profiling, use built-in --inspect and --prof flags.
+-For production environments, consider using tools like Clinic.js, PM2 to identify performance bottlenecks.
+-For monitoring production apps, use logging and metrics tools like  Grafana, or Winston for real-time insights.
+
+Run Node with profiling enabled:
+	node --inspect --prof app.js
+analyze using the log using node --prof-process
+	node --prof-process isolate-0xnnnnnnnnnn-v8.log
+PM2:
+-PM2 is a process manager for Node.js applications, but it also includes profiling features. PM2 provides monitoring for performance metrics such as CPU, memory usage, and the number of requests per second.
+    npm install -g pm2
+    pm2 start index.js --name myapp
+
+https://nodejs.org/en/learn/getting-started/profiling
+
+
+
+
+How to improve Node.js performance
+==============================================
+-Use the latest version of Node.js for better performance
+-Use caching to reduce latency (REDIS)
+-Optimize your data handling methods
+ a.streams  b.pagination c.DB query
+-Ensure secure client-side authentication
+-Improve throughput through clustering
+-Use a Content Delivery Network (CDN)
+-Use asynchronous programming
+ fs.readfile('',()=>{})
+-Reduce the number of dependencies
+-Use Compression
+ Middleware libraries such as compression or gzip
+-Use Load Balancing
+-Employ efficient algorithms and data structures.
+-Reduce I/O operations
+
+
+
+
+
+NodeJS Security Risks
+=====================
+1. Code Injection
+1. Brute-Force Attacks   :  attackers generate random passwords and try implementing them on login endpoints
+2. Cross-Site Scripting (XSS) Attack  :  attacker can use XSS to send a malicious script
+3. Cross-Site Resource Forgery (CSRF) :  attackers hijack the sessions of real users, thereby bypassing security rules for non-users.
+4. Exploited and Malicious Packages
+5. Distributed Denial of Service (DDoS) attacks : attempt to disrupt the regular traffic of a server with a flood of internet traffic
+
+
+
+Best Practices to keep NodeJS Secure
+====================================
+1. Setup logging and monitoring
+2. Ensure you have strong authentication policies in place
+3. Avoid blocking the event loop
+4. Safe error handling
+5. Don’t send unnecessary information
+6. Limit request sizes
+7. Validate user input
+8. Set up cookie flags like httpOnly, Secure, or SameSite.
+
+
+https://www.simform.com/blog/nodejs-security/
+https://anywhere.epam.com/en/blog/node-js-security-best-practices
+https://www.aquasec.com/cloud-native-academy/application-security/node-js-security/
+
+
+Web-Hooks
+=========
+
+
+
+
+		SOAP                        REST
+======================================================
+1.A XML based Message protocol    1.Architectural style
+2.Uses WSDL For Communication     2.Uses JSON  to send and receive data
+3.Not easily readable   		  3.The result is easily readable
+4.javascript cann't consume XML   4.Javascript can consume JSON
+5.Performance - Not Great		  5.Performs better than SOAP
+
+
+
+CRON
+=====
+https://www.npmjs.com/package/node-cron
+
+
+1. npm i node-cron
+2.Add the below code
+var cron = require('node-cron');
+cron.schedule('* * * * *', () => {
+  console.log('running a task every minute');
+});
+
+
+
+1. second (optional)
+2. minute
+3. hour
+4. day of month
+5. month
+6. day of week
+
+
+* * * * * *        Every Second
+*/10 * * * * *     Every 10 Second
+* * * * *          Every minute
+*/2 * * * *        Every 2 minute
+
+0 * * * *        Every Hour
+0 */2 * * *      Every alternate Hour
+30 * * * *       30th minute of every hour
+0 0 * * *        every day 12 am
+0 10 * * *       every day 10 am
+0 14 * * *       every day 2 pm
+
+0 10 * * 1       every monday 10 am
+0 10 * * 1-5     Weekday  10:00 AM
+0 10 */2 * *     every alternate day 10 am
+0 0 1 * *        Every Month
+0 0 1 1 *        Every Year jan 1st
+
+https://crontab.guru/every-year
+     
+
+
+
+
+
+PhonePe Integration
+====================
+https://developer.phonepe.com/v1/docs/api-integration/
+https://developer.phonepe.com/v2/docs/technical-flow-diagram/
+
+1. npm init -y
+2. npm i express cors axios crypto
+
+
+
+Step 1. Initiating Payment request
+Step 2. Redirecting user to PhonePe Standard Checkout page
+Step 3. Redirecting user to Merchant web page
+Step 4. Status verification post redirection to merchant website
+Step 5. Handling Payment Success, Pending and Failure
+Step 6. Refund
+
+
+
+
+
+Differentiate between sharding and replication 
+===============================================
+-Sharding, also called partitioning, refers to the data's splitting by the key. 
+We use sharding to increase performance and to reduce the hit as well as memory load on a single resource.
+
+-Replication, also called mirroring, refers to copying all the data. 
+This helps to get high availability of reads. 
+The hit rate on all the resources will reduce if you are reading from multiple replicas. But the memory requirement remains the same for all the resources.
+
+
+References:
+===========
+1. https://riptutorial.com/Download/node-js.pdf
+2. https://nodejs.dev/en/learn/
+3. https://www.tutorialsteacher.com/nodejs
+4. https://www.javatpoint.com/nodejs-tutorial
+5. https://www.guru99.com/node-js-tutorial.html
+6. https://codeforgeek.com/nodejs/
+7. https://www.geeksforgeeks.org/nodejs/
+8. https://training-course-material.com/training/Nodejs
+9. https://expressjs.com/en/advanced/best-practice-performance.html
+
+
+
+Interview Questions & Answers
+=============================
+1.https://gist.github.com/paulfranco/9f88a2879b7b7d88de5d1921aef2093b
+2.https://github.com/Devinterview-io/nodejs-interview-questions
+
+
+
+
+
+---------------------------
+express-rate-limit
+md5 generator
+joi validator
+passportjs npm
+rxjs
+node profiler : https://nodejs.org/en/learn/getting-started/profiling
+Monitoring Node.js applications with tools like PM2
+
+
+
+Sample Projects
+===============
+https://github.com/itzabhinavarya/ShopingKaro
+https://github.com/idurar/mern-admin
+https://github.com/claykabongok/CRUD_REST_API_NODEJS_TYPESCRIPT
+https://github.com/innextinit/foodOrdering?tab=readme-ov-file
+https://github.com/omzi/madam-sauce/blob/stable/routes/auth.js
+https://github.com/shoaib0657/foodmine/tree/main
+
+
+
+---------------------------------------
+Interview Questions
+
+1- update() findOneAndUpdate()
+2- drop & remove()
+3- createIndex() & reIndex()
+   builds an index on a collection
+   rebuild all existing indexs on a collection
+4- How to get system info on which mongoDB is running
+	db.hostInfo()
+5- How to remove the current database ?
+	db.dropDatabse
+6- How to rename a collection?
+	db.collection.renameCollection()
+7 - findModify() findOneAndUpdate()
+	findModify - atomically modifies and return a single document
+	findOneAndUpdate - Find a single document and upd
+
+
+
+https://medium.com/@ben.dev.io/node-js-for-real-time-communication-cf71f985f983
+
+https://chatgpt.com/c/66dbe630-a978-800e-8a4b-1a3944ddbfc4
