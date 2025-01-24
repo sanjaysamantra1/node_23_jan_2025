@@ -1,0 +1,51 @@
+pre-requisite
+=============
+-Basic Javascript
+
+Softwares
+=========
+1. VS Code (Editor) (Atom ,  Sublimetext , notepad++)
+   https://code.visualstudio.com/download
+
+2. NodeJS
+   https://nodejs.org/en/download
+   
+
+
+NodeJS
+======
+NodeJS - FrontEnd Development  - Runtime Environment (NodeJs as a software)
+NodeJS - BackEnd Development   - Programming Language - Modules/Packages (fs,os,http,crypto)
+
+
+How to execute Javascript Files
+===============================
+1. Browser
+  -create a javascript file, add javascript code/content
+  -include that javascript file in an HTML file
+  -Open the HTML file in browser
+     a. add 'open in browser' extension in vscode
+     b. alt + b (OR) alt + shift + b
+2. NodeJS
+   -create a javascript file, add javascript code/content
+   -to run javascript file in nodejs , run the below command
+    node <filename>.js (make sure nodejs is installed)
+
+Note : Every Javascript file that runs on browser may not work in nodejs , 
+       every javascript code that runs on nodejs may not work in browser
+
+
+        Browser                       NodeJS
+===========================================================
+1. DOM(document) - yes              1. DOM - No
+2. window - yes                     2. window - no
+3. cookie - yes                     3. cookie - no
+4. offline storage - yes            4. offline storage - no
+5. FileSystem - No                  5. FileSystem - yes
+6. Database Interaction-No          6. Database Interaction-yes
+7. Client App / FrontEnd / UI       7. Server App / BackEnd
+8. Consumes APIs                    8. Develop APIs 
+
+
+Nodejs : Develop API , fetch the live data from databse and return that data to client/FrontEnd
+FrontEnd : Consumes the API, Collects the data from nodejs & displays on the screen
