@@ -1,0 +1,39 @@
+Javascript : Programming Language, it follows ECMASCRIPT Standards
+ECMASCRIPT : standards (set of rules and regulations)
+ECMA : European Computer Menufecturer Association
+
+<2015  ES-5
+2015   ES-6 (const,let,class,for-in,for-of,module)
+2016   ES-7
+2017   ES-8
+2018   ES-9
+2019   ES-10
+2020   ES-11
+2021   ES-12
+2022   ES-13
+2023   ES-14
+2024   ES-15
+
+
+Variables
+=========
+-Variables can be declared by using the below 3 keywords
+    1. var
+    2. let
+    3. const
+
+        var                      let                        const
+============================================================================    
+1. Since Begining          1. ECMASCRIPT-6(2015)           1. ECMASCRIPT-6(2015)
+2. value can be changed    2. value can be changed         2. value cann't be changed
+3. initialization
+   not mandatory           3. not mandatory                3. mandatory
+4.can be redeclared		   4.cann't be redeclared		   4.cann't be redeclared
+5.function/global		   5.block/function/global	       5.block/function/global
+6.TDZ - No			 	   6.TDZ - Yes				       6.TDZ - Yes
+
+Variable Scopes:
+================
+1. global : declared outside functions & accessible anywhere in the script
+2. function : declared inside a function & accessible anywhere in the function
+3. block : declared inside a block & accessible inside a block only
