@@ -1,0 +1,29 @@
+How Javascript Works
+====================
+-When a javascript code is executed, N # of execution contexts are created.
+-1 Global Execution context is created for every javascript program.
+-For Each Function call 1 execution context is created.
+-Execution context is the environment within which the current code is being executed.
+-Each execution context has two phases: 
+	1. Memory creation phase. (Allocates memory - variables & functions and assign 'undefined' to variables)
+	2. Code execution phase. (Code gets Executed - assign values to variables & method invocation)
+
+https://www.youtube.com/watch?v=iLWTnMzWtj4&t=1044s
+https://www.jsv9000.app/
+
+
+
+Hoisting:
+=========
+-The process of assigning variable declarations a default value of 'undefined' during the creation phase is called Hoisting.
+-In hoisting, the variable and function declarations are put into memory during the	compile/creation phase before code execution phase.
+
+
+
+Temporal Dead Zone
+==================
+-The period between entering scope and being initialized where they cannot be accessed. 
+ This period is the temporal dead zone (TDZ).
+-The state where variables are un-reachable. They are in memory, but they aren't usable.
+-The let and const variables exist in the TDZ from the start of their enclosing scope until they are initialized.
+-if a let/const variable is accessed before its initialization, it would throw a ReferenceError. Because of the TDZ.
