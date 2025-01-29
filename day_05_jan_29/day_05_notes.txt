@@ -1,0 +1,28 @@
+Functions
+=========
+Pre-Defined/inbuilt : Function Logic is already written, we have to use it
+    console : log() ,error(),warn(), table(), trace() , dir(), time(), timeEnd()
+    Math : max() , min(), sqrt()
+User Defined : We have to write the function & use that
+    1. Function Declaration / Named Function
+    2. Function Expression
+    3. Self Invoked
+    4. arrow function
+
+Function Declaration vs Function Expression
+===========================================
+1. Function Declarations are Named ,  Function Expressions are anonymous
+2. Function Declarations are hoisted ,  Function Expressions are not hoisted
+
+Arrow Function
+--------------
+-'this' value inside a regular function is dynamic and depends on the context in which it is called.
+-'this' inside the arrow function is bound lexically and equals to 'this' where the function is declared.
+-lexical context means that arrow function uses 'this' from the code that contains the arrow function.
+-Regular function ( this = how the function is invoked/who invoked )
+-Arrow function( this = where the function is declared )
+
+
+Arrow Function Limitations
+--------------------------
+-arrow functions shouldn't be used as object methods

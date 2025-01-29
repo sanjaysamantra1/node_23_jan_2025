@@ -1,0 +1,15 @@
+<script>
+    console.log('Global Scope ', this);
+
+    function f1() { // this = where the function is called / how the function is called
+        console.log('This is F1...');
+        console.log('Inside Regular Function', this)
+    }
+    f1(); // f1() is being called from window, hence 'this' inside f1() is window
+
+    let f2 = () => { // this = where the function is written
+        console.log('This is F2...')
+        console.log('Inside arrow Function', this)
+    }
+    f2(); // f2() is written in window context, hence 'this' inside f2() is window
+</script>
