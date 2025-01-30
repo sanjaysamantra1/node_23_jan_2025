@@ -1,0 +1,22 @@
+<script>
+    class Student {
+        firstName = 'sachin';
+        lastName = 'tendulkar';
+
+        fullName() {
+            console.log('inside fullName Function ', this); // this = Student
+
+            function f1() { // this = how it is called
+                console.log('inside f1 Function ', this); // this = undefined
+            }
+            f1();
+
+            let f2 = ()=> { // this = where it is written (Lexical this)
+                console.log('inside f2 Function ', this);
+            }
+            f2();
+        }
+    }
+    let std = new Student();
+    std.fullName();
+</script>

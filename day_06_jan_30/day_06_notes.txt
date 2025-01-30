@@ -1,0 +1,12 @@
+Arrow Function Limitations
+--------------------------
+-arrow functions shouldn't be used as object methods
+-arrow functions shouldn't be used when 'this' value needs to be dynamic and not static
+
+
+Arrow function Benefits
+=======================
+-Short in syntax
+-Implicit return
+-'this' is static
+-this = lexical scope (Wherre the function is written)

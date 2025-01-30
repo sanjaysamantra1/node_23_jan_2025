@@ -1,0 +1,21 @@
+<script>
+    class Student {
+        firstName = 'sachin';
+        lastName = 'tendulkar';
+
+        fullName1() {   // this = from which context it is called
+            console.log(this); // this = (dynamic) Student Object
+            console.log(this.firstName, this.lastName);
+        }
+        fullName2 = () => {   // this = (static) where it is written
+            console.log(this); // this = Student Object
+            console.log(this.firstName, this.lastName);
+        }
+    }
+    let std = new Student();
+    std.fullName1();  // sachin tendulkar
+    std.fullName2();  // sachin tendulkar
+
+    setTimeout(std.fullName1, 2000); // undefined undefined
+    setTimeout(std.fullName2, 4000); // sachin tendulkar
+</script>

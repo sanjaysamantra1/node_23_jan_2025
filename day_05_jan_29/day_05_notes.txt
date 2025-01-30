@@ -22,7 +22,3 @@ Arrow Function
 -Regular function ( this = how the function is invoked/who invoked )
 -Arrow function( this = where the function is declared )
 
-
-Arrow Function Limitations
---------------------------
--arrow functions shouldn't be used as object methods

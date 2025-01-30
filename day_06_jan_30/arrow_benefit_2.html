@@ -1,0 +1,30 @@
+<script>
+    class Student {
+        firstName = 'sachin';
+        lastName = 'tendulkar';
+
+        fullName1() {   // this = Student Object
+            console.log('I am fullName-1 function...', this)
+            console.log(this.firstName, this.lastName);
+        }
+        fullName2 = () => {    // this = Student Object (always)
+            console.log('I am fullName-2 function...', this)
+            console.log(this.firstName, this.lastName);
+        }
+    }
+    let std = new Student();
+    std.fullName1();  // sachin tendulkar
+    std.fullName2();  // sachin tendulkar
+
+    let a = std.fullName1;
+    // a(); // it calls fullName1() , but inside fullname1() , this is no more 'student object'
+
+    let b = std.fullName2;
+    b(); //  it calls fullName2() , this =  student object (arrow function doesnt care how it is called)
+
+    let c = b;
+    c();
+
+    let d = c;
+    d();
+</script>
