@@ -1,0 +1,19 @@
+<script>
+    // Closure and useState()
+    function useState(defaultValue) {
+        let value = defaultValue;
+
+        function getValue() {
+            return value;
+        }
+        function setValue(newValue) {
+            value = newValue;
+        }
+        return [value, setValue];
+    }
+    const [color, setColor] = useState("Red");
+    console.log(color);
+    setColor('Blue');
+    console.log(color());
+    console.dir(color)
+</script>

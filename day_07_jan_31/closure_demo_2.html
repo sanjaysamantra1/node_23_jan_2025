@@ -1,0 +1,15 @@
+<script>
+    function f1() { // outer
+        console.log('f1 executed...')
+        let a = 10;
+        return function f2() { //inner
+            console.log('f2 executed...')
+            let b = 20;
+            console.log(`a+b is ${a + b}`)
+        }
+    }
+    let myf2 = f1();
+    myf2();
+
+    // Note : inner function retains access to outer function data even after outer function execution is over
+</script>

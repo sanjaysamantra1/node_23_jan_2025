@@ -1,0 +1,11 @@
+function closure
+================
+-A closure is the combination of a function bundled together (enclosed) with references to its surrounding state (the lexical environment). In other words, a closure gives a function access to its outer scope. 
+
+-A closure is an inner function that has access to its outer function's variables even after the outer function's execution is Completed/Closed.
+
+-When an inner function accesses any data from the outer function, a 'closure' scope gets attached to the inner function.hence inner function can access outer function data.
+
+-When the outer function execution completes, you’d expect all its variables to be no longer accessible. However, if the inner function uses variables from the outer function, those variables remain accessible.
+
+-The inner function retains access to the outer function’s scope, because the inner function ‘remembers’ the environment in which it was created.

@@ -1,0 +1,32 @@
+<script>
+    // Closure And Encapsulation
+
+    let account = { accNo: 12345, accBal: 5000 }; // not encapsulated
+    console.log('account No:', account.accNo, '& Balance:', account.accBal); // Read
+    account.accBal = -30000;
+    console.log('account No:', account.accNo, '& Balance:', account.accBal); // Read
+
+    function openAccount(initialAmt) {
+        let accNo = Math.floor(100000 + Math.random() * 900000);
+        let accBal = initialAmt;
+        return {
+            deposit: function (amt) {
+                if (amt < 0) {
+                    console.log('Please keep your money with, Dont deposit here')
+                } else {
+                    accBal = accBal + amt;
+                }
+            },
+            displayInfo: function (amt) {
+                console.log('account No:', accNo, '& Balance:', accBal);
+            }
+        }
+    }
+    let encapsulatedAccount = openAccount(3000);
+    console.log(encapsulatedAccount);
+    encapsulatedAccount.displayInfo();
+    encapsulatedAccount.deposit(-4000);
+    encapsulatedAccount.deposit(4000);
+    encapsulatedAccount.displayInfo();
+    console.dir(encapsulatedAccount)
+</script>
