@@ -1,0 +1,77 @@
+Strings
+=======
+-strings are used to represent and manipulate a sequence of characters.
+-JavaScript string is zero or more characters written inside quotes.
+-We can use single or double quotes for string. 
+	  var a='hello'; 
+	  var b="hello";
+-We can use quotes inside a string, as long as they don't match the quotes surrounding the string.
+	var answer1 = 'It's alright'; //in-valid
+	var answer1 = "It's alright"; //valid
+	var answer2 = "He is called 'Johnny'";  //valid
+	var answer3 = 'He is called "Johnny"'; // valid
+-Strings can be created in 2 ways
+	1. as primitives, using string literals; 
+	   var a = 'hello';
+	2. as objects, using the String() constructor
+	   var b = new String('hello');
+-JavaScript automatically converts primitives to String objects, so that it's possible 
+ to use String object methods for primitive strings.
+-String primitives and String objects give different results when using eval(). 
+ Primitives passed to eval are treated as source code; String objects are treated as all other objects are, by returning the object..
+	let s1 = '2 + 2'              // creates a string primitive
+	let s2 = new String('2 + 2')  // creates a String object
+	console.log(eval(s1))         // returns the number 4
+	console.log(eval(s2))         // returns the string "2 + 2"
+-A String object can always be converted to its primitive counterpart with the valueOf() method.
+	console.log(eval(s2.valueOf()))  // returns the number 4
+	
+
+1. literal
+   var str1 = "sachin";
+   typeof str1; //string
+
+2. object
+   var str2 = new String("sachin");    
+   typeof str2;   //"object"
+
+var a = "sachin";
+var b = "sachin"
+a == b; // true
+
+var a = "sachin";
+var b = new String("sachin")
+a == b; // true
+
+var a = new String("sachin");
+var b = new String("sachin");
+a == b;  // false
+
+
+
+String methods:
+--------------
+length;
+toUpperCase();
+toLowerCase();
+charAt();
+at()
+charCodeAt();
+concat();
+indexOf();
+lastIndexOf();
+includes();
+match();
+matchAll()   // returns iterator
+replace();
+replaceAll();
+slice(start, end)
+substring(start, end)
+substr(start, length)
+split()
+search(regex)
+trim()
+eval(); (eval() is from Window Object)
+localeCompare()
+
+N.p:- substring() cannot accept negative indexes. slice() does.
