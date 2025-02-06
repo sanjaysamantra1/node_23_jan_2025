@@ -1,0 +1,15 @@
+<script>
+    let arr = [10, 20, 30, 40, 50];
+    let sum = arr.reduce((prev, curr) => {
+        console.log(prev, curr)
+        return prev + curr;
+    });
+    console.log(sum);
+
+    let str = 'entertainment'; // { e:3 , n:2 , t:3 , r:1 .....}
+    let res = str.split('').reduce((obj, char) => {
+        obj[char] = obj[char] ? obj[char] + 1 : 1;
+        return obj;
+    },{});
+    console.log(res)
+</script>
