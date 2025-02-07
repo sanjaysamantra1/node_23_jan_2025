@@ -1,0 +1,41 @@
+Array Mutability/Immutability
+============================
+1. Even when declared as const, the elements of an array can be changed, added, or removed. However, the reference to the array cannot be reassigned.
+	const arr = [1, 2, 3];
+	arr[0] = 42;
+	arr.push(4); // Mutating the array (allowed)
+	console.log(arr); // [42, 2, 3, 4]
+	// Reassigning the array (not allowed with `const`)
+	arr = [5, 6, 7]; // TypeError: Assignment to constant variable.
+
+2. Immutability (Freezing an Array) (Object.freeze() is shallow, meaning nested objects or arrays are still mutable)
+	const arr = Object.freeze([1, 2, 3]);
+	arr[0] = 11; // Attempting to mutate the array
+	arr.push(4); // TypeError: Cannot add property 3, object is not extensible
+	console.log(arr); // [1, 2, 3]
+	
+3. create new arrays instead of modifying existing ones. (map(), filter() , spread operator)
+    const arr = [1, 2, 3];
+	const newArr = [...arr, 4]; // Adds 4 without modifying the original
+	console.log(newArr); // [1, 2, 3, 4]
+	console.log(arr);    // [1, 2, 3] (unchanged)
+
+
+
+
+Array Copy
+==========
+let arr1 = [10, 20];
+let arr2 = arr1;  // address/reference copy ( Not value copy)
+-A new array is not being created, rather same address is being assigned to arr2
+-Both arr1 & arr2 are holding the same address
+
+let arr1 = [10, 20, [30, 31]];
+let arr2 = [...arr1]; // value copy - shallow copy
+
+let arr3 = [10, 20, [30, 31]];
+let arr4 = structuredClone(arr3); // value copy - Deep Copy
+
+-A shallow copy of an array is a copy whose nested elements share the same references.
+ (Nested arrays will not be copied by value)
+-A deep copy of an array is a copy whose nested elements do not share the same references.
