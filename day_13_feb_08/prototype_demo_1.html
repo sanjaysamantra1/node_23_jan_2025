@@ -1,0 +1,27 @@
+<script>
+    class Student {
+        constructor(roll, name, course) {
+            this.roll = roll;
+            this.name = name;
+            this.course = course;
+            // this.clgName = 'NIT';
+            // this.clgAddress = 'Hyderabad';
+        }
+    }
+    Student.prototype.clgName = 'NIT';
+    Student.prototype.clgAddress = 'Hyderabad';
+    
+    let std1 = new Student(101, 'Adarsh', 'NodeJS');
+    std1.clgName = 'nareshIT'; //'clgName' is added to std1 , along with prototype clgName
+    console.log(std1)
+    console.log(std1.roll, std1.name, std1.course, std1.clgName, std1.clgAddress);
+
+
+    let std2 = new Student(102, 'Manikanta', 'AngularJS');
+    console.log(std2)
+    console.log(std2.roll, std2.name, std2.course, std2.clgName, std2.clgAddress);
+
+    /*
+        1000 Objects = 1000 * 5 = 5000
+    */
+</script>
