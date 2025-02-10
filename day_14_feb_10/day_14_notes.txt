@@ -1,0 +1,31 @@
+ 
+-Object class static functions : 
+	assign() - Copies properties from one or more source objects to a target object.
+	create() -  creates a new object, using an existing object as the prototype of new object.
+	freeze() - Freezes an object. neither the structure nor values can be changed
+	isFrozen() - Determines if an object was frozen
+	seal()  - structure of the object cann't be modified, value of the properties can be changed.
+	isSealed() - Determines if an object is sealed.
+	preventExtensions() -new properties cann't be added to an object, properties can be deleted, value of the properties can be changed
+    isExtensible() - Determines if extending of an object is allowed
+	keys()	- Returns an array of keys
+	values() - Returns an array of values
+	entries() - returns an array of [key, value] pairs
+	fromEntries() - transforms an array/Map into an Object
+	groupBy(items, callbackFn) - groups the data, the callbackFn should return a groupName
+
+
+-shallow copy : Object.assign()
+                obj2 = {...obj1}
+-deep cloning :  JSON.parse(JSON.stringify(obj))  
+				 obj2 = structuredClone(obj1)
+Note: structuredClone() cann't copy the functions from original object to copied object.
+
+-A shallow copy of an object is a copy whose nested properties share the same references.
+ (Nested objects will not be copied by value)
+-A deep copy of an object is a copy whose nested properties do not share the same references.
+
+	
+-JSON.stringify()  converts object to string.
+-JSON.parse()      converts string to object.
+

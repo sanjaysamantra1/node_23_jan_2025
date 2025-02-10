@@ -1,0 +1,14 @@
+<script>
+    let user = { name: 'sachin', age: 45, add: 'Mumbai' };
+
+    let all_keys = Object.keys(user);
+    let all_values = Object.values(user);
+    let all_entries = Object.entries(user);
+    console.log(all_keys)
+    console.log(all_values)
+    console.log(all_entries)
+
+    // convert from entries to object
+    let userObj = Object.fromEntries(all_entries);
+    console.log(userObj);
+</script>

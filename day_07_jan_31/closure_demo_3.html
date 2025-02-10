@@ -9,18 +9,19 @@
     function openAccount(initialAmt) {
         let accNo = Math.floor(100000 + Math.random() * 900000);
         let accBal = initialAmt;
-        return {
+        return Object.freeze({
             deposit: function (amt) {
                 if (amt < 0) {
                     console.log('Please keep your money with, Dont deposit here')
                 } else {
+                    console.log(`amount ${amt} deposited in your Account ${accNo}`)
                     accBal = accBal + amt;
                 }
             },
             displayInfo: function (amt) {
                 console.log('account No:', accNo, '& Balance:', accBal);
             }
-        }
+        })
     }
     let encapsulatedAccount = openAccount(3000);
     console.log(encapsulatedAccount);

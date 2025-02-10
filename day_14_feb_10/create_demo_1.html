@@ -1,0 +1,13 @@
+<script>
+    let obj1 = { a: 10, b: 20 };
+    let obj2 = Object.create(obj1);
+    console.log(obj2); // obj2 = {} , obj2.prototype = obj1;
+    
+    console.log(`Obj1:: ${obj1.a} ${obj1.b}`); // 10 20
+    console.log(`Obj2:: ${obj2.a} ${obj2.b}`); // 10 20
+    obj1.a = 15;
+    obj2.b = 25; // obj2 = {b:25} , obj2.prototype = obj1;
+    console.log(`Obj1:: ${obj1.a} ${obj1.b}`); // 15 20
+    console.log(`Obj2:: ${obj2.a} ${obj2.b}`); // 15 25
+    console.log(obj2);
+</script>
