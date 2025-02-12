@@ -1,0 +1,65 @@
+13. Enhanced Object Literals
+14. From constructors to classes
+15. inheritance - class,extends
+16. Modules
+17. collection-Map,weakmap,Set,weakset
+18. promise and async-await
+19. generators
+20. Tail Calls
+
+
+Modules:
+========
+Module Systems : 1.commonJS  2.EJS  3.AMD  4.UMD
+
+react,angular - EJS             (import , export)
+Nodejs - CommonJs (default)     (module.exports , require())
+
+
+ECMASCRIPT Module System
+=========================
+1. Default export
+2. Named export
+
+Default export vs named export
+===============================
+1. variables cann't be exported default, variables always should be named export
+2. maximum 1 default export is allowed per file, any number of named exports are allowed
+3. while importing the exported member name must not be same in imported file
+
+
+object vs map
+-------------
+1. object keys must be strings/symbol, where as map keys can be of any type.
+2. You can get the size of a Map easily.  ex: map.size
+   for object size has to be calculated manually. ex: Object.keys(obj).length
+3.The iteration of maps is in insertion order of the elements
+4.Objects are not inherently iterable (Object.keys() is slow), Maps are iterable.
+
+
+Map
+===
+-Maps are collections of keys and values of any type
+-const myMap = new Map(); // Create a new Map
+ myMap.set('name', 'sanjay'); // Sets a key value pair
+ myMap.set('hobby', 'cycling'); // Sets a key value pair
+-get data from map
+ console.log(myMap.get('name'));
+-size of map
+ console.log(myMap.size);
+-Iterate Map
+ for (const [key, value] of map) {
+   console.log(`${key} = ${value}`); 
+ }
+ 
+ 
+Set
+===
+-Sets are ordered lists of values that contain no duplicates.
+-const planetsOrderFromSun = new Set();
+ planetsOrderFromSun.add('Mercury');
+ planetsOrderFromSun.add('Venus').add('Earth').add('Mars'); // Chainable Method
+ console.log(planetsOrderFromSun.size);
+ console.log(planetsOrderFromSun.has('Earth')); // True
+ planetsOrderFromSun.delete('Earth'); // deletes 1 item
+ planetsOrderFromSun.clear(); // deletes all the items

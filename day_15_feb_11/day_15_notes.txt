@@ -11,11 +11,3 @@ ES-6 Features (ES-2015)
 10. for-loop to for-in and for-of
 11. arrow functions
 12. From apply() to the spread operator (...)
-13. Enhanced Object Literals
-14. From constructors to classes
-15. inheritance - class,extends
-16. Modules
-17. collection-Map,weakmap,Set,weakset
-18. promise and async-await
-19. generators
-20. Tail Calls
