@@ -1,7 +1,7 @@
 Call() & apply() & bind()
 ========================
 -call(),apply(),bind() are methods from 'Object' class.
--used to change the context(this value) while calling a function.
+-used to change the context(this value) explicitly while calling a function.
 -while calling a function, if we want to pass 'this' explicitely.
 -Calls a method of an object, substituting another object for the current object.
 
