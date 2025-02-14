@@ -1,0 +1,90 @@
+What NodeJs is?
+===============
+-NodeJS is a Runtime Environment to execute JavaScript on server side
+-Allows to run JavaScript on the server(outside the browser).
+-Built on Google Chrome's JavaScript V8 Engine. 
+-Single threaded, non-blocking, and event-driven execution model.
+-It is used to develop I/O intensive web applications. 
+-ex:video streaming sites, real-time chat application, Game servers and web applications.
+-It's not the best choice for CPU intensive work.(Complex calculations)
+
+javascript Engines:
+	V8  - is developed by Google , Google Chrome.
+	SpiderMonkey - is developed by Mozilla , Firefox.
+	JavaScriptCore  - is Apple's engine for its Safari browser. 
+	Chakra  - is the JavaScript engine of the Internet Explorer browser.
+	
+
+	Browser					 Node.js
+======================================================
+-DOM (document)				-No DOM
+-Window						-No Window (global)
+-Cookies					-No Cookies
+-Offline Storage            -No Offline Storage
+-No FileSystem				-FileSystem
+-Database Interaction(No)	-Database Interaction(yes)
+-Client Apps/ UI			-Server side Apps / Back-End
+-Consume APIs				-Develop APIs
+
+
+
+Key Features of Node.js
+=======================
+Asynchronous and Event Driven:
+	All APIs of Node Js are asynchronous. 
+	This feature means that if  Node receives a request for some Input/Output operation, it will execute that operation in the background and continue with the processing of other requests. 
+	Thus it will not wait for the response from the previous requests.
+It's very fast:
+	Node Js uses the V8 JavaScript Runtime engine, the one which is used by Google Chrome. 
+	Node has a wrapper over the JavaScript engine which makes the runtime engine much faster and hence processing of requests in NodeJS is faster.
+Single Threaded but Highly Scalable:
+	Node Js uses a single thread model for event looping. 
+	The response from these events may or may not reach the server immediately. 
+	However, this does not block other operations. 
+	Thus making Node.js highly scalable. 
+	Traditional servers create limited threads to handle requests while Node.js creates	a single thread that provides service to much larger numbers of such requests.
+Node js library uses JavaScript:
+	The majority of developers are already well-versed in JavaScript. 
+	Hence, development in Node.js becomes easier for a developer who knows JavaScript.
+Community –
+	There is an Active and vibrant community for the Node Js framework - The active community always keeps the framework updated with the latest trends in the web development.
+No Buffering –
+	Node js applications never buffer any data. 
+	They simply output the data in chunks.
+NPM (Node Package Manager)–
+	it comes with node js & allows us to install various Packages for Node js Application. (lodash,cors,axios,express)
+
+
+
+V8 JavaScript Engine
+====================
+-V8 is the name of the JavaScript engine that powers Google Chrome & nodejs.
+-V8 takes our JavaScript and executes it while browsing with Chrome.
+-The same V8 Engine is used in NodeJS also.
+-V8 is written in C++, and it's continuously improved.
+-JavaScript is generally considered an interpreted language, but modern JavaScript engines no longer just interpret JavaScript, they compile it.
+-JavaScript is internally compiled by V8 
+
+JS Code --> V8  -->  Parsing  --> Abstract Syntax Tree  --> ByteCode --> Machine Code  --> Runs On CPU
+
+
+
+What Can Node.js Do?
+====================
+-Node.js can generate dynamic page content.
+-Node.js can create, open, read, write, delete, and close files on the server.
+-Node.js can collect form data.
+-Node.js can add, delete, modify data in the database.
+
+
+How NodeJs works/NodeJs Process Model
+=====================================
+-In the traditional web server model, each request is handled by a dedicated thread from the thread pool.
+If no thread is available in the thread pool at any point of time then the request waits till the next available thread. 
+-Dedicated thread executes a particular request and does not return to thread pool until it completes the execution and returns a response.
+
+-All the user requests are handled by a single thread and all the I/O work or long running job is performed asynchronously for a particular request. 
+this single thread doesn't have to wait for the request to complete and is free to handle the next request. 
+-When asynchronous I/O work completes then it processes the request further and sends the response.
+-An event loop is constantly watching for the events to be raised for an asynchronous job and executing callback function when the job completes. 
+-Internally, Node.js uses libuv for the event loop which in turn uses internal C++ thread pool to provide asynchronous I/O.
