@@ -1,0 +1,20 @@
+{
+  "name": "day_20_feb_17_nodejs_3",
+  "version": "1.0.0",
+  "main": "debug_demo_1.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "axios": "^1.7.9",
+    "bootstrap": "^5.3.3",
+    "minimist": "^1.2.8"
+  },
+  "devDependencies": {
+    "karma": "^6.4.4"
+  }
+}
