@@ -1,0 +1,20 @@
+Debug NodeJs Code
+=================	
+1. Debugging natively
+  a. node inspect script.js  (type next, help)
+     node inspect --port=5000 app.js
+     go to browser --> chrome://inspect   OR  about:inspect
+  b. use debugger;  in a code line you want
+  
+cont, c               Resume execution
+next, n               Continue to next line in current file
+step, s               Step into, potentially entering a function
+out, o                Step out, leaving the current function
+backtrace, bt         Print the current backtrace
+  
+  
+2. visual Studio Code
+   a. In the Debug panel, click the settings icon to open .vscode/launch.json.
+   Select "Node.js" for initial setup.
+   b. go to the JS file add debug points
+   c. go to Debug Panel, click 'Run' button
