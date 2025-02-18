@@ -91,3 +91,39 @@ package.json  VS  package-lock.json
 
 Ex: bootstrap - 5.1.3
               major.minor.hotfix
+
+
+
+NPX
+===
+NPX : Node Package Executer (used to execute Node.js packages)
+-Run Packages without installing them.
+-When you install NPM version 5.2.0 or higher, get NPX installed
+-we can install npx using the below command
+ npm i -g npx
+-npx helps us avoid versioning, dependency issues and installing unnecessary packages that we just want to try out.
+-npx helps running utility tools without installation (eslint, mocha)
+ npx eslint .
+ npx mocha
+-ex:npx create-react-app my-sample-react-app
+    npx nodemon file1.js	
+	npx nodemon file1.js -y
+
+
+
+Nodemon
+=======
+-Nodemon is a utility that will monitor for any changes in your source and automatically restart your server.
+-Nodemon can be installed using NPM.
+ ex:- npm i -g nodemon
+-Nodemon can be used without installing also, using npx
+ npx nodemon file1.js
+-nodemon help
+ nodemon -h 
+ nodemon --help
+-Just use nodemon instead of node to run your code, your process will automatically restart when your code changes
+ ex:- node file1.js      (server won't be re-started when code is changed)
+      nodemon file1.js   (server gets re-started when there is a code change)
+	  npx nodemon file1.js   (server gets re-started when there is a code change)
+-The 'node_modules' folder is ignored by default by nodemon.
+-You can restart the process at any time by typing 'rs' and hitting enter.
