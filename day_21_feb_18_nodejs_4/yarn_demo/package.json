@@ -1,0 +1,12 @@
+{
+  "name": "yarn_demo",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "minimist": "^1.2.8"
+  },
+  "devDependencies": {
+    "mocha": "^11.1.0"
+  }
+}
