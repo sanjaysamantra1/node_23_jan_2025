@@ -102,7 +102,7 @@ This
   -If it's a regular function, this often refers to the global object, but arrow functions will capture the lexical this from the surrounding code
 
 
-  Event Loop
+Event Loop
 ==========
 -Event loop's order of operations:
 
