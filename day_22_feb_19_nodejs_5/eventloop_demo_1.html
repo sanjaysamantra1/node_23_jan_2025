@@ -1,0 +1,11 @@
+<script>
+    let f1 = () => { console.log('This is f1...') }
+    let f2 = () => { console.log('This is f2...') }
+    let f3 = () => { console.log('This is f3...') }
+    let f4 = () => { console.log('This is f4...') }
+
+    f1();
+    setTimeout(f2);
+    Promise.resolve().then(f3);
+    f4();
+</script>

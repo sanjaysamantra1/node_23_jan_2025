@@ -1,0 +1,127 @@
+Node.js Global Objects
+======================
+-Node.js global objects are global in nature and available in all modules.
+-we don't have to include these objects in our application; they can be directly used.
+-A list of Node.js global objects are given below:
+	__dirname
+	__filename
+	console - log(),error(),warn(),time(),timeEnd(),trace(),dir(),assert(),table()
+	process - exit(),beforeExit(), uncaughtException()
+	buffer
+	setImmediate(callback[, arg][, ...])
+	setInterval(callback, delay[, arg][, ...])
+	setTimeout(callback, delay[, arg][, ...])
+	clearImmediate(immediateObject)
+	clearInterval(intervalObject)
+	clearTimeout(timeoutObject)
+	structuredClone()
+	atob()
+	btoa()
+	exports
+	require
+	fetch
+	global
+	globalThis
+	module
+	
+
+Note: 
+__dirname :  __dirname is not defined in ES module scope
+
+to use __dirname in ES modules, use the below code
+const __dirname = import.meta.dirname;
+
+
+
+Nodejs Global Variables
+=======================
+-In Node.js, the 'global' object is global.
+-abc.js
+ global.myGlobalVariable = "Hello from global!";
+-xyz.js
+require('./abc');
+console.log(myGlobalVariable);
+console.log(global.myGlobalVariable);
+console.log(globalThis.myGlobalVariable);
+
+
+global and globalThis
+=====================
+-global and globalThis are used to access the global object, but they differ slightly in terms of scope and standardization.
+
+global (Node.js specific)
+-------------------------
+-In Node.js, the global object is used to access the global scope.
+-It contains global variables such as setTimeout, process, and Buffer among others.
+-global is specific to Node.js, meaning it may not be present in other environments (like browsers).
+	console.log(global.setTimeout);  // Node.js global object
+	console.log(global.process);     // Node.js global object
+-The global object allows access to Node.js-specific features like the process object, which provides information about the current process, environment variables, etc.
+
+globalThis (Universal across environments)
+-------------------------------------------
+-globalThis was introduced in ECMAScript 2020 (ES11) as a standardized way to access the global object across different environments.
+-It provides a universal way to access the global object, regardless of whether you're running the code in Node.js, a browser, or any other JavaScript environment.
+-In Node.js, globalThis is essentially an alias for global, but in the browser environment, it refers to the window object.
+	console.log(globalThis.setTimeout);  // Works in both Node.js and browsers
+	
+	global									globalThis
+===============================================================
+Node.js Specific-Yes				Node.js Specific-No(Universal across environments)
+Standardized-No 					Standardized-Yes (Standardized by ECMAScript)
+Only available in Node.js			Works in Node.js, browsers, and more
+Access Node.js-specific globals		Access global objects in any environment
+
+
+
+This
+====
+-The behavior of the this keyword depends on the context in which it is used. 
+-The value of this can vary between global scope, functions, and object methods, and it behaves differently in different scenarios, including strict mode, classes, and modules.
+
+1.In the top-level code 
+  in a Node module, 'this' is equivalent to module.exports. That's the empty object.
+  ex: console.log(this, this === module.exports); //true
+	module.exports.name = "sanjay";
+	console.log(this); // { name:sanjay }
+	
+2. Inside Functions 
+  -in Normal Mode:
+	a. this value inside a regular/normal function is 'global Object'.
+	b. this value inside an arrow function is {} (module.exports)
+  -in strictmode, this value inside a function is undefined.
+
+3. Inside Object Methods 
+  -When this is used in an object method, it refers to the object itself (i.e., the object that owns the method).
+  -If the method is assigned to a different object or called as a standalone function, this will lose its reference to the original object.
+  
+4. Inside Classes
+  -In classes, this refers to the instance of the class.
+  
+5. in Event Listeners and Callbacks
+  -If it's a regular function, this often refers to the global object, but arrow functions will capture the lexical this from the surrounding code
+
+
+  Event Loop
+==========
+-Event loop's order of operations:
+
+1. timers: this phase executes callbacks for timers like setTimeout() and setInterval() whose delay has expired
+2. I/O callbacks: executes I/O callbacks deferred to the next loop iteration.
+3. idle, prepare: Used internally by Node.js and is not directly used by user applications
+4. poll: retrieve new I/O events; execute I/O related callbacks 
+5. check: setImmediate() callbacks are invoked here.
+6. close callbacks: some close callbacks, e.g. socket.on('close', ...)
+
+
+NodeJs Timers
+=============
+-setImmediate() is designed to execute a script once the current poll phase completes.
+ setImmediate() is useful when you want to execute a callback after I/O tasks in the current event loop iteration but before timers in the next iteration
+ 
+-setTimeout() schedules a script to be executed after a minimum threshold in ms has elapsed.
+-setImmediate callbacks are called after I/O Queue callbacks are finished or timed out. setImmediate callbacks are placed in Check Queue, which are processed after I/O Queue.
+-setTimeout(fn, 0) callbacks are placed in Timer Queue and will be called after I/O callbacks as well as Check Queue callbacks. As event loop, process the timer queue first in each iteration, so which one will be executed first depends on which phase event loop is.
+
+-if we run setImmediate() & setTimeout() which is not within an I/O cycle (i.e. the main module), the order in which the two timers are executed is non-deterministic.
+-However, if you move the two calls within an I/O cycle, the immediate callback is always executed first.
