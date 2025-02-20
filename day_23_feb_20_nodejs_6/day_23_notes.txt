@@ -1,0 +1,122 @@
+setTimeout
+setInterval
+nextTick
+setImmediate
+
+
+NodeJs Timers
+=============
+-setImmediate() is designed to execute a script once the current poll phase completes.
+ setImmediate() is useful when you want to execute a callback after I/O tasks in the current event loop iteration but before timers in the next iteration
+ 
+-setTimeout() schedules a script to be executed after a minimum threshold in ms has elapsed.
+-setImmediate callbacks are called after I/O Queue callbacks are finished or timed out. setImmediate callbacks are placed in Check Queue, which are processed after I/O Queue.
+-setTimeout(fn, 0) callbacks are placed in Timer Queue and will be called after I/O callbacks as well as Check Queue callbacks. As event loop, process the timer queue first in each iteration, so which one will be executed first depends on which phase event loop is.
+
+-if we run setImmediate() & setTimeout(0) which is not within an I/O cycle (i.e. the main module), the order in which the two timers are executed is non-deterministic.
+-However, if you move the two calls within an I/O cycle, the immediate callback is always executed first.
+
+
+
+NodeJs Modules
+==============
+-A way of encapsulating code in to separate logical units.
+-Module:A set of properties and functions we want to include in our application.
+-In Node.js module system, each file is treated as a separate module.
+-Node.js includes three types of modules:
+	1. Core(Built-in) Modules     	  (os,fs,http,path,url,crypto)
+	2. Local(Custom) Modules    	  (created locally in our application)
+	3. Third Party(External) Modules  (can be installed using NPM, and can be used) ex:-minimist,express,mongoose,lodash,moment,chalk,cors,axios
+
+
+Core Modules:
+-------------
+os-Get OS information
+fs-work with the file system
+path-handles path elegantly
+url-url module includes methods for URL resolution and parsing.
+querystring-querystring module includes methods to deal with query string.
+process - 
+http-launch a server,send requests
+https-launch a SSL server
+events-working with events
+util-util module includes utility functions useful for programmers.
+
+
+
+Local(Custom) Modules 
+=====================
+-Node.js has two types of modules: 
+	1. ES modules  (.mjs)
+	2. CommonJS modules (.cjs)
+-By default, Node.js treats JavaScript as CommonJS modules. But we can tell Node.js to treat JavaScript code as ES modules.
+-Node.js will treat the following files as ES modules:
+	a.Files ending in .mjs
+	b.if "type": "module" is set in package.json
+	
+Module Systems
+==============
+1. CommonJS
+   module.exports = {member1,member2};
+   const member1 = require('Library/file name');
+2. ECMASCRIPT
+   export member1;
+   export default member2;
+   import DefaultMember , {Namedmember} from 'file'
+
+
+imports & exports
+=================
+-Default import:
+  import DefaultMember from 'src/my_lib';
+-Named imports:
+  import { name1, name2 } from 'src/my_lib';
+-Combining a default import with named imports
+  import DefaultMember, { name1, name2 } from 'src/my_lib';
+
+
+Named Export vs Default Export
+==============================
+-Only one default export is allowed per file,where as multiple named exports are allowed per file.
+-Named exports are useful to export several values. 
+-A default export can be a function, a class, an object(cann't be variables). 
+ This value is to be considered as the “main” exported value since it will be the simplest to import
+-The name of imported module has to be the same as the name of the exported module for named exports.
+-The naming of import is completely independent in default export and we can use any name we like.
+ex: import MyReact, { MyComponent } from "react";
+           correct    wrong-namedExport
+
+
+
+External Modules(minimist,chalk,validator,lodash,moment)
+----------------
+1. Installing an npm Module
+   npm install validator
+2. Importing an npm Module
+   const validator = require('validator')
+   console.log(validator.isURL('https://www.google.co.in/')) // true
+   console.log(validator.isEmail('abc@gmail.com')) // true
+
+
+
+Node.js OS Module
+=================
+-The OS module provides information about the computer's operating system.
+
+arch()	      Returns the operating system CPU architecture-32/64
+cpus()	       Returns an array containing information about the computer's CPUs
+endianness()	Returns the endianness of the CPU (LE-Little Endian , BE-Big Endian)
+EOL	Returns the end-of-line marker for the current operating system
+freemem()	Returns the number of free memory of the system
+hostname()	Returns the hostname of the operating system
+loadavg()	Returns an array containing the load averages, (1, 5, and 15 minutes)
+networkInterfaces()	Returns the network interfaces that has a network address
+platform()	Returns information about the operating system's platform
+release()	Returns information about the operating system's release
+tmpdir()	Returns the operating system's default directory for temporary files
+totalmem()	Returns the number of total memory of the system
+type()	    Returns the name of the operating system
+uptime()	Returns the uptime of the operating system, in seconds
+userInfo()	Returns information about the current user
+availableParallelism() 
+constants	 Returns an object containing the operating system's constants for process signals, error cotes etc.
