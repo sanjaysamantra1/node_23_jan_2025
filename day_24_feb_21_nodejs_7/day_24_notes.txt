@@ -1,0 +1,43 @@
+Node.js URL Module
+==================
+-The URL module splits up a web address into readable parts.
+-Parse an address with the url.parse() method, and it will return a URL object with each part of the address as properties.
+ex:-
+const url = require('url');
+let urlStr = 'http://localhost:8080/default.htm?year=2025&month=february';
+let urlObj = url.parse(urlStr, true);
+console.log(urlObj)
+
+-format() converts url Object to URL String
+let urlString = url.format(urlObj)
+console.log(urlString)
+
+
+
+
+Node.js Path Module
+===================
+-The Path module provides a way of working with directories and file paths.
+sep	        Returns the segment separator specified for the platform
+delimiter	Returns the delimiter specified for the platform
+basename()	Returns the last part of a path
+dirname()	Returns the directories of a path
+extname()	Returns the file extension of a path
+format()	Formats a path object into a path string
+isAbsolute()	Returns true if a path is an absolute path, otherwise false
+join()	Joins the specified paths into one
+normalize()	normalizes the given path, resolving '..' and '.' segments.
+parse()	Formats a path string into a path object
+relative()	Returns the relative path from one specified path to another specified path
+resolve()	Resolves the specified paths into an absolute path
+win32	Returns an object containing Windows specific properties and methods
+posix	Returns an object containing POSIX specific properties and methods
+
+
+Q. why you’d use the path.join() function instead of using string concatenation??
+ans: 1. Supports separators (\ or /) for different OS.
+	 2. handles leading and trailing slashes.
+	    path.join('data', 'test.txt'); // 'data/test.txt'
+		path.join('data', '/test.txt'); // 'data/test.txt'
+		path.join('data/', 'test.txt'); // 'data/test.txt'
+		path.join('data/', '/test.txt'); // 'data/test.txt'
