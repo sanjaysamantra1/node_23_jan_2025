@@ -1,0 +1,93 @@
+Query String Module
+===================
+-Node.js Query String module provides methods to deal with query string. 
+-It can be used to convert query string into JSON object and vice-versa.
+-querystring module has methods like:
+	parse() / decode()
+	stringify() / encode()
+	escape()
+	unescape()
+querystring.parse(str[, sep][, eq][, options])	queryString To object.
+querystring.stringify(obj[, sep][, eq][, options]) object to string.
+
+-characters such as "/", "?", "#", ":", "@", "&", "=", "+", "$", and ",". When these characters need to be included in a URL as data rather than as part of the URL syntax, they must be percent-encoded / escaped. 
+-For instance, the character "@" is encoded as "%40", and the character "#" is encoded as "%23".
+
+let str = 'https://example.com/path/to/page?name=sanjay_samantra&color=dark blue';
+let queryStr = url.parse(str).query; 
+
+
+
+Process Module
+==============
+-Process Module provides the env property which hosts all the environment variables that were set at the moment the process was started.
+Note: process does not need a "require", it's automatically available.
+-If you have multiple environment variables in your node project, create an .env file in the root directory of project, and then use the 'dotenv' package to load them during runtime.
+.env file
+	USER_ID="239482"
+	USER_KEY="abcd"
+	NODE_ENV="development"
+	PORT=1234
+-npm install dotenv
+ require('dotenv').config();
+	process.env.USER_ID; // "239482"
+	process.env.USER_KEY; // "abcd"
+	process.env.NODE_ENV; // "development"
+-How to find which version of V8 ships with a particular version of Node.js?
+	node -p process.versions.v8
+-process.nextTick() : invoke this function at the end of the current operation, before the  next event loop tick starts
+-This function defers the execution of a callback function until the next Event Loop Iteration.
+-Every time the event loop takes a full trip, we call it a tick.
+-setTimeout(() => {}, 0) will execute the function at the end of next tick, much later than when using nextTick() which prioritizes the call and executes it just before the beginning of the next tick
+ 
+
+
+Node.js, the difference between development and production
+==========================================================
+-We can have different configurations for production and development environments.
+-Node.js assumes it's always running in a development environment.
+-We can signal Node.js that we are running in production by setting the NODE_ENV=production environment variable
+ 
+ NODE_ENV=production node app.js  (environemnt variable)
+ 
+ node --env-file=.env  app.js (environment file)
+ node --env-file=.development.env app.js
+ node --env-file=.qa.env app.js
+ node --env-file=.prod.env app.js
+ 
+Note: if the same variable is defined in the environment and in the file, the value from the environment takes precedence.
+ 
+if (process.env.NODE_ENV === 'development') {
+  app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
+}
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.errorHandler());
+}
+
+
+Child Processes Module
+======================
+-Node.js is single-threaded, non-blocking but running a single thread in a CPU cannot handle increasing workload.
+-The child_process module can be used to start child processes, and those child processes can easily communicate with each other with a messaging system.
+-There are four different ways to create a child process in Node:
+	1. exec() / execSync()
+	2. execFile() / execFileSync()
+	3. spawn()  /  spawnSync()
+	4. fork()
+exec()  
+	creates a new shell process and executes a command in that shell.
+         The output of the command can be collected via a callback function passed to exec()
+		ex: exec("dir", (error, stdout, stderr) =>{});
+		error - if command not found
+		stdout - output of the executed command
+		stderr - if error while executing the command
+			
+execFile() 
+	execute a file (bat/sh)
+			 
+spawn() 
+	when the command we want to run can output a large amount of data
+
+fork()  
+-communication channel is established to the child process when using fork, so we 	can use the send function on the forked process along with the global process object itself to exchange messages between the parent and forked processes.
+-ChildProcess will have an additional communication channel built-in that allows messages to be passed back and forth between the parent and child

@@ -1,0 +1,18 @@
+{
+  "name": "day_25_feb_22",
+  "version": "1.0.0",
+  "description": "",
+  "main": "query_string_demo_1.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "node --env-file=.dev.env main.js ",
+    "qa": "node --env-file=.qa.env main.js",
+    "prod": "node --env-file=.prod.env main.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.4.7"
+  }
+}
