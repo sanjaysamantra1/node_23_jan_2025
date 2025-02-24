@@ -1,0 +1,107 @@
+HTTP Module
+===========
+-HTTP module can create an HTTP server.
+-Receives the request from client & returns response back to the client.
+
+
+-headers, URL, method and body data can be collected from request objects.
+-Make routing decisions based on URL and/or other data in request objects.
+-Send headers, HTTP status codes and response data via response objects.
+
+createServer()   		Returns a new instance of Server.
+listen(PORT,CallBack)   Binds the server to listen on a specific port
+close()					Stops the server from listening to more requests
+
+response.setHeader('Content-Type', 'text/html');
+response.writeHead() should be called first when initiating a response, allows 	us to set up the HTTP response code and headers we are sending back.
+
+response.write(chunk[, encoding][, callback]) allows us to send a chunk of data as part of our response.
+
+response.end() signalizes the response as complete, MUST be called once per response.
+
+
+Note:Unless you change the path to your favicon in an HTML document, browsers will (usually) make a request to the /favicon.ico path in order to get the favicon of your server.
+
+
+HTTP Methods
+============
+https://testfully.io/blog/http-methods/
+
+GET - Retrieve a resource/Retrieve data from DB
+	  search	  
+POST - to send data to server  ( sign up ) 
+       (create a resource/create a new record in DB)
+	   to fetch data securly    (send params in body not in URL)
+PUT - update data/create or replace a resource  
+	  update user's profile information 	  
+PATCH - update/modify a particular resource(partial update)
+        update user password
+DELETE - Remove a resource/delete a record from DB 
+		 Delete naukri account
+OPTIONS - information about the Permitted HTTP methods (methods/content type)
+       Identifying which HTTP methods a resource supports, e.g. can we DELETE it or update it via a PUT?
+HEAD - method returns info about resource (http version/length/type)
+	  used to request the headers of a resource without actually fetching the body of the resource.
+	  HEAD request is a way to retrieve metadata about a resource, such as its size, modification date, or content type
+
+
+
+http status codes
+=================
+1xx Informational  (100-Continue,101-switching Protocols,102-processing)
+2xx Success		   (200-OK,201-created,202-accepted,204-No Content)
+3xx Redirection	   (300-Multiple Choices,301-Moved Permanently,302-Found,304-Not Modified)
+4xx Client Error   (400-Bad Request,401-Unauthorized,403-Forbidden,404-Not Found)
+5xx Server Error   (500-Internal Server Error,502-Bad Gateway,503-Service Unavailable)
+
+
+
+
+200 OK 
+201 Created 
+202 Accepted      accepted for processing,processing has not been finished
+204 No Content    successfully fulfilled the request, there is no available content
+205 ResetContent  the user should reset the document that sent this request
+206 Partial Content 
+
+300 MultipleChoices  request has multiple possible responses, user should choose one 
+301 MovedPermanently the target resource has been assigned a new permanent URL
+
+400 BadRequest   the server could not understand the request because of invalid syntax.
+401 Unauthorized  client needs to authenticate itself to get access.such as a username and password.
+402 Payment Required
+403 Forbidden   the client has been authenticated, but it does not have the necessary 	permissions to access the requested resource
+404 NotFound   could not locate the requested resource. Page/URL not found
+405 MethodNotAllowed  the method has been disabled and can not be used(only get ,not post,put)
+406 NotAcceptable   if a client requests a response in JSON format by including "Accept: application/json" in the request header, but the server can only provide data in XML format
+407 Proxy Authentication Required
+408 RequestTimeout  server did not receive a complete request in the time that it prepared to wait
+409 Conflict  
+
+500 InternalServerError   server has encountered an unexpected condition
+500 Not Implemented   server does not recognize the request method
+502 BadGateway  the server received an invalid response while working as a gateway to handle the response
+503 Service Unavailable temporarily
+504 GatewayTimeout did not receive a timely response from the upstream server
+505 HTTP Version Not Supported
+
+
+
+
+Route-Parameter
+===============
+1. PathParam
+-passed after /
+ ex:- /productDetails/101
+-Need to define in the route
+ ex: app.get('users/:id')
+-If defined than need to pass in url
+-only 1 value can be passed
+
+2. QueryParam
+-passed after ?
+  ex: /search?searchWord=skybag&filter=something
+-No Need to define in the route
+  ex: app.get('users')
+-not complusory to pass
+-used to pass multiple values.
