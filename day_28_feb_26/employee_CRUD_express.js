@@ -14,13 +14,16 @@ app.get('/employees', (req, res) => {
     res.json(employees)
 });
 app.get('/employees/:empId', (req, res) => {
+    const { url, method, params, body } = req;
+    console.log(url, method, params, body )
     let employee = employees.find(emp => emp.eId == req.params.empId);
     res.json(employee)
 });
 app.post('/employees', (req, res) => {
     let newEmployee = req.body;
     employees = [...employees, newEmployee];
-    res.send('Employee Added Successfully!!!')
+    // res.status(201).send('Employee Added Successfully!!!');
+    res.sendStatus(201);
 });
 app.put('/employees', (req, res) => {
 
