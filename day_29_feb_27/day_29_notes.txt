@@ -1,0 +1,95 @@
+express.Router()
+================
+-express.Router() creates a new router object that can handle requests in a modular and organized way
+
+Modularity: Group routes based on features or functionality. (users, products,  orders)
+Scalability: Organize routes for large applications and separate them into different modules.
+Middleware Management: Apply middleware to specific routes or groups of routes easily.
+Cleaner Code: By dividing routes into smaller, focused files, our codebase remains clean and readable.
+
+	
+	
+
+Middlewares
+===========
+-Middlewares in ExpressJS are functions that can modify Request and Response objects.
+-Either to retrieve something from request Object or to store something in response object.
+-An example of a simple express js middleware could be to log the current date and time on every URL the user visits on our website.
+
+
+without middleware : 
+	request => Route => Response
+with middleware : 
+	request => middleware1 => middleware2 => Route => Response
+
+https://www.turing.com/kb/building-middleware-for-node-js
+https://expressjs.com/en/guide/using-middleware.html
+https://expressjs.com/en/resources/middleware/body-parser.html
+
+
+
+An Express application can use the following types of middleware:
+1. Application-level middleware
+   app.use(logger)
+2. Router-level middleware
+   const userRouter = express.Router();
+   userRouter.use(logger);
+3. Error-handling middleware
+   Note : To manually trigger error handling middleware, you can pass an error object to the next() function
+   try{
+   }catch(err){
+	 next(err); // transfers error object to error handling middleware
+   }   
+4. Built-in middleware
+    express.static()
+	express.json()        converts request body to JSON.     
+	express.urlencoded()  converts form-data to JSON
+5. Third-party middleware 
+   cors , body-parser, cookie-parser
+   
+
+
+Q.How to run a middleware for all the routes in an application
+  app.use(logger);
+  
+Q.How to run a middleware for all the routes for a router object
+  const userRouter = express.Router();
+  userRouter.use(logger);
+
+Q.How to run a middleware for a particular route
+  app.get('/route1', middleware,routeHandler);
+  
+
+logger middleware
+==================
+const logger = (req, res, next) => {
+    console.log(`URL:${req.url} , method:${req.method} , Time:${new Date().toLocaleTimeString()}`)
+    next();
+}
+ 
+authenticate middleware
+=====================
+const authenticate = (req, res, next) => {
+    const token = req.headers['authorization'];
+    if (!token || token !== 'mysecrettoken') {
+		res.status(401).json({ message: 'Unauthorized' });	
+    } else {
+         next(); // User is authenticated, proceed to next middleware or route handler
+    }
+};
+
+
+Error handler
+=============
+let myErrorHandler = (err, req, res, next) => {
+  const errorStatus = err.status || 500;
+  const errorMessage = err.message || 'Something went wrong, Try again!';
+ 
+  res.status(errorStatus).json({
+    status: errorStatus,
+    message: errorMessage,
+    stack: err.stack,
+    success: false,
+  });
+};
+Note : this should be present after all the routes & before app.listen(5000)
