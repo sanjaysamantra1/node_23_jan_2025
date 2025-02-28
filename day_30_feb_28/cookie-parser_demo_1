@@ -1,0 +1,19 @@
+const express = require('express');
+const cookieParser = require('cookie-parser');
+const app = express();
+app.use(cookieParser());
+
+app.get('/setCookie', (req, res,next) => {
+    res.cookie('name','sanjay')
+    res.cookie('add','bangalore')
+    res.end();
+});
+
+app.get('/getCookie', (req, res,next) => {
+    console.log('Reading Cookie')
+    res.send(req.cookies); // server can read cookie data from request object
+});
+
+app.listen(5000, () => {
+    console.log(`app Running at 5000 port`)
+});
