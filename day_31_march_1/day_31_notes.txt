@@ -1,0 +1,57 @@
+Morgan 
+======
+-Morgan is a popular HTTP request logger middleware for Node.js.
+-Alternatives Packages to morgan are : Winston / Bunyan / Pino
+-It simplifies the process of logging HTTP requests in a Node.js application by automatically generating logs for incoming requests.
+-Morgan provides various logging formats and options, allowing developers to customize the logging output according to their requirements.
+-Logging formats : combined / common / short / tiny / dev
+1. npm i morgan
+2. const morgan = require('morgan');
+   app.use(morgan('tiny'));
+   app.use(morgan('dev'));
+   app.use(morgan(':method :url :status :res[content-length] - :response-time ms'));
+
+
+Winston
+=======
+-winston is a logging library with support for multiple transports(console, file)
+
+// Configure Winston logger
+const logger = winston.createLogger({
+  level: 'info', // Log level: 'error', 'warn', 'info', 'http', 'verbose', 'debug', 'silly'
+  format: winston.format.json(),
+  transports: [
+    new winston.transports.Console(), // Log to the console
+    new winston.transports.File({ filename: 'app.log' }) // Log to a file
+  ]
+});
+
+// Middleware to log each request
+app.use((req, res, next) => {
+  logger.info(`HTTP ${req.method} ${req.url}`);
+  next();
+});
+
+// Error handling middleware
+app.use((err, req, res, next) => {
+  logger.error(`Error: ${err.message}`);
+  res.status(500).send('Something went wrong!');
+});
+
+
+Express generator
+=================
+1. npm install -g express-generator
+2. express project1 (--view=jade  default)
+   express --view=pug project1
+   express --view=ejs project2
+   express project3 --no-view
+3. once the project is created, run the below commands to start the app
+	cd project1
+	npm install
+	npm start
+
+
+Folder Structure for NodeJS & ExpressJS project
+================================================
+https://dev.to/mr_ali3n/folder-structure-for-nodejs-expressjs-project-435l
