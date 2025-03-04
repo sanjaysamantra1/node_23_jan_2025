@@ -1,0 +1,47 @@
+Events
+======
+-Node.js allows us to create and handle custom events easily by using events module.
+-Event module includes 'EventEmitter' class which can be used to raise and handle custom events.
+-An event can be raised/triggered using emit(). in emit() First parameter is the name of the event as a string and then arguments.
+ ex:  emit(eventName)
+	  emit(eventName, arg1 , arg2)
+-An event can be emitted with zero or more arguments. 
+-We can specify any name for a custom event in the emit() function.
+-use addListener() / on() to subscribe/listen an event. 
+
+-Event names should be camel-cased strings but any valid name should be fine. 
+-Listeners should not return any value , Any values returned by the called listeners are ignored and will be discarded.
+
+-The EventEmitter calls all listeners synchronously in the order in which they were registered.
+-This ensures the proper sequencing of events and helps avoid race conditions and logic errors. 
+When appropriate, listener functions can switch to an asynchronous mode of operation using the setImmediate() or process.nextTick() methods:
+-Using the eventEmitter.once() method, it is possible to register a listener that is called at most once for a particular event. 
+-Once the event is emitted, the listener is unregistered and then called.
+
+ 
+EventEmitter Properties and Methods
+------------------------------------
+addListener()-			Adds the specified listener
+defaultMaxListeners-	Sets the maximum number of listeners allowed for one event. Default is 10
+emit()					Call all the listeners registered with the specified name
+eventNames()			Returns an array containing all registered events
+getMaxListeners()		Returns the maximum number of listeners allowed for one event
+listenerCount()			Returns the number of listeners with the specified name
+listeners()				Returns an array of listeners with the specified name
+on()					Adds the specified listener
+once()					Adds the specified listener once. When the specified listener has been executed, the listener is removed
+prependListener()		Adds the specified listener as the first event with the specified name
+prependOnceListener()	Adds the specified listener as the first event with the specified name, once. When the specified listener has been executed, the listener is removed
+removeAllListeners()	Removes all listeners with the specified name, or ALL listeners if no name is specified
+removeListener()		Removes the specified listener with the specified name
+setMaxListeners()		Sets the maximum number of listeners allowed for one event. Default is 10
+
+
+Assignment:
+===========
+-Create a Banking System using Event Concept, that has the below functionalities
+    1. Open Account
+    2. Check Balance
+    3. Deposit Amount
+    4. Withdraw Amount
+    5. Close Account
