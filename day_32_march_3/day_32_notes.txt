@@ -1,0 +1,79 @@
+CORS(Cross-Origin-Resource-Sharing)
+====
+-Manages how our server will respond to requests from different origins.
+-Controls which domains can access our API or web application by setting Access-Control-Allow-Origin and other headers.
+
+Key Features:
+-Prevents unauthorized cross-origin requests: 
+	By default, browsers block requests made from one domain to another (a different origin). The cors middleware enables specific domains or all domains to access your resources.
+-Customizable origin policies: 
+	We can whitelist specific origins, methods, and headers that are allowed to interact with your server.
+
+
+-CORS is a npm package.
+-How to Install
+ npm install cors
+ 
+ 
+How to use cors
+===============
+const cors = require('cors');
+const app = express();
+app.use(cors());
+
+const corsOptions = {
+  origin: 'http://example.com'
+}
+app.use(cors(corsOptions));
+
+
+Default Configuration 
+corsOptions = {
+  "origin": "*",
+  "methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
+  "preflightContinue": false,
+  "optionsSuccessStatus": 204
+}
+
+const whitelist = ['http://example1.com', 'http://example2.com']
+const corsOptions = {
+  origin: function (origin, callback) {
+    if (whitelist.includes(origin)) {
+      callback(null, true)
+    } else {
+      callback(new Error('Not allowed by CORS'))
+    }
+  }
+}
+
+https://www.npmjs.com/package/cors
+
+
+
+
+CURL
+====
+-Client URL Request Library
+-curl -help
+
+
+Helmet
+======
+-It Helps to secure Node.js application by setting several HTTP headers.
+-automatically adds or removes HTTP headers to comply with web security standards.
+-protect Node.js Express apps from common security threats such as Cross-Site Scripting (XSS) and click-jacking attacks.
+-Express applications do not come with security HTTP headers out of the box.
+-Without Helmet, default headers returned by Express expose sensitive information and make your Node.js app vulnerable to malicious actors
+
+
+curl http://localhost:3000/
+curl http://localhost:3000/ --include
+Or
+use an HTTP client such as Postman to inspect the HTTP headers of the response
+
+without Helmet
+==============
+-response header should have X-Powered-By header. As with all headers that begin with X-, it is a non-standard header. X-Powered-By indicates the name and version number of the framework or library used by the server to generate the HTTP response.
+-we should never give attackers details about our tech stack.
+
+https://securityheaders.com/
