@@ -1,7 +1,6 @@
 const express = require('express');
 const app = express();
-
-const users = ['Adarsh', 'Priyanka', 'Ajay', 'Pavan', 'Teja']
+const products = require('./data/products.json')
 
 // set view & view-engine
 app.set('views', './views')
@@ -11,13 +10,13 @@ app.get('/', (req, res) => {
     res.render('pages/home.ejs');
 });
 app.get('/about', (req, res) => {
-    res.render('pages/about.ejs', { users });
+    res.render('pages/about.ejs');
 });
 app.get('/careers', (req, res) => {
-    res.render('pages/careers.ejs', { users });
+    res.render('pages/careers.ejs');
 });
 app.get('/products', (req, res) => {
-    res.render('pages/products.ejs', { users });
+    res.render('pages/products.ejs', { products });
 });
 
 app.listen(5000, () => {
