@@ -5,13 +5,13 @@ const users = ['Adarsh', 'Priyanka', 'Ajay', 'Pavan', 'Teja']
 
 // set view & view-engine
 app.set('views', './views')
-app.set('view engine', 'pug')
+app.set('view engine', 'ejs')
 
 app.get('/', (req, res) => {
-    res.render('index.pug');
+    res.render('index.ejs');
 });
 app.get('/users', (req, res) => {
-    res.render('users.pug', { users });
+    res.render('users.ejs', { users });
 });
 
 app.listen(5000, () => {
