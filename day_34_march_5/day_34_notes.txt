@@ -1,0 +1,14 @@
+Template Engines for Node.js
+============================
+-A template engine enables us to use static template files in our application. 
+-At runtime, the template engine replaces variables in a template file with actual values, and transforms the template into an HTML file sent to the client.
+-Template engines for Node.js (Jade/pug,Vash,EJS,Handlebars)
+-Express application generator uses 'pug' as the default Template Engine.
+
+-To render template files, set the following application properties, in app.js
+ app.engine('pug', require('pug').__express)
+ app.set('views', './views')
+ app.set('view engine', 'pug')
+ 
+
+https://expressjs.com/en/guide/using-template-engines.html
