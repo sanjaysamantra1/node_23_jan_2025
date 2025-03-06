@@ -1,0 +1,122 @@
+Data Access in Node.js
+======================
+-Node.js supports all kinds of databases(RDBMS/NO-SQl)
+ However, NoSQL databases like MongoDB are the best fit with Node.js
+-To access the database in Node.js application, driver needs to be installed 
+ex:npm install mysql (for MySQL)
+   npm install oracledb (for Oracle)
+   npm install mongodb (MongoDB)
+
+
+MongoDB
+=======
+-it stores data in the collections as JSON based documents and does not enforce schemas. 
+-UnStructured data. structure of every document must not be the same.
+-It does not have tables, rows, and columns like other RDBMS.
+-RDBMS  (Database,Table,Row,Column)
+ MongoDB(Database,Collection,Document,Field)
+-indexing , shemaless , Replication, Scalability, Performance, High Availability.
+-No SQL databases - MongoDB, cassandra, Amazon Dynamo DB, couchbase, redis.
+ Relational databases - MySql , Oracle , PostgreSQL
+ 
+
+NoSQL Databases (MongoDB)
+=========================
+-Type: NoSQL, document-oriented database.
+-Data Storage: Stores data in flexible, JSON-like documents (BSON).
+-Schema: Schema-less; fields can vary from document to document.
+-Scalability: Horizontal scaling is easier; designed to scale out by sharding.
+-Performance: Can be faster for certain types of applications, especially those dealing with unstructured data or requiring flexible schema.
+-Use Cases: Ideal for content management systems, real-time analytics, IoT, and applications requiring flexible, hierarchical data structures.
+
+Relational Databases (MySQL, PostgreSQL, etc.)
+==============================================
+-Type: SQL-based, relational database management systems.
+-Data Storage: Stores data in tables with rows and columns.
+-Schema: Enforced schema; data must adhere to a predefined structure.
+-Scalability: Typically scales vertically, although horizontal scaling (sharding) is possible with more complexity.
+-Performance: Can be faster for applications with complex queries, transactions, and operations requiring joins across multiple tables.
+-Use Cases: Suitable for applications requiring ACID (Atomicity, Consistency, Isolation, Durability) properties, such as financial systems, e-commerce platforms, and other data-centric applications.
+
+Vertical Scaling : Increasing the processing power and capacity of a single database
+    (8gb CPU + 32 GB RAM + 128 GB Disk)  -------->  (16gb CPU + 64 GB RAM + 256 GB Disk)
+Horizontal Scaling : adding more database servers to distribute workload
+    (8gb CPU + 32 GB RAM + 128 GB Disk)  -------->  (16gb CPU + 64 GB RAM + 256 GB Disk)
+    
+
+Sql         MongoDB
+===================
+Database    Database
+Table       Collection
+Row         Document
+Column		Field
+Select      find
+Insert      Insert
+Update      Update
+Delete      Remove
+
+
+
+db.employees.insertMany([{id:1,name:'sanjay},{id:2,name:'deepak',sal:5000}])
+db.employees.insertMany([{id:1,name:'sanjay},{prodid:111,name:'prod1',price:5000}])
+-if it was RDBMS, we would have changed the schema(alter) first 
+
+
+MongoDB Local
+=============
+1. download and install (MongoDB Community Server)
+   https://www.mongodb.com/try/download/community 
+					(OR)
+   https://fastdl.mongodb.org/windows/mongodb-windows-x86_64-6.0.5-signed.msi
+   
+   
+The Below Points are optional if we want to access our database in MongoDB Compass
+2. Go to the path where MongoDB is installed,and run 'mongod.exe'  
+   By default it is "C:\Program Files\MongoDB\Server\6.0\bin"
+4. Expect Error as the data directory is not set
+   "{"error":"NonExistentPath: Data directory C:\\data\\db\\ not found"
+5. create folder 'c:\data\db'
+6. run 'mongod.exe'
+7. set path for mongo-server(To start mongodb from any path)
+	C:\Program Files\MongoDB\Server\6.0\bin
+
+
+https://treehouse.github.io/installation-guides/mac/mongo-mac.html
+https://www.mongodb.com/docs/manual/tutorial/install-mongodb-on-os-x/
+
+
+
+MongoDB Shell (CLI for mongoDB)
+=============
+-download mongoDB shell 
+ https://www.mongodb.com/try/download/shell
+-extract and run mongosh.exe
+-set path for mongo-shell
+	 C:\mongo-shell\bin	    
+-verify the path setup is done correctly by running below 2 commands
+ mongod --version
+ mongosh --version 
+-Run the below command to Start Mongo Shell 
+ start mongosh.exe 
+-Enter mongoDB Connection String 
+ mongodb://localhost:27017
+ 
+ 
+Note: If mongoDB and mongoShell are installed & path is set
+-open 2 command prompts
+-run 'mongod' in 1st cmd
+-run 'mongosh' in 2nd cmd
+ 
+ 
+MongoDB Compass
+===============
+-MongoDB Compass is a graphical interface to interact with the MongoDB 
+-Manage MongoDB data without writing complex shell commands
+ 
+1. Download and install MongoDB Compass (It comes along with mongoDB)
+   https://www.mongodb.com/try/download/compass
+2. open mongoDB Compass GUI
+3. Enter mongoDB Connection String 
+   mongodb://localhost:27017  (OR) 
+   mongodb://127.0.0.1:27017   
+   mongodb://0.0.0.0:27017
