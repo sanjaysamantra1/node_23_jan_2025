@@ -42,7 +42,7 @@ Vertical Scaling : Increasing the processing power and capacity of a single data
     (8gb CPU + 32 GB RAM + 128 GB Disk)  -------->  (16gb CPU + 64 GB RAM + 256 GB Disk)
 Horizontal Scaling : adding more database servers to distribute workload
     (8gb CPU + 32 GB RAM + 128 GB Disk)  -------->  (16gb CPU + 64 GB RAM + 256 GB Disk)
-    
+
 
 Sql         MongoDB
 ===================
@@ -120,3 +120,87 @@ MongoDB Compass
    mongodb://localhost:27017  (OR) 
    mongodb://127.0.0.1:27017   
    mongodb://0.0.0.0:27017
+
+
+MongoDB Queries/Commands
+========================
+https://www.geeksforgeeks.org/mongodb-tutorial/
+
+-To See All databases
+ show dbs;
+ show databases;
+-To Use one database
+ use sanjaydb1  (creates a new database if it doesn’t exist)
+-To see the Current Database
+ db 
+-To see all the collections under a database
+ show collections
+-To Create a Collection/Table
+ db.createCollection('employees')
+-To add a Document/Row in a collection
+ db.employees.insertOne({eid:1,name:'sanjay',sal:5000})
+ db.employees.insertOne({_id:1,name:'sanjay',sal:5000})
+ db.employees.insertMany([{eid:1,name:'sanjay',sal:5000},
+            {eid:2,name:'sameer',sal:6000}])
+ db.employees.insertMany([{eid:1,name:'sanjay',sal:5000},
+            {eid:2,name:'sameer',sal:6000}] , {ordered:false}); 
+// ordered:false , trying to insert 3 docs, if 2nd fails, 1 & 3 should be inserted
+-To  see data inside collections
+ db.employees.find() 
+ db.employees.find().pretty()
+ db.employees.find( {sal: 6000} )
+ db.employees.findOne({sal: 6000})
+ db.employees.find( {name:'abc',sal: 6000} )
+ db.employees.find({"address.city":"bangalore"}) //Nested
+ db.employees.find({sal: {$lt:6000}}) 
+ db.employees.find({sal: {$lte:6000}}) 
+ db.employees.find({sal: {$ne:6000}})
+ db.employees.find({sal: {$gt:5000, $lt:9000}})
+ db.employees.find({"name":{$in:["Raj", "Ram", "Raghu"]}})
+ db.employees.find({$or:[{name:"ram"},{sal:5000}]})
+ db.employees.find({"name":/san/i})   // (Like in SQL)
+ 
+Projection : which fields to include in the results
+             use 1 to include a field and 0 to exclude a field.
+
+ db.employees.find( {} , {sal:0} ) // all columns except sal
+ db.employees.find( {} , {sal:1,name:1} ) // name,sal column in result
+ db.employees.find({},{eid:1,sal:1}) // projection
+ 
+
+ db.employees.find().sort({sal:1})   //asc
+ db.employees.find().sort({sal:-1}) //desc
+ db.employees.find().count()
+ db.employees.countDocuments({salary:13001});
+ db.employees.find().limit(2)
+ db.employees.find().sort({sal:-1}).skip(2).limit(1)
+ db.employees.distinct('eid');  // ['e101','e102']
+ 
+-To Update the existing Data
+ db.employees.updateOne( { id: 101 }, { $set: { sal: 2000 } } ) 
+ db.employees.updatemany( { sal:6000 }, { $set: { sal: 6500 } } )
+ db.employees.updateOne({id: 101},{$set:{eid:1,name:'sanjay',sal:5000}},{ upsert: true });  // Update or Insert
+ // Update the document, but if not found insert it
+ db.employees.updateOne({eId:'e102'},{$inc:{sal:100}}); // increment
+ 
+ db.users.updateOne({id:3},{$set:{'address.pin':'12345'}}); // adds 'pin' in address, without removing other fields of add 
+ db.employees.updateOne({eId:'e102'},{$set:{address:{city:'bangalore'}}}); 
+ // add a new field 'address' in employee obj, if address is already there that is replaced by new value
+ db.employees.updateOne({eId:'e102'},{$set:{address:{}}}); // update address value to {}
+ db.employees.updateOne({eId:'e102'},{$unset:{address:''}});  // remove a field
+ db.employees.updateOne({eid:101},{$currentDate:{joiningDate:true}}) // Sets the field value to the current date
+ db.employees.updateOne({eid:101},{$currentDate:{joiningDate: { $type: "date" }}}) // Sets the field value to the current date
+ db.employees.updateOne({eId:'e102'},{ $rename: { "username": "user_name" } }); // Renaming a Field
+ 
+ 
+ 
+ 
+-To Delete 
+ db.employees.deleteOne({ sal:6000 });      
+ db.employees.deleteMany({ gender:"male" })
+ db.employees.deleteMany({})   // Delete All Documents(equivalent of SQL's truncate)
+ db.employees.deleteMany({$or:[{status:'inactive'},{sal:7000}]});  // Delete with Logical Operator
+ db.employees.deleteMany({name:{$regex:/si/}});  // Delete using REGEX
+ 
+ db.employees.drop()  // Drop The Collection
+ db.dropDatabase()    // Drop Database
