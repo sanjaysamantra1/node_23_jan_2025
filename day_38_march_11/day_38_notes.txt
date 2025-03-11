@@ -1,0 +1,55 @@
+Managing Indexes
+================
+-Without indexes, MongoDB must scan every document of a collection to select those documents that match the query statement. 
+-This scan is highly inefficient and require MongoDB to process a large volume of data.
+-Indexes support efficient execution of queries in MongoDB
+-Indexes are special data structures, that store a small portion of the data set in an easy-to-traverse form. 
+-If an appropriate index exists for a query, MongoDB uses the index to limit the number of documents it must scan
+
+db.employees.find({sal:5000}).explain('executionStats'); // nReturned, totalDocsExamined
+
+
+Single Field Indexes:
+-store information from a single field in a collection
+ ex:db.students.createIndex( { gpa: 1 } )
+
+Index on an Embedded Field:
+db.students.createIndex( { "location.state": 1 } )
+
+Compound Indexes:
+-Compound indexes collect and sort data from two or more fields
+ ex:db.students.createIndex( {name:1,gpa:-1})
+   
+
+-Create an index (db.COLLECTION_NAME.createIndex({KEY:1}))
+ db.user.createIndex({"name.family": 1})
+ db.user.createIndex({email: 1}, {unique: true})  
+ //at most one record in the collection with a given value for that field
+-See indexes on a collection
+ db.user.getIndexes()
+-Drop an index
+ db.user.dropIndex("email")
+ db.user.dropIndexes()
+ 
+
+Aggregation Operations
+======================
+-Aggregation operations process multiple documents and return computed results
+-Used to: 
+	1. Group values from multiple documents together.
+	2. Perform operations on the grouped data to return a single result.
+	3. Analyze data changes over time.
+
+
+
+Aggregation Pipelines
+======================
+-An aggregation pipeline consists of one or more stages that process documents.
+-Each stage performs an operation on the input documents. For example, a stage can filter documents, group documents, and calculate values.
+-The documents that are output from a stage are passed to the next stage as input.
+-An aggregation pipeline can return results for groups of documents. For example, return the total, average, maximum, and minimum values.
+
+-db.collectionName.aggregate(pipeline, options)
+ input --> $match  --> $group --> $sort --> output
+
+$match, $group, $limit, $project, $sort, $addFields, $count, $lookup, $out , $unwind
