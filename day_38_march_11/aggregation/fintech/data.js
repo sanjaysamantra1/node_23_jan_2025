@@ -1,5 +1,3 @@
-const { db } = require("../../restaurantApi/model/User")
-
 db.users.insertMany([
     {
         name:"John Doe",
