@@ -53,9 +53,8 @@ const Mutation = new GraphQLObjectType({
                 gender: { type: GraphQLString },
             },
             resolve: (_, { id, name, sal, gender }) => {
-                console.log(id, name, sal, gender )
                 employeeArr.push({ id, name, sal, gender });
-                return { msg: 'Employee Added Successfully', data: { id, name, sal, gender } }
+                return { id, name, sal, gender } 
             }
         }
     }
