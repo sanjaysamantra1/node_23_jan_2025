@@ -1,0 +1,65 @@
+Redis
+=====
+-Redis Stands for 'Remote Dictionary Server'.
+-fast, open source, in-memory, key-value data store.
+-Redis speed makes it ideal for caching database queries, complex computations, API calls, and session state.
+-The stream data type enables high-rate data ingestion, messaging, event sourcing, and notifications.
+-Redis Cann't replace DB,it can only (set,get,delete)
+
+
+How To Install Redis
+====================
+1. https://github.com/microsoftarchive/redis/releases
+2. download Redis-x64-3.0.504.msi  and install
+3. add redis as path variable (Environment Variable)
+   C:\Program Files\Redis 
+4. check redis version (in command prompt)
+   redis-server -v
+5. open command prompt & run the below command. (redis cli should open at 127.0.0.1:6379 )
+   redis-cli 
+   
+
+
+Commands
+========
+Note : commands are not case sensitive (set/SET), Keys are case sensitive (get name)
+
+-To check the existing keys/data
+ KEYS *
+-Set Data (Syntax: set key value expiryTime_in_seconds)
+ SET name sanjay
+ SET add bangalore ex 2000 
+ SETEX age 3600 45
+-Get Data From Redis
+ GET <keyName>
+ GET name 
+ get add
+ get Add  (nil) (Keys are case sensitive)
+-Check if a key exists (1-Yes,0-No)
+ EXISTS keyName
+-Rename key
+ RENAME name fName
+-Check Data type of the value
+ TYPE keyName
+-Delete Data (del keyName)
+ del name
+-Delete all 
+ FLUSHALL
+-INFO (to check redis server details)
+
+
+Redis Cache Usecases
+====================
+GET: 
+	1. Check if data is there in Redis or not?
+	2. if Data is there in redis, return the data from redis cache
+	3. if Data is not there in redis, fetch data from db , Add the Data in Redis, Return the data
+POST: 
+	1. Insert the data into Database
+	2. add the data in Redis
+PATCH:
+	1. Update the data in Database
+	2. Update the data in Redis
+DELETE:
+	1. Delete the data in Database
+	2. Delete the data in Redis

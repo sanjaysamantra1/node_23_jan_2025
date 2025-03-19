@@ -1,6 +1,6 @@
 const productModel = require("./product_model");
 
-exports.typeDefs = `
+const typeDefs = `
     #graphql
     type Product {
         id: ID,
@@ -20,7 +20,7 @@ exports.typeDefs = `
         deleteProduct(id:ID) : Boolean
     }
 `;
-exports.resolvers = {
+const resolvers = {
     Query: {
         getProductList: async () => {
             const products = await productModel.find({});
@@ -47,3 +47,5 @@ exports.resolvers = {
         }
     }
 }
+
+module.exports = { typeDefs, resolvers }
