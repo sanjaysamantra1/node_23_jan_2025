@@ -1,0 +1,16 @@
+
+Redis Cache Usecases
+====================
+GET: 
+	1. Check if data is there in Redis or not?
+	2. if Data is there in redis, return the data from redis cache
+	3. if Data is not there in redis, fetch data from db , Add the Data in Redis, Return the data
+POST: 
+	1. Insert the data into Database
+	2. add the data in Redis
+PATCH:
+	1. Update the data in Database
+	2. Update the data in Redis
+DELETE:
+	1. Delete the data in Database
+	2. Delete the data in Redis
