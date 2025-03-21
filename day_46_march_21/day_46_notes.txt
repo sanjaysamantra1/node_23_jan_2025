@@ -1,0 +1,17 @@
+Nodemailer
+==========
+-Nodemailer is a module for Node.js to send emails.
+
+https://nodemailer.com/about/
+https://nodemailer.com/usage/using-gmail/
+
+Google App password
+===================
+-Go to your Google Account.(https://myaccount.google.com/)
+-->Security --> How you sign in to Google --> 2-Step Verification
+-->App passwords --> Generate a new password
+
+if app-password option is not there:
+1. enable 2-Step Verification
+2. create app password using the below URL
+  https://myaccount.google.com/apppasswords
