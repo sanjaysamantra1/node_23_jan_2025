@@ -10,6 +10,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "express-fileupload": "^1.5.1",
     "nodemailer": "^6.10.0"
   }
 }

@@ -15,3 +15,12 @@ if app-password option is not there:
 1. enable 2-Step Verification
 2. create app password using the below URL
   https://myaccount.google.com/apppasswords
+
+
+
+
+Upload File
+===========
+1. express-fileupload
+2. formidable
+3. multer

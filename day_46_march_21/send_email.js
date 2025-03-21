@@ -23,7 +23,13 @@ async function sendMyMail() {
                 Hiiiiiiiiiiiii
                 Good Morning
             </pre>
-        `
+        `,
+        attachments:[
+            {
+                filename: 'profile.png',
+                path: './profile.png'
+            }
+        ]
     });
     console.log("Message Sent Successfully!!!");
 }
