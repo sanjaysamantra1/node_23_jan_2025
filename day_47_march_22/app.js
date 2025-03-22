@@ -1,12 +1,11 @@
 const path = require('path');
 const express = require('express');
-const { createServer } = require('http');
 const { Server } = require('socket.io');
-let app = express();
+let app = express(); // app - request handler function
+let expressServer = app.listen(5000, () => console.log('server running at 5000 port'));
+// expressServer - actual http Server
+const io = new Server(expressServer, {}); // io - socket.io server
 app.use(express.static(path.join(__dirname, "public")));
-
-const httpServer = createServer(app);
-const io = new Server(httpServer, {}); // io - socket.io server
 
 io.on("connection", (socket) => {
     console.log('A new client Joined');
@@ -20,5 +19,3 @@ io.on("connection", (socket) => {
         io.emit('chat', msgObj);
     })
 });
-
-httpServer.listen(5000, () => console.log('server running at 5000 port'));
