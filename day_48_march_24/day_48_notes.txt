@@ -1,0 +1,48 @@
+Socket IO / Chat Application
+============================
+-Socket.IO is a library that enables bidirectional and event-based communication between a client and a server.
+
+Socket.IO is composed of two parts:
+-A server that integrates with the Node.JS HTTP Server (socket.io package)
+-A client library that loads on the browser side (socket.io-client package)
+
+
+Express & socket.io
+===================
+const app = require('express')();
+const server = require('http').createServer(app);
+const io = require('socket.io')(server);
+io.on('connection', socket => {
+  socket.emit('request', /* … */); // emit an event to the socket
+  socket.on('reply', () => { /* … */ }); // listen to the event
+  socket.broadcast.emit(); //emit an event to all connected sockets, except the sender
+  io.emit('broadcast', /* … */); // emit an event to all connected sockets  
+});
+server.listen(3000);
+
+
+
+Private Message	
+===============
+socket.on("private message", ({ content, to }) => {
+  socket.to(to).emit("private message", {
+    content,
+    from: socket.id,
+  });
+});
+
+
+(OR)
+
+1. Create a Room and join
+   io.on("connection", (socket) => {
+		socket.join("some room");
+   });
+2. Emit the message only to a room
+  socket.to('sanjaypraveenroom').emit("chat message", data);
+  
+  io.to("some room").emit("some event");
+  io.except("some room").emit("some event");
+  io.to("room1").to("room2").to("room3").emit("some event");
+
+https://socket.io/docs/v4/tutorial/introduction
