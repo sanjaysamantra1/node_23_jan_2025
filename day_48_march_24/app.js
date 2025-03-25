@@ -1,4 +1,3 @@
-const { Socket } = require('dgram');
 const express = require('express');
 const app = express();
 const httpServer = require('http').createServer(app);
@@ -7,12 +6,13 @@ const io = require('socket.io')(httpServer);
 // static files
 app.use(express.static('public'));
 
+var a=10;
+console.log(a);
+
 const activeUsers = new Set();
 
-io.on('connection', (socket) => {
+io.on("connection", (socket) => {
     console.log('A new client connected');
-
-    
 
     socket.on('new user', (userId) => {
         socket.userId = userId;
@@ -23,10 +23,10 @@ io.on('connection', (socket) => {
             socket.join("adarsh_ajay_room");
         }
     });
-    // socket.on('disconnect', () => {
-    //     activeUsers.delete(socket.userId);
-    //     io.emit('user disconnected', socket.userId);
-    // });
+    socket.on('disconnect', () => {
+        activeUsers.delete(socket.userId);
+        io.emit('user disconnected', socket.userId);
+    });
     socket.on('chat message', (data) => {
         io.emit('chat message', data);
     });
@@ -39,6 +39,6 @@ io.on('connection', (socket) => {
     });
 
 });
-httpServer.listen(5000, () => console.log('server running at 5000'))
+httpServer.listen(5000, () => console.log('server running at 5000'));
 
 
