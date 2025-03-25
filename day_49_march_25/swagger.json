@@ -1,0 +1,65 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "Employee CRUD",
+        "version": "1.0"
+    },
+    "consumes": [
+        "application/json"
+    ],
+    "produces": [
+        "application/json"
+    ],
+    "schemes": [
+        "http"
+    ],
+    "host": [
+        "localhost:5000"
+    ],
+    "basePath": [
+        "/api"
+    ],
+    "paths": {
+        "/employees": {
+            "get": {
+                "summary": "Get All Employees",
+                "description": "Get All the Employees",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "Succesfull Operation",
+                        "schema": {
+                            "type": "array",
+                            "item": {
+                                "$ref": "#/definitions/employeeResponse"
+                            }
+                        }
+                    },
+                    "400": {}
+                }
+            }
+        }
+    },
+    "definitions": {
+        "employeeResponse": {
+            "type": "object",
+            "properties": {
+                "eId": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "sal": {
+                    "type": "integer"
+                },
+                "gender": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}

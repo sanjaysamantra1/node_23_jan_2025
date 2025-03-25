@@ -1,0 +1,16 @@
+{
+  "name": "day_49_march_25",
+  "version": "1.0.0",
+  "description": "",
+  "main": "employee_CRUD_express.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "swagger-ui-express": "^5.0.1"
+  }
+}
