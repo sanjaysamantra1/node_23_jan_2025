@@ -1,0 +1,16 @@
+Child Processes Module
+======================
+-Node.js is single-threaded, non-blocking but running a single thread in a CPU cannot handle increasing workload.
+-The child_process module can be used to start child processes, and those child processes can easily communicate with each other with a messaging system.
+-There are four different ways to create a child process in Node:
+	1. exec() / execSync()
+	2. execFile() / execFileSync()
+	3. spawn()  /  spawnSync()
+	4. fork()
+
+spawn() 
+	when the command we want to run can output a large amount of data
+
+fork()  
+-communication channel is established to the child process when using fork, so we 	can use the send function on the forked process along with the global process object itself to exchange messages between the parent and forked processes.
+-ChildProcess will have an additional communication channel built-in that allows messages to be passed back and forth between the parent and child
