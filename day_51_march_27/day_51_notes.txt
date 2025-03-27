@@ -1,0 +1,144 @@
+Unit Testing with Jasmine
+=========================
+-Unit testing is important to verify the behavior of the smallest units of code in application. 
+-It helps improve the quality of  code and reduces the amount of time we spend on bug fixing. 
+-unit testing helps to find bugs early in the development life cycle.
+-Jasmine is an open-source and  popular JavaScript testing framework to test any kind of JavaScript application.
+
+
+1. Create a npm project
+   npm init -y
+2.install jasmine 
+   npm i jasmine
+3.Initialize the Jasmine Environment
+  jasmine init
+4.verify your configuration file. (spec/support/jasmine.json)
+  jasmine.json
+5.run the below command to run tests
+  jasmine					 (run all the tests)
+  jasmine spec/demo.spec.js  (run tests for only 1 file)
+ 
+ 
+Coverage Report
+===============
+1. npm i istanbul
+2. istanbul cover --include-all-sources spec/tests/index.spec.js && istanbul check-coverage
+
+ 
+Jasmine Terminologies
+=====================
+describe()  Test suite (Group of testcases)
+it() 		test case / spec
+test()      test case / spec
+
+expect(actual).matcher(expected);
+expect(app.add(2,3)).toBe(5);
+
+
+Matchers
+--------
+toBe();
+not.toBe();
+toBeDefined();
+not.toBeDefined();
+toEqual();
+toBeTruthy();  
+toBeFalsy();  
+toBeGreaterThan();
+toBeLessThan();
+toContain()
+
+
+Setup and Teardown
+Jasmine Global Functions
+------------------------
+beforeAll()
+beforeEach()
+afterEach()
+afterAll()
+
+fdescribe() - focused describe. If it exists, jasmine will run only fdescribe spec and ignore other type of describe (describe and xdescribe).
+xdescribe() - disabled describe. It will never be executed.
+fit() - focused it()
+xit() - disabled it()
+
+
+
+
+Spy & Stub
+==========
+Spy: Used to track calls to a function without altering its actual behavior.
+	 spyOn(obj, 'greet'); // spy
+Stub: Used to replace the function's implementation to control its behavior during testing.
+     spyOn(obj, 'greet').and.returnValue("Stubbed greeting!"); // stub
+
+
+Stub
+====
+-stub is a function/object that replaces the actual behavior of a unit with a fixed response.
+-stub avoids calling the real implementation by overriding the original function with our custom implementation.
+-Allows to control the function behavior entirely.
+	Replaces the original function with:
+		A return value.
+		A fake implementation.
+-ex: if we are testing a function that writes a value to the database, we should write a stub that avoids the db interaction but returns a successful result.
+
+function saveUser(userData, userModel) { 
+  let result = userModel.create(userData)
+  return result;
+}
+
+makeStub(userModel, 'create', () => {
+  return true;
+})
+
+it("should return TRUE when the query succeeds", () => {
+  let result = saveUser({
+    name: "Fernando",
+    password: "1234"
+  }, userModel)
+  result.should.be.true
+})
+
+
+Spy
+===
+-A spy is a tool used to observe and monitor the behavior of an existing function. 
+-It allows to track if a function is called, how many times it’s called, with what arguments, and other behaviors. 
+-it does not modify the original function unless explicitly configured to do so.
+
+spyOn(someObj, 'func').and.returnValue(42);
+spyOn(someObj, 'func').withArgs(2, 3).and.returnValue(5);
+
+
+// app.js 
+const app = {
+  processData: (data) => {
+    console.log('Processing data:', data);
+    return data.length;
+  },
+  fetchData: () => {
+    const data = ['item1', 'item2', 'item3'];
+    return app.processData(data);
+  },
+};
+module.exports = app;
+
+// app.spec.js 
+const app = require('./app');
+describe('fetchData functionality', () => {
+  it('should call processData with the correct data', () => {
+    // Spy on processData,  callThrough() ensures the original implementation still runs
+    spyOn(app, 'processData').and.callThrough();
+
+    // Call fetchData
+    const result = app.fetchData();
+
+    // Assertions
+    expect(app.processData).toHaveBeenCalled(); // Verify processData was called
+    expect(app.processData).toHaveBeenCalledWith(['item1', 'item2', 'item3']); // Verify correct arguments
+    expect(result).toBe(3); // Verify the return value
+  });
+});
+
+
