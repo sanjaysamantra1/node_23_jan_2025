@@ -1,0 +1,64 @@
+Unit testing with Mocha & Chai
+==============================
+-Mocha is a testing framework for NodeJS.
+-Chai is an assertion library
+
+	
+project level install
+	npm install express cors mongoose
+	npm install --save-dev mocha chai chai-http sinon
+
+	
+Run Testcases
+=============
+mocha
+
+
+Code Coverage
+=============
+1. npm i nyc
+
+2. For nyc related help 
+   npx nyc --help
+
+3. Add Below code in package.json
+   "scripts": {
+    "test": "mocha 'specs/**/*.js'",
+    "test-report": "nyc mocha 'specs/**/*.js'",
+    "coverage": "nyc report --reporter=html && npm run test"
+  }
+	
+	
+
+Chai Assertion Style
+--------------------
+1. should 
+	ex: arr.should.have.lengthOf(3)
+2. expect
+   ex: expect(arr).to.have.lengthOf(3)
+3. assert
+   ex: assert.lengthOf(arr,3)
+   
+var chai = require('chai');  
+var assert = chai.assert;    // Using Assert style
+var expect = chai.expect;    // Using Expect style
+var should = chai.should();  // Using Should style
+
+
+Hooks
+=====
+-Mocha provides the hooks before(), after(), beforeEach(), and afterEach(). 
+-These should be used to set up preconditions and clean up after  tests are executed.
+
+
+Exclusive/Inclusive Test
+========================
+describe.only()
+it.only()
+describe.skip()
+it.skip()
+
+
+
+https://www.digitalocean.com/community/tutorials/test-a-node-restful-api-with-mocha-and-chai
+https://blog.logrocket.com/node-js-unit-testing-mocha-chai-sinon/
