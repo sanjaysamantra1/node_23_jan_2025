@@ -7,7 +7,7 @@ const generateAccessToken = function (user) {
 }
 const generateRefreshToken = function (user) {
     return jsonwebtoken.sign({ userId: user._id, name: user.name },
-        REFRESH_TOKEN_SECRET, { expiresIn: '1m' });
+        REFRESH_TOKEN_SECRET, { expiresIn: '2m' });
 }
 
 module.exports = {

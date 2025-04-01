@@ -1,6 +1,7 @@
 const bcrypt = require('bcrypt');
 const userModel = require('../models/user_model');
 const { generateAccessToken, generateRefreshToken } = require('../utils/jwt_utils');
+const { REFRESH_TOKEN_SECRET } = require('../config/jwt.config');
 
 exports.register = async (req, res) => {
     req.body.password = bcrypt.hashSync(req.body.password, 8);
@@ -34,7 +35,20 @@ exports.login = async (req, res) => {
     }
 }
 exports.refreshToken = async (req, res) => {
-
+    const { refreshToken } = req.body;
+    if (!refreshToken) {
+        res.status(401).send({ auth: false, msg: 'Refresh Token is Required to generate Access Token' })
+    }
+    try {
+        jsonwebtoken.verify(refreshToken, REFRESH_TOKEN_SECRET);
+        console.log('user',user)
+        const accessToken = generateAccessToken(user);
+        const refreshToken = generateRefreshToken(user);
+        res.send({ auth: true, expiresIn: 60, accessToken, refreshToken });
+    } catch (err) {
+        console.log('errrrrr')
+        res.status(401).json(err);
+    }
 }
 exports.logout = async (req, res) => {
 
