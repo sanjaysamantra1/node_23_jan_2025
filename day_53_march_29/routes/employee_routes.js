@@ -1,18 +1,11 @@
 const express = require('express');
-const {
-    getAllEmployees,
-    getEmployeeById,
-    addEmployee,
-    updateEmployee,
-    deleteEmployee
-} = require('../controllers/employee_controller');
+const { getEmployees, getEmployeeById } = require('../controller/employee_controller');
+const { authMiddleware } = require('../middlewares/auth_middleware');
+const { logger } = require('../middlewares/logger_middleware');
 
 const employeeRouter = express.Router();
 
-employeeRouter.get('/', getAllEmployees)
-employeeRouter.get('/:id', getEmployeeById)
-employeeRouter.post('/', addEmployee)
-employeeRouter.patch('/:id', updateEmployee)
-employeeRouter.delete('/:id', deleteEmployee)
+employeeRouter.get('/', authMiddleware, logger, getEmployees);
+employeeRouter.get('/:id', getEmployeeById);
 
 module.exports = employeeRouter;

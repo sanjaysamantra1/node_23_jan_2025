@@ -8,12 +8,11 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-
 app.use('/employees', employeeRouter)
 app.use('/auth', authRouter)
 
-
 app.listen(5000, () => {
-    connectToDB()
-    console.log(`app Running at 5000 port`)
-});
+    connectToDB();
+    console.log('server running at 5000 port');
+})
+
