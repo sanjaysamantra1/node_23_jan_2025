@@ -12,7 +12,7 @@ const generateRefreshToken = function (userId,name) {
 
 function verifyToken(token, secret) {
     try {
-        return jwt.verify(token, secret);
+        return jsonwebtoken.verify(token, secret);
     } catch (err) {
         return null;
     }

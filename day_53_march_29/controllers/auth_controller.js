@@ -51,6 +51,9 @@ exports.refreshToken = async (req, res) => {
         const user = await userModel.findOne({ refreshToken });
         if (!user) return res.status(403).send('No User found with the provided Refresh Token');
 
+        // console.log(refreshToken, REFRESH_TOKEN_SECRET)
+        // console.log(verifyToken(refreshToken, REFRESH_TOKEN_SECRET));
+        console.log(decoded,user);
         const decoded = verifyToken(refreshToken, REFRESH_TOKEN_SECRET);
         if (!decoded) return res.status(403).send('Provided Refresh Token is not correct');
 
