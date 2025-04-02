@@ -6,7 +6,8 @@ const userSchema = new mongoose.Schema({
     password: { type: String, required: true },
     phone: { type: String, required: true },
     role: { type: String, required: true },
-});
-// Create a Model
+    refreshToken: { type: String },
+}, { timestamps: true });
+
 const userModel = mongoose.model('users', userSchema);
-module.exports = userModel
+module.exports = userModel;

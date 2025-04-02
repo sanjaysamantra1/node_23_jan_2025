@@ -1,15 +1,22 @@
 const jsonwebtoken = require('jsonwebtoken');
-const { ACCESS_TOKEN_SECRET, REFRESH_TOKEN_SECRET } = require('../config/jwt.config');
+const { ACCESS_TOKEN_SECRET, REFRESH_TOKEN_SECRET, ACCESS_TOKEN_LIFETIME, REFRESH_TOKEN_LIFETIME } = require('../config/jwt.config');
 
-const generateAccessToken = function (user) {
-    return jsonwebtoken.sign({ userId: user._id, name: user.name },
-        ACCESS_TOKEN_SECRET, { expiresIn: '1m' });
+const generateAccessToken = function (userId,name) {
+    return jsonwebtoken.sign({ userId, name},
+        ACCESS_TOKEN_SECRET, { expiresIn: ACCESS_TOKEN_LIFETIME });
 }
-const generateRefreshToken = function (user) {
-    return jsonwebtoken.sign({ userId: user._id, name: user.name },
-        REFRESH_TOKEN_SECRET, { expiresIn: '2m' });
+const generateRefreshToken = function (userId,name) {
+    return jsonwebtoken.sign({ userId,name },
+        REFRESH_TOKEN_SECRET, { expiresIn: REFRESH_TOKEN_LIFETIME });
 }
 
+function verifyToken(token, secret) {
+    try {
+        return jwt.verify(token, secret);
+    } catch (err) {
+        return null;
+    }
+}
 module.exports = {
-    generateAccessToken, generateRefreshToken
+    generateAccessToken, generateRefreshToken, verifyToken
 }
