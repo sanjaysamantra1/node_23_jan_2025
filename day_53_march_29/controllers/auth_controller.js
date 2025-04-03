@@ -36,42 +36,43 @@ exports.login = async (req, res) => {
                 await userModel.updateOne({ email: req.body.email }, { $set: { refreshToken } });
 
                 res.cookie('refreshToken', refreshToken, { httpOnly: true });
-                res.send({ auth: true, expiresIn: 60, accessToken, refreshToken });
+                res.json({ auth: true, accessToken, refreshToken });
             }
         }
     } catch (err) {
-        res.status(500).send(err);
+        res.status(500).json({ message: 'Login failed', err });
     }
 }
 exports.refreshToken = async (req, res) => {
-    const refreshToken = req.cookies.refreshToken;
-    if (!refreshToken) return res.sendStatus(403);
+    const { refreshToken } = req.cookies;
+    if (!refreshToken) return res.status(401).json({ msg: 'No Referesh Token Found' });
 
     try {
         const user = await userModel.findOne({ refreshToken });
         if (!user) return res.status(403).send('No User found with the provided Refresh Token');
 
-        // console.log(refreshToken, REFRESH_TOKEN_SECRET)
-        // console.log(verifyToken(refreshToken, REFRESH_TOKEN_SECRET));
-        console.log(decoded,user);
         const decoded = verifyToken(refreshToken, REFRESH_TOKEN_SECRET);
         if (!decoded) return res.status(403).send('Provided Refresh Token is not correct');
-
-        const accessToken = generateAccessToken(user._id, username);
-        res.json({ accessToken });
+        const newAccessToken = generateAccessToken(user._id, user.name);
+        const newRefreshToken = generateRefreshToken(user._id, user.name);
+        await userModel.updateOne({ email: user.email }, { $set: { 'refreshToken': newRefreshToken } });
+        res.cookie('refreshToken', newRefreshToken, { httpOnly: true });
+        res.json({ auth: true, newAccessToken, newRefreshToken });
     } catch (err) {
-        res.status(500).json({ message: 'Server error' });
+        res.status(500).json({ msg: 'Server Error', err });
     }
 }
 exports.logout = async (req, res) => {
+    let refreshToken = req.cookies?.refreshToken;
     try {
-        const refreshToken = req.cookies.refreshToken;
-        if (!refreshToken) return res.status(204).send('No Refresh Token Found');
-
+        if (!refreshToken) {
+            res.status(403).json({ msg: 'No Refresh Token ' });
+        }
         await userModel.updateOne({ refreshToken }, { $unset: { refreshToken: '' } });
+        res.clearCookie('accessToken');
         res.clearCookie('refreshToken');
-        res.sendStatus(204);
+        res.json({ message: 'Logged out' });
     } catch (err) {
-        res.status(500).json({ message: 'Server error' });
+        res.status(500).json({ message: 'Server error', err });
     }
 }

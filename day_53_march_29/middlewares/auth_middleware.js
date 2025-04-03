@@ -8,6 +8,7 @@ const authMiddleware = (req, res, next) => {
     }
     try {
         jsonwebtoken.verify(token, ACCESS_TOKEN_SECRET);
+        req.user = user;
         next();
     } catch (err) {
         res.status(401).json(err);

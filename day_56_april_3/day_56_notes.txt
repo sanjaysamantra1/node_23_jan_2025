@@ -1,0 +1,17 @@
+
+PhonePe Integration
+====================
+https://developer.phonepe.com/v1/docs/api-integration/
+https://developer.phonepe.com/v2/docs/technical-flow-diagram/
+
+1. npm init -y
+2. npm i express cors axios crypto
+
+
+
+Step 1. Initiating Payment request
+Step 2. Redirecting user to PhonePe Standard Checkout page
+Step 3. Redirecting user to Merchant web page
+Step 4. Status verification post redirection to merchant website
+Step 5. Handling Payment Success, Pending and Failure
+Step 6. Refund
